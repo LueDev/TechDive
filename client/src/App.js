@@ -1,4 +1,5 @@
 import './App.css';
+import Sidebar from './sidebar';
 
 import { useApi } from './hooks/use-api';
 
@@ -7,11 +8,13 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <p>
           {response}
         </p>
-      </header>
+      </header> */}
+      <Sidebar/>
+      
     </div>
   );
 }

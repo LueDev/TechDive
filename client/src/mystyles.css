@@ -1,0 +1,38 @@
+.sidebar {
+    width: 218px;
+    height: 100%;
+    background-color: #007EF2;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: -60px;
+    transition: left 0.3s ease;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+  
+  .toggle-button {
+    background-color: #007EF2;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 15px;
+    border-bottom: 1px solid #555;
+    cursor: pointer;
+  }
+  
+  li:hover {
+    background-color: #555;
+  }
+  
