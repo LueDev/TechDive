@@ -36,7 +36,6 @@ userSchema.methods.safeFetch = function () {
   userObject.firstname = toTitleCase(userObject.firstname);
   userObject.lastname = toTitleCase(userObject.lastname);
   delete userObject.password,
-    delete userObject.admin,
     delete userObject.roles,
     delete userObject.createdAt;
   delete userObject.updatedAt;

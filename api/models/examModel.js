@@ -7,7 +7,7 @@ const examSchema = new mongoose.Schema({
   ZIP: { type:Number, required: true},
   LATEST_BMI: { type:Number, required: true},
   'LATEST WEIGHT': { type:Number, required: true},
-  png_filename: { type:String, requires:true },
+  png_filename: { type:String, required:true },
   exam_id: { type:String, required: true},
   'ICU ADMIT': { type:String}, 
   '# ICU ADMIT': {type:Number},

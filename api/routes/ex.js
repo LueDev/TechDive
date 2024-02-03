@@ -15,7 +15,7 @@ async function connectToDatabase() {
 
 async function run() {
   try {
-    // const user = new User({ firstname: "Raul", lastname: "De La Hoya", username: "Rico Suave", email: "jump@gmail.com", password: "Password1", admin: false });
+    // const user = new User({ firstname: "Raul", lastname: "De La Hoya", username: "Rico Suave", email: "jump@gmail.com", password: "Password1", admin: true });
     // // Save the user to the database
     // const savedUser = await user.save();
     // console.log(savedUser);
@@ -26,12 +26,12 @@ async function run() {
 
     // Using .where is very handy 
 
-    // const foundUser = await User.findOne()
-    // const scrub = foundUser.safeFetch() 
-    // console.log(scrub)
+    const foundUser = await User.find()
+    const scrub = foundUser.forEach(user => user.safeFetch())
+    console.log(foundUser.map(user => user.safeFetch()))
 
-    const foundExam = await Exam.where('LATEST WEIGHT').gt(290) 
-    console.log(foundExam)
+    // const foundExam = await Exam.where('LATEST WEIGHT').gt(290) 
+    // console.log(foundExam)
     
 
   } catch (error) {

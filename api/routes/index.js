@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/users');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 

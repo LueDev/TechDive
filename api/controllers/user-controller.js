@@ -1,6 +1,7 @@
 const User = require('../models/userModel')
 
 const getUser = async (req, res) => {
+  
   return res.status(200).json({
     success: true,
     message: 'API is working.'
@@ -10,8 +11,8 @@ const getUser = async (req, res) => {
 // Registration controller
 const registerUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const newUser = new User({ username, password });
+    const { firstname, lastname, email, password } = req.body;
+    const newUser = new User({ firstname: firstname, lastname: lastname, email:email, password:password });
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -22,8 +23,8 @@ const registerUser = async (req, res) => {
 // Login controller
 const loginUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
