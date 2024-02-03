@@ -5,8 +5,23 @@
     color: white;
     position: fixed;
     top: 0;
-    left: -60px;
+    left: -30px;
     transition: left 0.3s ease;
+  }
+
+  .sidebar-title {
+    align-items: center; 
+    margin-bottom: 3px;
+    padding: 20px;
+    margin-top:10px;
+    display: flex;
+    margin-left: 25px;
+    }
+  
+  .sidebar-title span {
+    margin-left: 5px;
+    font-weight: bold; /* Bold Text */
+    font-size: 1.4em; /* Font Size*/
   }
   
   .sidebar.open {
@@ -28,11 +43,13 @@
   
   li {
     padding: 15px;
-    border-bottom: 1px solid #555;
+    border-bottom: 0px solid #555;
     cursor: pointer;
   }
   
   li:hover {
     background-color: #555;
+  
+  
   }
   

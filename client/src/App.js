@@ -1,5 +1,8 @@
 import './App.css';
 import Sidebar from './sidebar';
+import HeaderBar from './header';
+
+
 
 import { useApi } from './hooks/use-api';
 
@@ -14,7 +17,8 @@ function App() {
         </p>
       </header> */}
       <Sidebar/>
-      
+
+      <HeaderBar/>
     </div>
   );
 }

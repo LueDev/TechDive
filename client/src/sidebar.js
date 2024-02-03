@@ -1,25 +1,47 @@
 import React, { useState } from 'react';
 import './mystyles.css'; 
+import { TbActivityHeartbeat } from "react-icons/tb";
+import { BsPerson } from "react-icons/bs";
+import { BsClipboard2Plus } from "react-icons/bs";
+import { IoFolderOutline } from "react-icons/io5";
+import { SiWorldhealthorganization } from "react-icons/si";
+
+
+
+
+
 
 const Sidebar = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
+  const lists = [
+    { id: 1, text: "Home", icon:<TbActivityHeartbeat/> },
+    { id: 2, text: "Admin", icon:<BsPerson/>},
+    { id: 3, text: "Add Patient", icon:<BsClipboard2Plus/>},
+    {id: 4, text:"File Processing", icon:<IoFolderOutline/>}
+  ];
 
   return (
-    <div className={`sidebar ${true ? 'open' : ''}`}>
-      <button onClick={toggleSidebar} className="toggle-button">
-        ☰
-      </button>
+    <div className="sidebar">
+    
+    <div className="sidebar-title">
+        <SiWorldhealthorganization size={50} />
+        <span>Health</span>
+    </div>
+
+
       <ul>
-        <li>Exam Dashboard</li>
-        <li>Admin</li>
-        <li>Add Patient</li>
+        {lists.map((list) => (
+          <li key={list.id} >
+            {list.icon}
+            {" "}
+            {list.text}
+          </li>
+        ))}
       </ul>
     </div>
   );
 };
 
+
 export default Sidebar;
+
+
