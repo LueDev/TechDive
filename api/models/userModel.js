@@ -83,7 +83,7 @@ userSchema.statics.LoginUser = async function(email, password) {
       console.log("Invalid credentials");
     }
   } catch (error) {
-    res.status(500).json({ error: "User Login Error - Internal Server Error" });
+    throw new Error("User Model Login Error - Internal Server Error" );
   }
 };
 

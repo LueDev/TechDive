@@ -14,17 +14,17 @@ const examSchema = new mongoose.Schema({
   MORTALITY: { type: String },
 });
 
-examSchema.methods.updateExam(){
-  //Used to update an individual exam
-}
+// examSchema.methods.updateExam(){
+//   //Used to update an individual exam
+// }
 
-examSchema.methods.deleteExam(){
-  //Used to delete an individual exam
-}
+// examSchema.methods.deleteExam(){
+//   //Used to delete an individual exam
+// }
 
-examSchema.methods.createExam(){
-  //Used to create an exam
-}
+// examSchema.methods.createExam(){
+//   //Used to create an exam
+// }
 
 
 const Exam = mongoose.model("Exam", examSchema);

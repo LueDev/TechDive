@@ -1,8 +1,9 @@
 const express = require('express');
+const {authenticateToken} = require('../controllers/user-controller')
 const router = express.Router();
 
 const UserController = require('../controllers/user-controller');
 
-router.get('/', UserController.getUser);
+router.get('/', authenticateToken, UserController.getUser);
 
 module.exports = router;
