@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt')
-const saltRounds = 10; 
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
   firstname: { type: String, lowercase: true, required: true },
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     required: true,
   },
-  admin: { type: String, required: true },
+  admin: { type: String, default: false },
   createdAt: { type: Date, immutable: true, default: () => Date.now() },
   updatedAt: { type: Date, default: () => Date.now() },
   roles: [{ type: String }],
@@ -36,25 +36,68 @@ userSchema.methods.safeFetch = function () {
   userObject.firstname = toTitleCase(userObject.firstname);
   userObject.lastname = toTitleCase(userObject.lastname);
   delete userObject.password,
-    delete userObject.roles,
-    delete userObject.createdAt;
+  delete userObject.roles,
+  delete userObject.createdAt;
   delete userObject.updatedAt;
   delete userObject.__v;
   return userObject;
 };
 
+userSchema.statics.createUser = async function(userData) {
+  try {
+    const { password, admin, ...rest } = userData;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-// Whenever we use the save function, this function below will encrypt the user password
-userSchema.pre('save', function (next) {
-    const user = this;
-    if (!user.isModified('password')) return next();
-  
-    bcrypt.hash(user.password, saltRounds, (err, hash) => {
-      if (err) return next(err);
-      user.password = hash;
-      next();
-    });
+    if(admin === true){
+      const roles = ["View-Notifications", "View-Exams","Update-Exams","Delete-Exams","Create-Exams"]
+      const user = new this({ ...rest, roles:roles, password: hashedPassword });
+      await user.save();
+      return user;
+    }else{
+      const roles = ["View-Notifications", "View-Exams"]
+      const user = new this({ ...rest, roles:roles, password: hashedPassword });
+      await user.save();
+      return user;
+    }
+
+  } catch (error) {
+    throw new Error('Error creating user: ' + error.message);
+  }
+};
+
+userSchema.statics.LoginUser = async function(email, password) {
+  try {
+    // Find the user by email
+    const user = await this.findOne({ email });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (isPasswordValid) {
+      console.log("Login successful");
+      return user
+    } else {
+      console.log("Invalid credentials");
+    }
+  } catch (error) {
+    res.status(500).json({ error: "User Login Error - Internal Server Error" });
+  }
+};
+
+// Whenever we use the save function, this function below will encrypt the user password if it's been changed.
+userSchema.pre("save", function (next) {
+  const user = this;
+  if (!user.isModified("password")) return next();
+
+  bcrypt.hash(user.password, saltRounds, (err, hash) => {
+    if (err) return next(err);
+    user.password = hash;
+    next();
   });
+});
 
 const User = mongoose.model("User", userSchema);
 

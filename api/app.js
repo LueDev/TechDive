@@ -5,8 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+//Connect to Mongo with this module and the mongoose model operations will read/write to mongoDB collections
+const connectDB = require('./db')
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+// const PORT = process.env.PORT || 3000
 
 var app = express();
 
@@ -16,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+connectDB()
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -33,7 +39,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send('error');
 });
+
+// app.listen(PORT, console.log("Server is running on port ", PORT))
 
 module.exports = app;

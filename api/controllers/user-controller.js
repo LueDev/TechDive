@@ -1,26 +1,27 @@
-const User = require("../models/userModel");
+const { User } = require("../models/userModel");
+const amqp = require("amqplib");
 
 const getUser = async (req, res) => {
   return res.status(200).json({
     success: true,
-    message: "API is working.",
+    message: "Users API is working.",
   });
 };
 
-// Registration controller
+
+
+// Registration controller 
 const registerUser = async (req, res) => {
   try {
-    const { firstname, lastname, email, password } = req.body;
-    const newUser = new User({
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      password: password,
-    });
-    await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    const userSignUpDetails = { firstname, lastname, email, password, admin } = req.body;
+    const newUser = await User.createUser(userSignUpDetails)
+      
+    res
+      .status(201)
+      .json({ message: "User registered successfully", user: newUser});
+    }
+  catch (error) {
+    res.status(500).json({ error: "Users Registration Error - Internal Server Error" });
   }
 };
 
@@ -28,21 +29,13 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const userLoggedIn = await User.LoginUser(email, password)
 
-    if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (isPasswordValid) {
-      return res.status(200).json({ message: "Login successful" });
-    } else {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res
+    .status(200)
+    .json({"user" : userLoggedIn.safeFetch()})
+  }catch{
+    res.status(500).json({error: "User Login Error - Internal Server Error"})
   }
 };
 
