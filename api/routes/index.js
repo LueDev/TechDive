@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const {authenticateToken} = require('../controllers/user-controller')
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('API is working properly!');
-});
+const UserController = require('../controllers/user-controller');
+
+router.get('/', authenticateToken, UserController.getUser);
 
 module.exports = router;
