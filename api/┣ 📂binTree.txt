@@ -1,0 +1,17 @@
+┣ 📂bin
+┃ ┗ 📜www
+┣ 📂controllers
+┃ ┗ 📜user-controller.js
+┣ 📂models
+┃ ┣ 📜examModel.js
+┃ ┗ 📜userModel.js
+┣ 📂public
+┃ ┣ 📜Exams.csv
+┃ ┗ 📜PatientExams.csv
+┣ 📂routes
+┃ ┣ 📜contact.js
+┃ ┣ 📜ex.js
+┃ ┣ 📜index.js
+┃ ┗ 📜users.js
+┣ 📜app.js
+┗ 📜package.json
