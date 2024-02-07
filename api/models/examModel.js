@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const examSchema = new mongoose.Schema({
   PATIENT_ID: { type: String, required: true },
@@ -6,11 +6,11 @@ const examSchema = new mongoose.Schema({
   SEX: { type: String, required: true },
   ZIP: { type: Number, required: true },
   LATEST_BMI: { type: Number, required: true },
-  "LATEST WEIGHT": { type: Number, required: true },
+  'LATEST WEIGHT': { type: Number, required: true },
   png_filename: { type: String, required: true },
   exam_id: { type: String, required: true },
-  "ICU ADMIT": { type: String },
-  "# ICU ADMIT": { type: Number },
+  'ICU ADMIT': { type: String },
+  '# ICU ADMIT': { type: Number },
   MORTALITY: { type: String },
 });
 
@@ -26,8 +26,7 @@ const examSchema = new mongoose.Schema({
 //   //Used to create an exam
 // }
 
-
-const Exam = mongoose.model("Exam", examSchema);
+const Exam = mongoose.model('Exam', examSchema);
 
 module.exports = { Exam };
 

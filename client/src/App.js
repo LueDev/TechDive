@@ -1,13 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
-import Sidebar from './sidebar';
-import HeaderBar from './header';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// import { useApi } from './hooks/use-api';
+import './styles/App.css';
 
-const Home = React.lazy(() => import('./pages/Home'))
-const Exams = React.lazy(() => import('./pages/Exams'))
-const NotFound = React.lazy(() => import('./pages/NotFound'))
+// Lazy-loaded components
+const Home = React.lazy(() => import('./pages/Home/Home.js'));
+const NotFound = React.lazy(() => import('./pages/NotFound/NotFound.js'));
 // Other imported pages go here...
 
 function App() {
@@ -17,26 +15,22 @@ function App() {
         <Route
           index
           element={
-            <React.Suspense fallback={ <>...</> }>
+            <React.Suspense fallback={<div>Loading...</div>}>
               <Home />
-            </React.Suspense>
-          }
-        />
-        <Route
-          path="exams"
-          element={
-            <React.Suspense fallback={ <>...</> }>
-              <Exams />
             </React.Suspense>
           }
         />
         {/* Other paths go here... */}
         <Route
           path="*"
-          element={ <NotFound /> }
+          element={
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <NotFound />
+            </React.Suspense>
+          }
         />
       </Routes>
-    </ BrowserRouter>
+    </BrowserRouter>
   );
 }
 

@@ -1,12 +1,8 @@
-const { Exam } = require("../models/examModel");
-
+const { Exam } = require('../models/examModel');
 
 const getExams = async (req, res) => {
-  
-
-  
-    return res.status(200).json({
+  return res.status(200).json({
     success: true,
-    message: 'API is working.'
+    message: 'API is working.',
   });
-}
+};

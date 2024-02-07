@@ -7,7 +7,7 @@ const organizationSchema = new mongoose.Schema({
   exams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Exam' }], // Exams associated with the organization
   admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Admin users of the organization
   createdAt: { type: Date, default: () => Date.now(), immutable: true },
-  updatedAt: { type: Date, default: () => Date.now() }
+  updatedAt: { type: Date, default: () => Date.now() },
 });
 
 const Organization = mongoose.model('Organization', organizationSchema);

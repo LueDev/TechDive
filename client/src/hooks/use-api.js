@@ -7,11 +7,11 @@ export function useApi({ path } = { path: '' }) {
 
   useEffect(() => {
     fetch(`${API_ROOT}/${path}`)
-      .then(res => res.text())
-      .then(res => setResponse(res));
+      .then((res) => res.text())
+      .then((res) => setResponse(res));
   }, []);
 
   return {
-    response
+    response,
   };
 }

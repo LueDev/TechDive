@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         return passwordRegex.test(password);
       },
       message:
-        "Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one digit.",
+        'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one digit.',
     },
     required: true,
   },
@@ -36,36 +36,49 @@ userSchema.methods.safeFetch = function () {
   userObject.firstname = toTitleCase(userObject.firstname);
   userObject.lastname = toTitleCase(userObject.lastname);
   delete userObject.password,
-  delete userObject.roles,
-  delete userObject.createdAt;
+    delete userObject.roles,
+    delete userObject.createdAt;
   delete userObject.updatedAt;
   delete userObject.__v;
   return userObject;
 };
 
-userSchema.statics.createUser = async function(userData) {
+userSchema.statics.createUser = async function (userData) {
   try {
     const { password, admin, ...rest } = userData;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    if(admin === true){
-      const roles = ["View-Notifications", "View-Exams","Update-Exams","Delete-Exams","Create-Exams"]
-      const user = new this({ ...rest, roles:roles, password: hashedPassword });
+    if (admin === true) {
+      const roles = [
+        'View-Notifications',
+        'View-Exams',
+        'Update-Exams',
+        'Delete-Exams',
+        'Create-Exams',
+      ];
+      const user = new this({
+        ...rest,
+        roles: roles,
+        password: hashedPassword,
+      });
       await user.save();
       return user;
-    }else{
-      const roles = ["View-Notifications", "View-Exams"]
-      const user = new this({ ...rest, roles:roles, password: hashedPassword });
+    } else {
+      const roles = ['View-Notifications', 'View-Exams'];
+      const user = new this({
+        ...rest,
+        roles: roles,
+        password: hashedPassword,
+      });
       await user.save();
       return user;
     }
-
   } catch (error) {
     throw new Error('Error creating user: ' + error.message);
   }
 };
 
-userSchema.statics.LoginUser = async function(email, password) {
+userSchema.statics.LoginUser = async function (email, password) {
   try {
     // Find the user by email
     const user = await this.findOne({ email });
@@ -77,20 +90,20 @@ userSchema.statics.LoginUser = async function(email, password) {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
-      console.log("Login successful");
-      return user
+      console.log('Login successful');
+      return user;
     } else {
-      console.log("Invalid credentials");
+      console.log('Invalid credentials');
     }
   } catch (error) {
-    throw new Error("User Model Login Error - Internal Server Error" );
+    throw new Error('User Model Login Error - Internal Server Error');
   }
 };
 
 // Whenever we use the save function, this function below will encrypt the user password if it's been changed.
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
   const user = this;
-  if (!user.isModified("password")) return next();
+  if (!user.isModified('password')) return next();
 
   bcrypt.hash(user.password, saltRounds, (err, hash) => {
     if (err) return next(err);
@@ -99,6 +112,6 @@ userSchema.pre("save", function (next) {
   });
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = { User };
