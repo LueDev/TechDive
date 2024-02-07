@@ -1,0 +1,17 @@
+/* Light theme colors */
+:root {
+  --accent-color: #007ef2; /* Accent color available in both themes */
+}
+
+:root.light-theme {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --link-color: #1a0dab;
+}
+
+/* Dark theme colors */
+:root.dark-theme {
+  --background-color: #121212;
+  --text-color: #ffffff;
+  --link-color: #8ab4f8;
+}
