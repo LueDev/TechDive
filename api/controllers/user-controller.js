@@ -44,6 +44,11 @@ const loginUser = async (req, res) => {
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization']
+
+  if(!authHeader){
+    res.status(500).json({message: "Bearer token not present."})
+  }else{
+      //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index, pos 1. 
   const token = authHeader && authHeader.split(' ')[1]
 
   //Unathorized / Unauthenticated
@@ -58,6 +63,7 @@ const authenticateToken = (req, res, next) => {
     //next() calls the next operation after our middleware. This is like saying, we're done authenticating, please proceed with the next callback method
     next()
   })
+  }
 
 }
 
