@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import Footer from './components/Footer.js'
 import './styles/App.css';
 
 // Lazy-loaded components
@@ -10,6 +10,7 @@ const NotFound = React.lazy(() => import('./pages/NotFound/NotFound.js'));
 
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Routes>
         <Route
@@ -31,6 +32,9 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
+
+    <Footer/>
+    </>
   );
 }
 
