@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SecireTransport from "./components/SecureTransport.js"
 
 import './styles/App.css';
+import SecureTransport from './components/SecureTransport.js';
 
 // Lazy-loaded components
 const Home = React.lazy(() => import('./pages/Home/Home.js'));
@@ -17,6 +19,7 @@ function App() {
           element={
             <React.Suspense fallback={<div>Loading...</div>}>
               <Home />
+              <SecureTransport />
             </React.Suspense>
           }
         />
