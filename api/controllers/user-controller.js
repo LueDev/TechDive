@@ -20,7 +20,8 @@ const registerUser = async (req, res) => {
     res.status(201).json({
       message: 'User registered successfully',
       user: newUser,
-    });
+      redirectTo: "/"
+    }) //redirects to the exams page, "/" upon creation of user
   } catch (error) {
     res.status(500).json({
       error: 'Users Registration Error - Internal Server Error',
@@ -30,61 +31,59 @@ const registerUser = async (req, res) => {
 
 // Login controller
 const loginUser = async (req, res) => {
+  console.log("LoginUser Page")
   try {
     const { email, password } = req.body;
     const userLoggedIn = await User.LoginUser(email, password);
 
-    //Without a refresh token operation, we shouldn't add expiration yet
+    // Set expiration time for the JWT (15 minutes)
     const accessToken = jwt.sign(
-      userLoggedIn.safeFetch(),
+      { user: userLoggedIn.safeFetch() }, // Payload
       process.env.ACCESS_TOKEN_SECRET,
-      { algorithm: 'HS512' },
+      { algorithm: 'HS512', expiresIn: '15m' } // Expiration time
     );
-
-    res.status(200).json({ accessToken: accessToken });
+    
+    res.status(200).json({ accessToken: accessToken, redirectTo: "/" })
   } catch {
     res.status(500).json({
-      error: 'User Login Error - Internal Server Error',
+      error: 'User Login Error - Invalid Credentials',
     });
   }
 };
 
+
+
 const authenticateToken = (req, res, next) => {
-<<<<<<< HEAD
   const authHeader = req.headers['authorization']
 
   if(!authHeader){
     res.status(500).json({message: "Bearer token not present."})
   }else{
       //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index, pos 1. 
-  const token = authHeader && authHeader.split(' ')[1]
-=======
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
->>>>>>> Development
+     
+      const authHeader = req.headers['authorization'];
+      const token = authHeader && authHeader.split(' ')[1]
+      //Unathorized / Unauthenticated
+      if (token == null) return res.status(401);
 
-  //Unathorized / Unauthenticated
-  if (token == null) return res.status(401);
+      //Handles server timeout in the event of a present bearer token but inaccurate to the 
+      setTimeout(()=>{
+        console.log("Inside JWT Verify timeout")
+        return res.status(500).json({message: "Server timeout. Bearer token inaccurate."})
+      }, 3000)
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.status(403); //Forbidden
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.status(403); //Forbidden
 
-    //otherwise, this user is who they say they are and we set req.user to user
-    req.user = user;
+        //otherwise, this user is who they say they are and we set req.user to user
+        req.user = user;
 
-    //next() calls the next operation after our middleware. This is like saying, we're done authenticating, please proceed with the next callback method
-<<<<<<< HEAD
-    next()
-  })
+        //next() calls the next operation after our middleware. This is like saying, we're done authenticating, please proceed with the next callback method
+        next()
+      })
   }
-
 }
 
-=======
-    next();
-  });
-};
->>>>>>> Development
 
 module.exports = {
   getUser,

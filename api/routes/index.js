@@ -2,8 +2,8 @@ const express = require('express');
 const { authenticateToken } = require('../controllers/user-controller');
 const router = express.Router();
 
-const UserController = require('../controllers/user-controller');
+const ExamController = require('../controllers/exam-controller');
 
-router.get('/', authenticateToken, UserController.getUser);
+router.get('/', authenticateToken, ExamController.getExams);
 
 module.exports = router;
