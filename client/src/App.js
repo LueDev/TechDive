@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Footer from './components/Footer.js'
+import Footer from './components/Footer/Footer.js'
 import './styles/App.css';
 
 // Lazy-loaded components

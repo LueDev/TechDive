@@ -1,13 +1,13 @@
-import placeholder from '../photos/placeholder.png';
-import './footer.css';
+import placeholder from './Photos/placeholder.png';
+import './Footer.css';
 
 const Footer = () => {
     return (
         <>
-        <h2 className='title'> About Us</h2>
 
+    <div className='footer-container'>
         <footer>
-        
+            <h3 className='title'> About Us</h3>
             <p> Developed by: </p>
             
             <div className="team_pics">
@@ -18,11 +18,6 @@ const Footer = () => {
                 </div>
 
                 <div className="team_member">
-                    <img src={placeholder} alt="teammember Jason" />
-                    <p>Jason</p>
-                </div>
-
-                <div className="team_member">
                     <img src={placeholder} alt="teammember Rachelle" />
                     <p>Rachelle</p>
                 </div>
@@ -30,6 +25,11 @@ const Footer = () => {
                 <div className='team_member'>
                     <img src={placeholder} alt="teammember Paloma" />
                     <p>Paloma</p>
+                </div>
+
+                <div className="team_member">
+                    <img src={placeholder} alt="teammember Jason" />
+                    <p>Jason</p>
                 </div>                
 
                 <div className='team_member' >
@@ -38,10 +38,12 @@ const Footer = () => {
                 </div>
             </div>
         
-        <div className='trademark'>
+        <div>
             <p> © 2024 El Quipe </p>
         </div>
+
         </footer>
+    </div>
         </>
     )
 }

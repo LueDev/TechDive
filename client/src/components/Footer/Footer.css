@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
+
+.footer-container {
+    margin-top:300px;
+    border: 100px;
+}
+
 footer {
     font-family: 'Lato', 'sans-serif';
     display: flex;
@@ -9,8 +15,7 @@ footer {
 }
 
 .title {
-    padding-left: 370px;
-
+margin: 0px;
 }
 
 /* container for images*/
@@ -22,8 +27,8 @@ div.team_pics {
 }
 
 div.team_pics img{
-    height: 80px;
-    width: 80px;
+    height: 50px;
+    width: 50px;
     padding: 10px;
 }
 
