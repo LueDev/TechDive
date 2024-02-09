@@ -4,7 +4,7 @@ const router = express.Router();
 const AuthController = require('../controllers/auth-controller');
 
 router.get('/', AuthController.getPublicKey)
-// router.post('/send-message', AuthController.sendMessage);
+router.post('/receive-message', AuthController.sendMessage);
 
 
 module.exports = router;

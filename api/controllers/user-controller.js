@@ -1,9 +1,12 @@
 const { User } = require('../models/userModel');
+const { NotificationController } = require('../controllers/notification-controller')
+const { Auth } = require('../models/authModel');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const amqp = require('amqplib');
 
 const getUser = async (req, res) => {
+
+  
   return res.status(200).json({
     success: true,
     message: 'Users API is working.',
@@ -17,9 +20,11 @@ const registerUser = async (req, res) => {
       req.body);
     const newUser = await User.createUser(userSignUpDetails);
 
+    
+
     res.status(201).json({
       message: 'User registered successfully',
-      user: newUser,
+      user: newUser.safeFetch(),
       redirectTo: "/"
     }) //redirects to the exams page, "/" upon creation of user
   } catch (error) {

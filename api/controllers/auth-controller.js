@@ -1,19 +1,19 @@
 const openpgp = require('openpgp');
 
 // Function to generate a key pair
-const generateKeyPair = async () => {
+const generateKeyPair = async (firstname, lastname, email) => {
         const { privateKey, publicKey, revocationCertificate } = await openpgp.generateKey({
             type: 'ecc', // Type of the key, defaults to ECC
             curve: 'curve25519', // ECC curve name, defaults to curve25519
-            userIDs: [{ name: 'Jon Smith', email: 'jon@example.com' }], // you can pass multiple user IDs. We'll pass the IDs in the JWT maybe? 
+            userIDs: [{ firstname: firstname, lastname: lastname, email: email }], // you can pass multiple user IDs. We'll pass the IDs in the JWT maybe? 
             passphrase: 'super long and hard to guess secret', // protects the private key
             format: 'armored' // output key format, defaults to 'armored' (other options: 'binary' or 'object')
         });
     
         return { privateKey, publicKey, revocationCertificate}
-        console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
-        console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-        console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
+        // console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
+        // console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
+        // console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
 };
 
 // Handler to get the public key
