@@ -1,6 +1,6 @@
 // HeaderBar.js
 import React from 'react';
-import '../headerstyle.css'; // Make sure to create a corresponding CSS file
+import '../styles/headerstyle.css'; // Make sure to create a corresponding CSS file
 
 const HeaderBar = () => {
   return (
