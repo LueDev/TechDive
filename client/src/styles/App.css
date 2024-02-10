@@ -83,6 +83,10 @@
   border-bottom: none; /* Removes the border from the last row */
 }
 
+.examPhotos{
+  width:100%
+}
+
 /* App.css */
 
 .search-input {

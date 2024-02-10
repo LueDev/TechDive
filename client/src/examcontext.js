@@ -8,7 +8,8 @@ const ExamProvider = ({ children }) => {
   const [examData, setExamData] = useState([]);
 
   useEffect(()=>{
-      fetch(`${process.env.REACT_APP_LOCALSERVER}/`)
+    //MUST name .env vars with the prefix REACT_APP_ to call with React components.
+      fetch(`${process.env.REACT_APP_LOCALSERVER}/`) 
       .then(res => res.json())
       .then(data => {
         const exams = Object.entries(data)[0][1]

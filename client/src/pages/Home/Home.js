@@ -10,11 +10,11 @@ import { ExamContext } from "../../examcontext"
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {examData, setExamData} = useContext(ExamContext)
-  console.log(examData)
+  const {examData} = useContext(ExamContext)
+  // console.log(examData)
 
   //Used to separate the data into chunks
-  const recordsPerPage = 6;
+  const recordsPerPage = 15;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const records = examData.slice(firstIndex, lastIndex);
@@ -46,7 +46,7 @@ const HomePage = () => {
       
         <nav>
           <PaginationComponent
-            totalRecords={data.length}
+            totalRecords={examData.length}
             recordsPerPage={recordsPerPage}
             currentPage={currentPage}
             onPageChange={changePage}

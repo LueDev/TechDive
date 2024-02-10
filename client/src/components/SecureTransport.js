@@ -1,3 +1,5 @@
+//TODO: Test the openpgp encrypted message transport with this. Please dont delete
+
 // import React, { useState } from 'react';
 // import NodeRSA from 'node-rsa'; // Importing node-rsa library
 

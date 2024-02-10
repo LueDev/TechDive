@@ -3,7 +3,8 @@ import Table from 'react-bootstrap/Table';
 import '../styles/App.css'
 const PatientTable = ({ records }) => {
   return (
-    <Table striped bordered hover className='table'>
+    <>
+  <Table striped bordered hover className='table'>
       <thead>
         <tr>
           <th>Patient ID</th>
@@ -22,7 +23,7 @@ const PatientTable = ({ records }) => {
           <tr key={index}>
             <td>{item['patientId']}</td>
             <td>{item.examId}</td>
-            <td>{item.imageURL}</td>
+            <td>{<img className="examPhotos" src={item.imageURL} alt={item.imageURL}/>}</td>
             <td>{item.keyFindings}</td>
             <td>{item.brixiaScores}</td>
             <td>{item.age}</td>
@@ -33,6 +34,7 @@ const PatientTable = ({ records }) => {
         ))}
       </tbody>
     </Table>
+    </>
   );
 };
 
