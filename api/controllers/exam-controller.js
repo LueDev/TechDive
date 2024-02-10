@@ -20,30 +20,43 @@ const createExam = async (req, res) => {
   try {
     //Get the user performing this action. AuthenticateToken stored the user in req.user
     const user = req.user;
-  } catch {}
-
-  res.status(200).json({
-    success: true,
-    message: 'Exams API is working.',
-  });
+    res.status(200).json({
+      success: true,
+      message: 'Create Exams API is working.',
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const updateExam = async (req, res) => {
   console.log('Update Exams endpoint reached');
 
-  return res.status(200).json({
-    success: true,
-    message: 'Exams API is working.',
-  });
+  try {
+    //Get the user performing this action. AuthenticateToken stored the user in req.user
+    const user = req.user;
+    res.status(200).json({
+      success: true,
+      message: 'Update Exams API is working.',
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const deleteExam = async (req, res) => {
   console.log('Delete Exams endpoint reached');
 
-  return res.status(200).json({
-    success: true,
-    message: 'Exams API is working.',
-  });
+  try {
+    //Get the user performing this action. AuthenticateToken stored the user in req.user
+    const user = req.user;
+    res.status(200).json({
+      success: true,
+      message: 'Delete Exams API is working.',
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {
