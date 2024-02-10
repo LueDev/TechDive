@@ -1,48 +1,51 @@
-import React from 'react';
-const openpgp = require('openpgp');
+// import React, { useState } from 'react';
+// import NodeRSA from 'node-rsa'; // Importing node-rsa library
 
-function SecureTransport() {
+// const SecureTransport = () => {
+//   const [message, setMessage] = useState('');
+//   const [encryptedMessage, setEncryptedMessage] = useState('');
 
+//   // Function to encrypt message with server's public key
+//   const encryptMessage = (message, publicKey) => {
+//     const key = new NodeRSA(publicKey);
+//     return key.encrypt(message, 'base64');
+//   };
 
-    (async () => {
-        const { privateKey, publicKey, revocationCertificate } = await openpgp.generateKey({
-            type: 'ecc', // Type of the key, defaults to ECC
-            curve: 'curve25519', // ECC curve name, defaults to curve25519
-            userIDs: [{ name: 'Jon Smith', email: 'jon@example.com' }], // you can pass multiple user IDs
-            passphrase: 'super long and hard to guess secret', // protects the private key
-            format: 'armored' // output key format, defaults to 'armored' (other options: 'binary' or 'object')
-        });
-    
-        console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
-        console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-        console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-    })();
+//   // Function to handle message submission
+//   const handleSubmit = async () => {
+//     try {
+//       // Fetch server's public key from /auth endpoint
+//       const response = await fetch('/auth');
+//       const publicKey = await response.text();
 
-// (async () => {
-//     const message = await openpgp.createMessage({ binary: new Uint8Array([0x01, 0x01, 0x01]) });
-//     const encrypted = await openpgp.encrypt({
-//         message, // input as Message object
-//         passwords: ['secret stuff'], // multiple passwords possible
-//         format: 'binary' // don't ASCII armor (for Uint8Array output)
-//     });
-//     console.log(encrypted); // Uint8Array
+//       // Encrypt message with server's public key
+//       const encrypted = encryptMessage(message, publicKey);
+//       setEncryptedMessage(encrypted);
 
-//     const encryptedMessage = await openpgp.readMessage({
-//         binaryMessage: encrypted // parse encrypted bytes
-//     });
-//     const { data: decrypted } = await openpgp.decrypt({
-//         message: encryptedMessage,
-//         passwords: ['secret stuff'], // decrypt with password
-//         format: 'binary' // output as Uint8Array
-//     });
-//     console.log(decrypted); // Uint8Array([0x01, 0x01, 0x01])
-// })();
+//       // Send encrypted message to the server
+//       const serverResponse = await fetch('/auth', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ encryptedMessage: encrypted }),
+//       });
 
-  return (
-      <div>
-        
-      </div>
-  )
-}
+//       // Handle server response
+//       const data = await serverResponse.json();
+//       console.log('Server response:', data);
+//     } catch (error) {
+//       console.error('Error:', error);
+//     }
+//   };
 
-export default SecureTransport;
+//   return (
+//     <div>
+//       <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} />
+//       <button onClick={handleSubmit}>Send Message</button>
+//       <p>Encrypted Message: {encryptedMessage}</p>
+//     </div>
+//   );
+// };
+
+// export default SecureTransport;

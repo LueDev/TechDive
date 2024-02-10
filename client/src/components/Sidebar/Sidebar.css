@@ -5,8 +5,9 @@
   color: white;
   position: fixed;
   top: 0;
-  left: -30px;
+  left: 0px;
   transition: left 0.3s ease;
+  display:none
 }
 
 .sidebar-title {

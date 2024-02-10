@@ -19,7 +19,6 @@ function App() {
           element={
             <React.Suspense fallback={<div>Loading...</div>}>
               <Home />
-              <SecureTransport />
             </React.Suspense>
           }
         />

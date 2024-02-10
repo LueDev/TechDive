@@ -19,9 +19,6 @@ const registerUser = async (req, res) => {
     const userSignUpDetails = ({ firstname, lastname, email, password, admin } =
       req.body);
     const newUser = await User.createUser(userSignUpDetails);
-
-    
-
     res.status(201).json({
       message: 'User registered successfully',
       user: newUser.safeFetch(),
@@ -44,7 +41,7 @@ const loginUser = async (req, res) => {
     // Set expiration time for the JWT (15 minutes)
     const accessToken = jwt.sign(
       { user: userLoggedIn.safeFetch() }, // Payload
-      process.env.ACCESS_TOKEN_SECRET,
+      process.env.ACCESS_TOKEN_SECRET, //secret
       { algorithm: 'HS512', expiresIn: '15m' } // Expiration time
     );
     
@@ -75,7 +72,7 @@ const authenticateToken = (req, res, next) => {
       setTimeout(()=>{
         console.log("Inside JWT Verify timeout")
         return res.status(500).json({message: "Server timeout. Bearer token inaccurate."})
-      }, 3000)
+      }, 1500)
 
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) return res.status(403); //Forbidden
