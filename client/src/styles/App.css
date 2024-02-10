@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-a {
-  color: var(--link-color);
-=======
 
 .App {
   text-align: center;
@@ -109,5 +100,4 @@ a {
 .search-bar-container {
   margin-left: auto; /* This pushes the search bar container to the right */
   width: auto; /* Or set a specific width if you prefer */
->>>>>>> Paloma
 }

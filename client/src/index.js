@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-<<<<<<< HEAD
-=======
 import './styles/index.css';
->>>>>>> Paloma
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

@@ -1,9 +1,9 @@
 // src/pages/PatientPage.js
 
 import React, { useState } from 'react';
-import PatientTable from '../components/patientTable';
-import PaginationComponent from '../components/pagination';
-import { data } from "../mockdata";
+import PatientTable from '../../components/patientTable';
+import PaginationComponent from '../../components/pagination';
+import { data } from "../../mockdata";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
