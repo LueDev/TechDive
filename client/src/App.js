@@ -11,7 +11,6 @@ const NotFound = React.lazy(() => import('./pages/NotFound/NotFound.js'));
 // Other imported pages go here...
 
 function App() {
-  const { response } = useApi();
 
   return (
     <>
