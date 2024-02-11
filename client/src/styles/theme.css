@@ -3,6 +3,7 @@
     --accent-color: #007ef2; /* Accent color available in both themes */
   }
   
+
   :root.light-theme {
     --background-color: #ffffff;
     --text-color: #000000;

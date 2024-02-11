@@ -4,7 +4,7 @@ import Home from './pages/Home/Home.js'
 import Admin from './pages/Admin/Admin.js'
 import AddPatient from './pages/AddPatient/AddPatient.js';
 import Footer from './components/Footer/Footer.js'
-import './styles/App.css';
+import './styles/App.css'
 
 // Lazy-loaded components
 const NotFound = React.lazy(() => import('./pages/NotFound/NotFound.js'));
