@@ -5,15 +5,14 @@
   color: white;
   position: fixed;
   top: 0;
-  left: -30px;
+  left: 0px;
   transition: left 0.3s ease;
 }
 
 .sidebar-title {
   align-items: center;
   margin-bottom: 3px;
-  padding-left: 30px;
-  padding-bottom: 20px;
+  padding: 20px;
   margin-top: 10px;
   display: flex;
   margin-left: 25px;
@@ -29,12 +28,7 @@
   left: 0;
 }
 
-.sidebar-links
-{
-  text-decoration: none;
-}
-
-toggle-button {
+.toggle-button {
   background-color: #007ef2;
   color: white;
   border: none;
@@ -48,16 +42,17 @@ ul {
 }
 
 li {
-  padding-left: 50px;
-  padding-bottom: 20px;
+  padding: 15px;
   border-bottom: 0px solid #555;
   cursor: pointer;
 }
 
 li:hover {
-  background-color: #0056b3;
-  padding-bottom: 20px;
-  padding-top: 20px;
-  border-bottom: 0px solid #555;
-  cursor: pointer;
+  background-color: #555;
+}
+
+.sidebar-links
+{
+  text-decoration: none;
+
 }

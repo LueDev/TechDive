@@ -4,7 +4,7 @@
 .footer-container {
     margin-top: 20px;
     border: 100px;
-    position: absolute;
+    position: relative;
     left: 58%;
     transform: translateX(-50%);
 }
@@ -16,10 +16,6 @@ footer {
     align-items: center;
 
 
-}
-
-.title {
-margin: 0px;
 }
 
 /* container for images*/
