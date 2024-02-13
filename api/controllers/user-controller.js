@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const getUser = async (req, res) => {
-
   
   return res.status(200).json({
     success: true,
@@ -13,11 +12,11 @@ const getUser = async (req, res) => {
   });
 };
 
+
 // Registration controller
 const registerUser = async (req, res) => {
   try {
-    const userSignUpDetails = ({ firstname, lastname, email, password, admin } =
-      req.body);
+    const userSignUpDetails = ({ firstname, lastname, email, password, admin } = req.body);
     const newUser = await User.createUser(userSignUpDetails);
     res.status(201).json({
       message: 'User registered successfully',
@@ -26,7 +25,8 @@ const registerUser = async (req, res) => {
     }) //redirects to the exams page, "/" upon creation of user
   } catch (error) {
     res.status(500).json({
-      error: 'Users Registration Error - Internal Server Error',
+      message: 'Users Registration Error - Internal Server Error',
+      error: error
     });
   }
 };
@@ -41,8 +41,8 @@ const loginUser = async (req, res) => {
     // Set expiration time for the JWT (15 minutes)
     const accessToken = jwt.sign(
       { user: userLoggedIn.safeFetch() }, // Payload
-      process.env.ACCESS_TOKEN_SECRET, //secret
-      { algorithm: 'HS512', expiresIn: '15m' } // Expiration time
+      process.env.ACCESS_TOKEN_SECRET, //secret - signature
+      { algorithm: 'HS512', expiresIn: '15m' } // Header Expiration time
     );
     
     res.status(200).json({ accessToken: accessToken, redirectTo: "/" })
