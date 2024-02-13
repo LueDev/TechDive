@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PatientTable from '../../components/patientTable';
 import PaginationComponent from '../../components/pagination';
-import { data } from "../../mockdata";
+// import { data } from "../../mockdata";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { ExamContext } from "../../examcontext"
