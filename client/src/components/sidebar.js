@@ -11,7 +11,7 @@ import { SiWorldhealthorganization } from "react-icons/si";
 const Sidebar = () => {
   const lists = [
     { id: 1, text: "Home", icon: <TbActivityHeartbeat/>, to: "/home"},
-    { id: 2, text: "Admin", icon: <BsPerson/>, to: "/Admin"},
+    { id: 2, text: "Admin", icon: <BsPerson/>, to: "/admin"},
     { id: 3, text: "Add Patient", icon: <BsClipboard2Plus/> },
     { id: 4, text: "File Processing", icon: <IoFolderOutline/> },
     { id: 5, text: "Patient Details", icon: <BsPerson/>, to: "/patients" }
@@ -25,7 +25,7 @@ const Sidebar = () => {
       </div>
       <ul>
         {lists.map((list) => (
-          <li key={list.id}>
+          <li key={list.id} >
             <NavLink 
               to={list.to} 
               activeClassName="active-link" 
