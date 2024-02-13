@@ -14,7 +14,7 @@ const examSchema = new mongoose.Schema({
   MORTALITY: { type: String },
 });
 
-// examSchema.methods.updateExam(){
+// examSchema.methods.updateExam(examID){
 //   //Used to update an individual exam
 // }
 

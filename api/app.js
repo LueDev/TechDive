@@ -7,12 +7,13 @@ var cors = require('cors');
 
 //Connect to Mongo with this module and the mongoose model operations will read/write to mongoDB collections
 const connectDB = require('./db');
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var authRouter = require('./routes/auth')
+var notificationRouter = require('./routes/notification')
+var adminRouter = require('./routes/admin')
 
 // const PORT = process.env.PORT || 3000
-
 var app = express();
 app.use(express.json());
 app.use(logger('dev'));
@@ -24,6 +25,9 @@ connectDB();
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/admin', adminRouter)
+app.use('/auth', authRouter)
+app.use('/notifications', notificationRouter )
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
