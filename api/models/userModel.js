@@ -35,6 +35,8 @@ userSchema.methods.safeFetch = function () {
   const userObject = this.toObject();
   userObject.firstname = toTitleCase(userObject.firstname);
   userObject.lastname = toTitleCase(userObject.lastname);
+  delete userObject._id
+  delete userObject.admin
   delete userObject.password,
     delete userObject.roles,
     delete userObject.createdAt;
@@ -87,7 +89,10 @@ userSchema.statics.LoginUser = async function (email, password) {
       throw new Error('User not found');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const storedHashedPassword = user.password
+
+
+    const isPasswordValid = await bcrypt.compare(password, storedHashedPassword);
 
     if (isPasswordValid) {
       console.log('Login successful');
@@ -101,7 +106,7 @@ userSchema.statics.LoginUser = async function (email, password) {
 };
 
 // Whenever we use the save function, this function below will encrypt the user password if it's been changed.
-userSchema.pre('save', function (next) {
+userSchema.pre('save', async function (next) {
   const user = this;
   if (!user.isModified('password')) return next();
 

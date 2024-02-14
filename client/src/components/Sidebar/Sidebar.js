@@ -21,6 +21,9 @@ const Sidebar = () => {
         <span>Health</span>
       </div>
 
+      {/*TODO: Update this UL to have two divs one for icon and the other for text. 
+         This will allow us to line up all the icons on the same baseline and apply
+         :hover logic to minimize sidebar to show only icons when not hovered over.*/}
       <ul>
         {lists.map((list) => (
           <li key={list.id}>

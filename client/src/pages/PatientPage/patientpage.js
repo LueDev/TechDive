@@ -1,16 +1,15 @@
 import React, { useState, useContext } from 'react';
 import PatientTable from '../../components/patientTable';
 import PaginationComponent from '../../components/pagination';
-// import { data } from "../../mockdata";
+import { data } from '../../mockdata';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { ExamContext } from "../../examcontext"
+import { ExamContext } from '../../examcontext';
 
-
-const HomePage = () => {
+const PatientPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {examData} = useContext(ExamContext)
+  const { examData } = useContext(ExamContext);
   // console.log(examData)
 
   //Used to separate the data into chunks
@@ -24,26 +23,28 @@ const HomePage = () => {
   }
 
   return (
-    <div className='main-content'>
-    {/* <p>{sample}</p> */}
-      <h1>All Exams</h1>
+    <div className="main-content">
+      <h1>Patient details</h1>
       {/* Example details - consider using dynamic data */}
-      {/* <p>Patient ID:</p>
-      <p>Number of Exams:</p> */}
-      
+      <p>Patient ID:</p>
+      <p>Number of Exams:</p>
+
       {/* Search Bar aligned to the right */}
       <div className="search-bar-container d-flex justify-content-end">
         <Form>
           <InputGroup>
-            <Form.Control placeholder="Search patient" className="search-input"/>
+            <Form.Control
+              placeholder="Search patient"
+              className="search-input"
+            />
           </InputGroup>
         </Form>
       </div>
-      
+
       {/* Table to display patient data */}
       <div className="table-container">
         <PatientTable records={records} />
-      
+
         <nav>
           <PaginationComponent
             totalRecords={examData.length}
@@ -57,4 +58,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default PatientPage;
