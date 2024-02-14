@@ -2,8 +2,11 @@
 
 
 .footer-container {
-    margin-top:300px;
+    margin-top: 20px;
     border: 100px;
+    position: relative;
+    left: 58%;
+    transform: translateX(-50%);
 }
 
 footer {
@@ -12,10 +15,7 @@ footer {
     flex-direction: column;
     align-items: center;
 
-}
 
-.title {
-margin: 0px;
 }
 
 /* container for images*/
@@ -36,9 +36,3 @@ div.team_pics img{
     text-align: center;
     margin: 0 10px;
 }
-
-/*.trademark {
-    display: flex;
-    text-align: center;
-    align-items: center;
-}*/
