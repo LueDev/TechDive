@@ -1,6 +1,8 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import '../styles/App.css'
+import { Link } from 'react-router-dom';
+
 const PatientTable = ({ records }) => {
   return (
     <>
@@ -21,7 +23,9 @@ const PatientTable = ({ records }) => {
       <tbody>
         {records.map((item, index) => (
           <tr key={index}>
-            <td>{item['patientId']}</td>
+
+            <td><Link to={`/patientdetails/${item.patientId}`}>{item.patientId}</Link></td>
+            {/* <Link to={`/patientdetails`}>{item['patientId']}</Link><td>{item.examId}</td> */}
             <td>{item.examId}</td>
             <td>{<img className="examPhotos" src={item.imageURL} alt={item.imageURL}/>}</td>
             <td>{item.keyFindings}</td>
