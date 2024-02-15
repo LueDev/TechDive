@@ -21,8 +21,8 @@ const PatientTable = ({ records }) => {
       <tbody>
         {records.map((item, index) => (
           <tr key={index}>
-            <td>{item['patientId']}</td>
-            <td>{item.examId}</td>
+            <td><a href={`localhost:9000/exam/${item.patientId}`}>{item.patientId}</a></td>
+            <td><a href={`localhost:9000/exam/${item.examId}`}>{item.examId}</a></td>
             <td>{<img className="examPhotos" src={item.imageURL} alt={item.imageURL}/>}</td>
             <td>{item.keyFindings}</td>
             <td>{item.brixiaScores}</td>

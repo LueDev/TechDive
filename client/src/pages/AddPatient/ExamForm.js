@@ -1,7 +1,7 @@
 import Form from '../../components/General/Form/Form.js';
 import './ExamForm.css';
 
-const ExamForm = () => {
+const ExamForm = ({update}) => {
     const patientFields = [
         { name: 'patientId', placeholder: 'Patient ID'},
         { name: 'age', placeholder: 'age'},
