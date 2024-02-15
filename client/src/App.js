@@ -11,7 +11,7 @@ import HomePage from "./pages/Home/Home";
 import Footer from "./components/Footer/Footer";
 import ExamForm from "./pages/AddPatient/ExamForm";
 import NotFound from "./pages/NotFound/NotFound";
-
+import AdminPage from "./pages/Admin/Admin"
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/admin" element={<PatientPage />} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/patients" element={<PatientPage />} /> {/* Setup the route for PatientPage */}
             <Route path="/add" element={<ExamForm/>} />
             <Route path="/file" element={<PatientPage />}/>
