@@ -13,6 +13,33 @@ const getExams = async (req, res) => {
   });
 };
 
+const getOneExam = async (req, res) => {
+  console.log('Individual Exam API');
+
+  const examData = {patientId, examId, age, sex, bmi, zipCode, imageURL, keyFindings, brixiaScores} = req.body
+  const exam = await Exam.finOne(examData)
+
+  return res.status(200).json({
+    success: true,
+    message: "Exam successfully fetched",
+    exam: exam
+  });
+};
+
+const getOnePatient = async (req, res) => {
+  console.log('Individual Patient API');
+
+  const examData = {patientId, examId, age, sex, bmi, zipCode, imageURL, keyFindings, brixiaScores} = req.body
+  const patient = await Exam.finOne(examData.patientId)
+
+  return res.status(200).json({
+    success: true,
+    message: "Patient successfully fetched",
+    exams: patient
+  });
+};
+
+
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
   try {
@@ -70,6 +97,8 @@ const deleteExam = async (req, res) => {
 
 module.exports = {
   getExams,
+  getOneExam,
+  getOnePatient,
   createExam,
   updateExam,
   deleteExam,
