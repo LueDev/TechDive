@@ -1,15 +1,25 @@
-import {React,useContext} from 'react';
+import {React,useContext, useState} from 'react';
 import Table from 'react-bootstrap/Table';
 import '../styles/App.css'
 import updateIcon from '../image/updateIcon.png'; 
 import deleteIcon from '../image/deleteIcon.png'; 
 import "../styles/iconstyle.css"
 import { ExamContext } from '../examcontext'; 
+import EditPatientModal from './updatecomp';
 
-
-const AdminTable = ({ records,setRecords  }) => {
-    const { deleteExamById } = useContext(ExamContext);
+const AdminTable = ({ records }) => {
+    const { deleteExamById, updateExamById } = useContext(ExamContext);
     
+    const [EditingPatient , setEditingPatient] = useState(null)
+
+    const handleEdit = (patientData) => {
+        setEditingPatient(patientData);
+      };
+
+    const handleSave = (updatedData) => {
+    updateExamById(updatedData.examId, updatedData);
+    setEditingPatient(null); // Close modal after saving
+    };
   return (
     <>
   <Table striped bordered hover className='table'>
@@ -39,9 +49,10 @@ const AdminTable = ({ records,setRecords  }) => {
             <td>{item.sex}</td>
             <td>{item.bmi}</td>
             <td>{item.zipCode}</td>
-            <td> <div className="icon-container">
-                <button className="actionButton" onClick={() => 1}>
-                
+            <td> 
+                <div className="icon-container">
+                <button className="actionButton" onClick={() => handleEdit(item)}>
+                       
                     <img className="updatepatient" src= {updateIcon} alt="Update" style={{ width: '36px', height: '36px' }}/>
                 </button>
                 <button className="actionButton" onClick={() => deleteExamById(item.examId)}>
@@ -51,9 +62,19 @@ const AdminTable = ({ records,setRecords  }) => {
             </td>
             
           </tr>
+          
         ))}
       </tbody>
     </Table>
+    {EditingPatient && (
+                <EditPatientModal
+                show={Boolean(EditingPatient)}
+                onHide={() => setEditingPatient(null)}
+                patientData={EditingPatient}
+                onSave={handleSave}
+                />
+            )}
+    
     </>
   );
 };
