@@ -12,7 +12,8 @@ const ExamProvider = ({ children }) => {
       fetch(`${process.env.REACT_APP_LOCALSERVER}/`) 
       .then(res => res.json())
       .then(data => {
-        const exams = Object.entries(data)[0][1]
+        console.log("fetching data WITHIN context: ", data)
+        const exams = data.exams
         setExamData(exams)
       })
       .catch(err => console.log("Endpoint not available, Error: ", err))

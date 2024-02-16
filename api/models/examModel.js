@@ -19,6 +19,19 @@ examSchema.methods.safeFetch = function(){
   return examObject
 }
 
+examSchema.statics.findByPatientId = async function(patientId){
+  console.log("Exam Model Find By Patient Id Class Method called.")
+
+  try{
+    const patient = await this.find({patientId: patientId})
+    return patient
+  }catch(err){
+    console.log("Error when finding patient by ID ", err)
+    throw err
+  }
+}
+
+
 examSchema.statics.updateExam = async function(updatedExam){
   console.log("Exam Model Create Exam Class Method called.")
 

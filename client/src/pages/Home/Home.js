@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PatientTable from '../../components/patientTable';
 import PaginationComponent from '../../components/pagination';
 // import { data } from "../../mockdata";
@@ -9,9 +9,22 @@ import { ExamContext } from "../../examcontext"
 
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const {examData} = useContext(ExamContext) 
+  useEffect(()=>{
 
-  const {examData} = useContext(ExamContext)
-  // console.log(examData)
+    try{
+      
+    console.log("Calling from within UseEffect in Home.JS", examData)  
+
+    }catch(err){
+      console.log("Error from useEffect, ", err)
+    }
+  }, [examData])
+
+  // const {examData} = useContext(ExamContext) 
+  console.log("Trying to fetch data from context")
+  console.log(examData)
+ 
 
   //Used to separate the data into chunks
   const recordsPerPage = 15;
