@@ -11,6 +11,8 @@ import PatientPage from "./pages/PatientPage/patientpage";
 import HomePage from "./pages/Home/Home";
 import PatientDetails from "./pages/PatientDetails/patientdetails";
 import Footer from './components/Footer/Footer.js';
+import AdminPage from './pages/Admin/Admin.js'
+
 
 function App() {
   return (
