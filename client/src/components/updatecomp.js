@@ -31,7 +31,7 @@ const EditPatientModal = ({show, onHide, patientData, onSave }) => {
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Patient ID</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>Patient ID:</Form.Label>
             <Form.Control 
             type="text" 
             name="ExamtId" 
@@ -41,42 +41,42 @@ const EditPatientModal = ({show, onHide, patientData, onSave }) => {
 
            
             <Form.Group>
-            <Form.Label>Exam ID</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600', marginTop: '20px'}}>Exam ID:</Form.Label>
             <Form.Control type="text" name="patientId" value={formData.examId} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Image Link</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>Image Link:</Form.Label>
             <Form.Control type="text" name="patientId" value={formData.imageURL} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Key Finding</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>Key Finding:</Form.Label>
             <Form.Control type="text" name="patientId"  value ={formData.keyFindings} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Brixia Scores</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>Brixia Scores:</Form.Label>
             <Form.Control type="text" name="patientId" value={formData.brixiaScores} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Age</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>Age:</Form.Label>
             <Form.Control type="text" name="patientId" value={formData.age} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Gender</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>Gender:</Form.Label>
             <Form.Control type="text" name="patientId" value={formData.sex} onChange={handleChange} />
           </Form.Group>
 
           <Form.Group>
-          <Form.Label>BMI</Form.Label>
+          <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>BMI:</Form.Label>
             <Form.Control type="text" name="patientId" value={formData.bmi} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Zip Code</Form.Label>
+            <Form.Label style={{ fontSize: '16px', fontWeight: '600' , marginTop: '20px'}}>Zip Code:</Form.Label>
             <Form.Control type="text" name="patientId" value={formData.zipCode} onChange={handleChange} />
             </Form.Group>
             </Form.Group>
