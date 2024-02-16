@@ -8,24 +8,39 @@ const examSchema = new mongoose.Schema({
   LATEST_BMI: { type: Number, required: true },
   'LATEST WEIGHT': { type: Number, required: true },
   png_filename: { type: String, required: true },
-  exam_id: { type: String, required: true },
+  examId: { type: String, required: true },
   'ICU ADMIT': { type: String },
   '# ICU ADMIT': { type: Number },
   MORTALITY: { type: String },
 });
 
+// CHANGES
+
+// examSchema.methods.createExam(){
+//   //Used to create an exam
+// }
+examSchema.statics.createExam = async function(examData) {
+  const exam = new this(examData);
+  await exam.save();
+  return exam;
+};
 // examSchema.methods.updateExam(examID){
 //   //Used to update an individual exam
 // }
+examSchema.statics.updateExam = async function(examID, updateData) {
+  const exam = await this.findOneAndUpdate({ exam_id: examID }, updateData, { new: true });
+  return exam;
+};
 
 // examSchema.methods.deleteExam(){
 //   //Used to delete an individual exam
 // }
 
-// examSchema.methods.createExam(){
-//   //Used to create an exam
-// }
+examSchema.statics.deleteExam = async function(examID) {
+  const delet = await this.findOneAndDelete({ examId: examID });
+  return delet
 
+};
 const Exam = mongoose.model('Exam', examSchema);
 
 module.exports = { Exam };

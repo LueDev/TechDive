@@ -7,7 +7,6 @@ const Footer = () => {
 
     <div className='footer-container'>
         <footer>
-            <h3 className='title'> About Us</h3>
             <p> Developed by: </p>
             
             <div className="team_pics">

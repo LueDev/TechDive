@@ -1,6 +1,9 @@
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Sidebar from "./components/sidebar";
+import Sidebar from "./components/Sidebar/Sidebar";
 import Header from "./components/header";
 import { ExamProvider } from "./examcontext";
 import './styles/App.css';
@@ -17,7 +20,8 @@ function App() {
           <Sidebar />
           <Header />
           <Routes>
-            <Route path="/Home" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/patients" element={<PatientPage />} /> {/* Setup the route for PatientPage */}
             {/* <Route path="/patientdetails/" element={<PatientDetails/>} /> */}
             <Route path="/patientdetails/:patientId" element={<PatientDetails/>} />
