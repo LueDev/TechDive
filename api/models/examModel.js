@@ -8,7 +8,7 @@ const examSchema = new mongoose.Schema({
   LATEST_BMI: { type: Number, required: true },
   'LATEST WEIGHT': { type: Number, required: true },
   png_filename: { type: String, required: true },
-  exam_id: { type: String, required: true },
+  examId: { type: String, required: true },
   'ICU ADMIT': { type: String },
   '# ICU ADMIT': { type: Number },
   MORTALITY: { type: String },
@@ -37,7 +37,9 @@ examSchema.statics.updateExam = async function(examID, updateData) {
 // }
 
 examSchema.statics.deleteExam = async function(examID) {
-  await this.findOneAndDelete({ exam_id: examID });
+  const delet = await this.findOneAndDelete({ examId: examID });
+  return delet
+
 };
 const Exam = mongoose.model('Exam', examSchema);
 

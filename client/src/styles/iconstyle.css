@@ -8,9 +8,8 @@
 }
 
 .updateIcon, .deleteIcon {
-  width: 100px; /* Set the desired width */
-  height: 200px; /* Set the desired height */
-  object-fit: scale-down; /* Ensures the image is scaled correctly without being cropped */
+ 
+  object-fit: scale-down; 
 }
 
 .actionButton:hover .updateIcon,

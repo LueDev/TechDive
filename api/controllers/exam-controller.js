@@ -44,21 +44,45 @@ const updateExam = async (req, res) => {
   }
 };
 
-const deleteExam = async (req, res) => {
-  console.log('Delete Exams endpoint reached');
+// const deleteExam = async (req, res) => {
+//   console.log('Delete Exams endpoint reached');
 
+//   try {
+//     //Get the user performing this action. AuthenticateToken stored the user in req.user
+//     const user = req.user;
+//     res.status(200).json({
+//       success: true,
+//       message: 'Delete Exams API is working.',
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+const deleteExam = async (req, res) => {
   try {
-    //Get the user performing this action. AuthenticateToken stored the user in req.user
-    const user = req.user;
-    res.status(200).json({
-      success: true,
-      message: 'Delete Exams API is working.',
+    const id = req.params.id;
+    const deletedExam = await Exam.deleteExam(id);
+    
+    if (!deletedExam) { // If null, meaning no document was found/deleted
+      return res.status(404).json({
+        success: false,
+        message: "Exam not found",
+      });
+    }
+
+    res.status(200).json({ 
+      success: true, 
+      message: "Exam deleted successfully" 
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Exam not found or can't delete" 
+    });
   }
 };
-
 module.exports = {
   getExams,
   createExam,

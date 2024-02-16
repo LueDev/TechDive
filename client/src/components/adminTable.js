@@ -1,10 +1,15 @@
-import React from 'react';
+import {React,useContext} from 'react';
 import Table from 'react-bootstrap/Table';
 import '../styles/App.css'
 import updateIcon from '../image/updateIcon.png'; 
 import deleteIcon from '../image/deleteIcon.png'; 
 import "../styles/iconstyle.css"
-const AdminTable = ({ records }) => {
+import { ExamContext } from '../examcontext'; 
+
+
+const AdminTable = ({ records,setRecords  }) => {
+    const { deleteExamById } = useContext(ExamContext);
+    
   return (
     <>
   <Table striped bordered hover className='table'>
@@ -39,7 +44,7 @@ const AdminTable = ({ records }) => {
                 
                     <img className="updatepatient" src= {updateIcon} alt="Update" style={{ width: '36px', height: '36px' }}/>
                 </button>
-                <button className="actionButton" onClick={() => 1}>
+                <button className="actionButton" onClick={() => deleteExamById(item.examId)}>
                     <img className="deletePatient" src= {deleteIcon} alt="Delete" style={{ width: '36px', height: '36px' }}/>
                 </button>
             </div>
