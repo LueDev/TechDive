@@ -1,17 +1,27 @@
 const mongoose = require('mongoose');
 
 const examSchema = new mongoose.Schema({
-  PATIENT_ID: { type: String, required: true },
-  AGE: { type: Number, required: true },
-  SEX: { type: String, required: true },
-  ZIP: { type: Number, required: true },
-  LATEST_BMI: { type: Number, required: true },
-  'LATEST WEIGHT': { type: Number, required: true },
-  png_filename: { type: String, required: true },
-  examId: { type: String, required: true },
-  'ICU ADMIT': { type: String },
-  '# ICU ADMIT': { type: Number },
-  MORTALITY: { type: String },
+  //The one below doesnt work
+  // PATIENT_ID: { type: String, required: true },
+  // AGE: { type: Number, required: false },
+  // SEX: { type: String, required: true },
+  // ZIP: { type: Number, required: true },
+  // LATEST_BMI: { type: Number, required: true },
+  // 'LATEST WEIGHT': { type: Number, required: true },
+  // png_filename: { type: String, required: true },
+  // examId: { type: String, required: true },
+  // 'ICU ADMIT': { type: String },
+  // '# ICU ADMIT': { type: Number },
+  // MORTALITY: { type: String },
+  patientId: { type: String, required: true }, // Updated to match document
+  age: { type: Number, required: true }, // Make required as per document; consider if this should be false based on your needs
+  sex: { type: String, required: true }, // Matches
+  zipCode: { type: String, required: true }, // Updated type to String to match document example, adjust as needed
+  bmi: { type: Number, required: true }, // Updated to match document
+  examId: { type: String, required: true }, // Matches
+  keyFindings: { type: String, required: false }, 
+  brixiaScores: { type: String, required: false }, 
+  imageURL: { type: String, required: false },
 });
 
 // CHANGES
@@ -28,7 +38,7 @@ examSchema.statics.createExam = async function(examData) {
 //   //Used to update an individual exam
 // }
 examSchema.statics.updateExam = async function(examID, updateData) {
-  const exam = await this.findOneAndUpdate({ exam_id: examID }, updateData, { new: true });
+  const exam = await this.findOneAndUpdate({ examId: examID }, updateData, { new: true });
   return exam;
 };
 

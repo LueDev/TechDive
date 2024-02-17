@@ -13,7 +13,7 @@ const getExams = async (req, res) => {
     exams: exams,
   });
 };
-
+//needs authentication
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
 
@@ -33,31 +33,33 @@ const updateExam = async (req, res) => {
   console.log('Update Exams endpoint reached');
 
   try {
-    //Get the user performing this action. AuthenticateToken stored the user in req.user
     const user = req.user;
+    const examIdentifier = req.params.id; 
+    const updateData = req.body; 
+
+    const updatedExam = await Exam.findOneAndUpdate({ examId: examIdentifier }, updateData, { new: true });
+
+    if (!updatedExam) {
+      return res.status(404).json({
+        success: false,
+        message: 'Exam not found',
+      });
+    }
+
     res.status(200).json({
       success: true,
-      message: 'Update Exams API is working.',
+      message: 'Exam updated successfully',
+      exam: updatedExam,
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while updating the exam',
+      error: error.message,
+    });
   }
 };
-
-// const deleteExam = async (req, res) => {
-//   console.log('Delete Exams endpoint reached');
-
-//   try {
-//     //Get the user performing this action. AuthenticateToken stored the user in req.user
-//     const user = req.user;
-//     res.status(200).json({
-//       success: true,
-//       message: 'Delete Exams API is working.',
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 const deleteExam = async (req, res) => {
   try {

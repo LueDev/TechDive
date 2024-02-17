@@ -17,7 +17,7 @@ const ExamProvider = ({ children }) => {
  //need api endpoint
   const updateExamById = async (examId, updatedExam) => {
     try {
-      await axios.put(`${process.env.REACT_APP_LOCALSERVER}/admin/exams/${examId}`, updatedExam);
+      await axios.put(`${process.env.REACT_APP_LOCALSERVER}/admin/exams/up/${examId}`, updatedExam);
       setExamData(prevData => prevData.map(data => data.examId === examId ? { ...data, ...updatedExam } : data));
     } catch (error) {
       console.error("Error updating exam:", error);
