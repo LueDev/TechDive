@@ -1,42 +1,37 @@
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+// App.js or wherever your main app component is defined
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Header from "./components/header";
 import { ExamProvider } from "./examcontext";
 import './styles/App.css';
-import PatientPage from "./pages/PatientPage/patientpage"; 
+import MainLayout from "./mainlayout"; // Import the Layout component
 import HomePage from "./pages/Home/Home";
-import Footer from "./components/Footer/Footer";
+import PatientPage from "./pages/PatientPage/patientpage";
 import ExamForm from "./pages/AddPatient/ExamForm";
 import NotFound from "./pages/NotFound/NotFound";
-import AdminPage from "./pages/Admin/Admin"
+import AdminPage from "./pages/Admin/Admin";
+import SplitPage from './pages/LoginPage/splitpage'; // Assuming this is the correct path
 
 function App() {
-
   return (
-    <>
     <ExamProvider>
       <Router>
         <div className="App">
-          <Sidebar />
-          <Header />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/patients" element={<PatientPage />} /> {/* Setup the route for PatientPage */}
-            <Route path="/add" element={<ExamForm/>} />
-            <Route path="/file" element={<PatientPage />}/>
-            <Route path="*" element={<NotFound/>} />
-            {/* Define other routes here */}
+            {/* For SplitPage, we render it without the Layout */}
+            <Route path="/" element={<SplitPage />} />
+
+            
+            <Route path="/home" element={<MainLayout><HomePage /></MainLayout>} />
+            <Route path="/admin" element={<MainLayout><AdminPage /></MainLayout>} />
+            <Route path="/patients" element={<MainLayout><PatientPage /></MainLayout>} />
+            <Route path="/add" element={<MainLayout><ExamForm /></MainLayout>} />
+            <Route path="/file" element={<MainLayout><PatientPage /></MainLayout>} />
+            <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
           </Routes>
-          <Footer/>
         </div>
       </Router>
     </ExamProvider>
-    </>
+    
   );
 }
 

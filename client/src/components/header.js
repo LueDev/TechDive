@@ -11,7 +11,7 @@ const HeaderBar = () => {
     <nav className="header-nav">
       <ul className="header-list">
         <li className="header-item">
-          <a href="/" className="header-link">
+          <a href="/home" className="header-link">
             User
           </a>
         </li>
