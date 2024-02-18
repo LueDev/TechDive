@@ -10,6 +10,10 @@ import ExamForm from "./pages/AddPatient/ExamForm";
 import NotFound from "./pages/NotFound/NotFound";
 import AdminPage from "./pages/Admin/Admin";
 import SplitPage from './pages/LoginPage/splitpage'; // Assuming this is the correct path
+import PatientDetails from "./pages/PatientDetails/patientdetails";
+import Footer from './components/Footer/Footer.js';
+import AdminPage from './pages/Admin/Admin.js'
+
 
 function App() {
   return (

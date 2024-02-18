@@ -3,7 +3,8 @@ const { authenticateToken } = require('../controllers/user-controller');
 const router = express.Router();
 
 const ExamController = require('../controllers/exam-controller');
-
+//Get Specific Exams
+router.get('/exams/:patientId', ExamController.getSpecificExams);
 router.get('/', ExamController.getExams); //router.get('/', authenticateToken, ExamController.getExams);
 // router.get('/patient/:id', ExamController.getOnePatient); //individual exam controller with JWT: router.get('/exam/:id', authenticateToken, ExamController.getExams);
 // router.get('/exam/:id', ExamController.getOneExam); //individual exam controller with JWT: router.get('/exam/:id', authenticateToken, ExamController.getExams);

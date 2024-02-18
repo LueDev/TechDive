@@ -26,7 +26,24 @@ const getExams = async (req, res) => {
     exams: exams,
   });
 };
-//needs authentication
+
+// Retrieving Specific Exams
+const getSpecificExams = async (req, res) => {
+  const patientId = req.params.patientId;
+  console.log(`Exams for patient ${patientId}`);
+
+  try {
+    const exams = await Exam.find({ patientId: patientId }).limit(50);
+    return res.status(200).json({
+      exams: exams,
+    });
+  } catch (error) {
+    console.error('Error fetching exams:', error);
+    return res.status(500).json({ message: 'Error fetching exams' });
+  }
+};
+
+
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
 
@@ -167,6 +184,7 @@ const deleteExam = async function (req, res) {
 };
 module.exports = {
   getExams,
+  getSpecificExams,
   createExam,
   updateExam,
   deleteExam,
