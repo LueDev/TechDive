@@ -15,6 +15,7 @@ const ExamProvider = ({ children }) => {
         const exams = Object.entries(data)[0][1]
         setExamData(exams)
       })
+      .catch(err => console.log("Endpoint not available, Error: ", err))
   },[])
 
   return (

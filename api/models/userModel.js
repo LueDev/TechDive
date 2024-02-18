@@ -38,8 +38,8 @@ userSchema.methods.safeFetch = function () {
   delete userObject._id
   delete userObject.admin
   delete userObject.password,
-    delete userObject.roles,
-    delete userObject.createdAt;
+  delete userObject.roles,
+  delete userObject.createdAt;
   delete userObject.updatedAt;
   delete userObject.__v;
   return userObject;
@@ -90,13 +90,11 @@ userSchema.statics.LoginUser = async function (email, password) {
     }
 
     const storedHashedPassword = user.password
-
-
     const isPasswordValid = await bcrypt.compare(password, storedHashedPassword);
 
     if (isPasswordValid) {
       console.log('Login successful');
-      return user;
+      return user; //could've used safeFetch(). TODO: ADD SAFEFETCH() HERE
     } else {
       console.log('Invalid credentials');
     }
