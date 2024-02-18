@@ -1,155 +1,162 @@
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { Exam } = require('../models/examModel');
-const { Notification } = require('../models/notificationModel');
-const amqp = require('amqplib');
+const NotificationController = require('./notification-controller');
 
 const getExams = async (req, res) => {
   console.log('Exams page');
 
   const exams = await Exam.find();
 
-  return res.status(200).json({
-    success: true,
-    message: 'All exams successfully fetched',
-    exams: exams
-  });
-};
+  try {
+    NotificationController.pushOperationsEvent({
+      message: "User has reached the home page.",
+      endpoint: "GET /",
+      user: req.user.user,
+      timestamp: Date.now(),
+    });
+  } catch (error) {
+    console.log(
+      'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
+      error,
+    );
+  }
 
-const getOneExam = async (req, res) => {
-  console.log('Individual Exam API');
-
-  const examData = {
-    patientId,
-    examId,
-    age,
-    sex,
-    bmi,
-    zipCode,
-    imageURL,
-    keyFindings,
-    brixiaScores,
-  } = req.body
-  const exam = await Exam.find(examData);
-
-  return res.status(200).json({
-    success: true,
-    message: 'Exam successfully fetched',
-    exam: exam,
-  });
-};
-
-const getOnePatient = async (req, res) => {
-  console.log('Individual Patient API');
-
-  const examData = ({
-    patientId,
-    examId,
-    age,
-    sex,
-    bmi,
-    zipCode,
-    imageURL,
-    keyFindings,
-    brixiaScores,
-  } = req.params);
-  const patientData = await Exam.find({patientId: examData.patientId});
-
-  return res.status(200).json({
-    success: true,
-    message: 'Patient successfully fetched',
-    'exam(s)': patientData,
+  res.status(200).json({
+    exams: exams,
   });
 };
 
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
-  try {
-    const examData = ({
-      patientId,
-      examId,
-      age,
-      sex,
-      bmi,
-      zipCode,
-      imageURL,
-      keyFindings,
-      brixiaScores,
-    } = req.body);
-    const newExam = await Exam.createExam(examData);
-    res.status(201).json({
+
+    try {
+      NotificationController.pushOperationsEvent({
+        message: "User has reached the home page. (endpoint = '/')",
+        endpoint: "POST /create",
+        user: req.user.user,
+        timestamp: Date.now(),
+      });
+    } catch (error) {
+      console.log(
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
+        error,
+      );
+    }
+
+    res.status(200).json({
       success: true,
-      message: 'Exam created successfully',
-      exam: newExam,
+      message: 'Create Exams API is working.',
     });
-  } catch (error) {
-    res.status(500).json({
-      message: 'Exam Creation Error - Internal Server Error',
-      error: error,
-    });
-  }
+
 };
+
+
 
 const updateExam = async (req, res) => {
   console.log('Update Exams endpoint reached');
+
   try {
-    const examData = ({
-      patientId,
-      examId,
-      age,
-      sex,
-      bmi,
-      zipCode,
-      imageURL,
-      keyFindings,
-      brixiaScores,
-    } = req.body);
-    const updatedExam = await Exam.createExam(examData);
+    const examIdentifier = req.params.id;
+    const updateData = req.body;
+
+    const updatedExam = await Exam.findOneAndUpdate(
+      { examId: examIdentifier },
+      updateData,
+      { new: true },
+    );
+
+    if (!updatedExam) {
+      return res.status(404).json({
+        success: false,
+        message: 'Exam not found',
+      });
+    }
+
+    try {
+      NotificationController.pushOperationsEvent({
+        message: "User has updated an exam",
+        exam: updatedExam,
+        endpoint: "PATCH: /exam/:id",
+        user: req.user.user,
+        timestamp: Date.now(),
+      });
+    } catch (error) {
+      console.log(
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
+        error,
+      );
+    }
+
     res.status(200).json({
       success: true,
       message: 'Exam updated successfully',
-      updatedExam: updatedExam,
+      exam: updatedExam,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
-      message: 'Exam Creation Error - Internal Server Error',
-      error: error,
+      success: false,
+
+      message: 'An error occurred while updating the exam',
+
+      error: error.message,
     });
   }
 };
 
-const deleteExam = async (req, res) => {
-  console.log('Delete Exams endpoint reached');
-
+const deleteExam = async function (req, res) {
   try {
-    const examData = ({
-      patientId,
-      examId,
-      age,
-      sex,
-      bmi,
-      zipCode,
-      imageURL,
-      keyFindings,
-      brixiaScores,
-    } = req.body);
-    const updatedExam = await Exam.deleteExam(examData);
+    const id = req.params.id
+
+    console.log(id)
+    const examToDelete = await Exam.findExam(id)
+    const deletedExam = await Exam.deleteExam(id);
+
+    if (!deletedExam) {
+      // If null, meaning no document was found/deleted
+      return res.status(404).json({
+        success: false,
+        message: 'Exam not found',
+      });
+    }
+
+       try {
+        NotificationController.pushOperationsEvent({
+        message: "User has deleted an exam",
+        exam: examToDelete,
+        user: req.user.user,
+        endpoint: "DELETE: /exam/:id",
+        timestamp: Date.now(),
+      });
+    } catch (error) {
+      console.log(
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
+        // error,
+      );
+    }    
+
     res.status(200).json({
       success: true,
-      message: 'Exam updated successfully',
-      updatedExam: updatedExam,
+      message: 'Exam deleted successfully',
+      exam: examToDelete
     });
+
+   
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
-      message: 'Exam Creation Error - Internal Server Error',
-      error: error,
+      success: false,
+
+      message: "Exam not found or can't delete",
     });
   }
 };
 
 module.exports = {
   getExams,
-  getOneExam,
-  getOnePatient,
   createExam,
   updateExam,
   deleteExam,

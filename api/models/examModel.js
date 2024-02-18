@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const mongoDB = require('mongodb')
 
 const examSchema = new mongoose.Schema({
   patientId: { type: String, required: true },
-  examId: {type: String, required: true},
+  examId: {type: String, required: true, unique: true},
   age: { type: Number, required: true },
   sex: { type: String, required: true },
   bmi: { type: Number, required: true },
@@ -32,6 +33,28 @@ examSchema.statics.findByPatientId = async function(patientId){
 }
 
 
+examSchema.statics.findExam = async function(documentId){
+  console.log("Exam Model Find By Patient Id Class Method called.")
+
+  try{
+    // const convert = new ObjectId(documentId)
+    const exam = await this.aggregate(
+      [
+        {
+          '$match': {
+            '_id': documentId.toString()
+          }
+        }
+      ]
+      )
+    return exam
+  }catch(err){
+    console.log("Error when finding exam by ID ", err)
+    throw err
+  }
+}
+
+
 examSchema.statics.updateExam = async function(updatedExam){
   console.log("Exam Model Create Exam Class Method called.")
 
@@ -53,7 +76,7 @@ examSchema.statics.deleteExam = async function (examData) {
 
   try{
     const deletedExam = await this.deleteOne({_id: examData._id})
-    return deletedExam.safeFetch()
+    return deletedExam
   }catch(err){
     console.log("Error when trying to delete exam: ", err)
     throw err

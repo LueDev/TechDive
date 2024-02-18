@@ -1,8 +1,7 @@
-const { User } = require('../models/userModel');
 const amqp = require('amqplib');
 
 // RabbitMQ connection URL
-const rabbitMQUrl = 'amqp://localhost';
+const rabbitMQUrl = 'amqp://localhost:5672';
 
 // Function to establish RabbitMQ connection
 const connectToRabbitMQ = async () => {
@@ -36,8 +35,13 @@ const NotificationController = {
     try {
       const channel = await connectToRabbitMQ();
       await channel.assertQueue('registration');
-      await channel.sendToQueue('registration', Buffer.from(JSON.stringify({newRegistration: userData})));
-      console.log('Event pushed to registration queue:', {newRegistration: userData});
+      await channel.sendToQueue(
+        'registration',
+        Buffer.from(JSON.stringify({ newRegistration: userData })),
+      );
+      console.log('Event pushed to registration queue:', {
+        newRegistration: userData,
+      });
     } catch (error) {
       console.error('Failed to push event to registration queue:', error);
       throw error;
@@ -45,11 +49,15 @@ const NotificationController = {
   },
 
   // Method to push event to operations queue
+
   pushOperationsEvent: async (operationData) => {
     try {
       const channel = await connectToRabbitMQ();
       await channel.assertQueue('operations');
-      await channel.sendToQueue('operations', Buffer.from(JSON.stringify(operationData)));
+      await channel.sendToQueue(
+        'operations',
+        Buffer.from(JSON.stringify(operationData)),
+      );
       console.log('Event pushed to operations queue:', operationData);
     } catch (error) {
       console.error('Failed to push event to operations queue:', error);
@@ -59,11 +67,25 @@ const NotificationController = {
 
   // Controller method to handle GET request for notifications
   getNotification: async (req, res) => {
-    return res.status(200).json({
-      success: true,
-      message: 'Notifications API is working.',
-    });
-  }
+    try {
+      const channel = await connectToRabbitMQ();
+      await channel.assertQueue('operations');
+      await channel.consume('operations', (message) => {
+        console.log(
+          'Event received from operations queue: ',
+          message.content.toString(),
+        );
+        res.status(200).json({
+          success: true,
+          message: JSON.parse(message.content.toString()),
+        });
+      });
+    } catch (error) {
+      console.error('Failed to push event to operations queue:', error);
+
+      throw error;
+    }
+  },
 };
 
 module.exports = NotificationController;
