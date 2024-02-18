@@ -28,14 +28,61 @@ const getExams = async (req, res) => {
 };
 
 // Retrieving Specific Exams
-const getSpecificExams = async (req, res) => {
+const getOnePatientExams = async (req, res) => {
   const patientId = req.params.patientId;
   console.log(`Exams for patient ${patientId}`);
 
   try {
     const exams = await Exam.find({ patientId: patientId }).limit(50);
+
+    try {
+      NotificationController.pushOperationsEvent({
+        message: "User has retrieved the exams for a patient",
+        endpoint: "GET /exams/:patientId",
+        user: req.user.user,
+        patientId: patientId,
+        exams: exams,
+        timestamp: Date.now(),
+      });
+    } catch (error) {
+      console.log(
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
+      );
+    }
     return res.status(200).json({
+      success: true,
       exams: exams,
+    });
+  } catch (error) {
+    console.error('Error fetching exams:', error);
+    return res.status(500).json({ message: 'Error fetching exams' });
+  }
+};
+
+// Retrieving Specific Exams
+const getOneSpecificExam = async (req, res) => {
+  const examId = req.params.examid;
+
+  try {
+    const exam = await Exam.find({ examId: examId }).limit(1);
+
+    try {
+      NotificationController.pushOperationsEvent({
+        message: "User has retrieved a single exam",
+        endpoint: "GET /exam/:examId",
+        user: req.user.user,
+        examId: examId,
+        exam: exam,
+        timestamp: Date.now(),
+      });
+    } catch (error) {
+      console.log(
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
+      );
+    }
+    return res.status(200).json({
+      success: true,
+      exam: exam,
     });
   } catch (error) {
     console.error('Error fetching exams:', error);
@@ -184,7 +231,8 @@ const deleteExam = async function (req, res) {
 };
 module.exports = {
   getExams,
-  getSpecificExams,
+  getOnePatientExams,
+  getOneSpecificExam,
   createExam,
   updateExam,
   deleteExam,

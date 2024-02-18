@@ -11,22 +11,24 @@ const PatientDetails = () => {
     const [patientExamData, setPatientExamData] = useState([]);
 
     const dataSelected = useParams();
+    console.log(dataSelected)
 
     let specificPatientID = '';
 
     // checking if dataSelected.patientId exists
-    if (dataSelected.patientId !== undefined) {
-        specificPatientID = dataSelected.patientId;
+    if (dataSelected.patientid !== undefined) {
+        specificPatientID = dataSelected.patientid;
     }
 
     console.log(specificPatientID)
 
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_LOCALSERVER}/exams/${specificPatientID}`)
+        fetch(`http://localhost:9000/exams/patient/${specificPatientID}`)
         .then(res => res.json())
         .then(data => {
-            const patients = Object.entries(data)[0][1]
+          console.log(data)
+            const patients = data.exams
             setPatientExamData(patients)
         })
     },[])

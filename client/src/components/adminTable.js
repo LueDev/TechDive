@@ -1,4 +1,5 @@
 import {React,useContext, useState} from 'react';
+import {Link} from 'react-router-dom'
 import Table from 'react-bootstrap/Table';
 import '../styles/App.css'
 import updateIcon from '../image/updateIcon.png'; 
@@ -40,8 +41,9 @@ const AdminTable = ({ records }) => {
       <tbody>
         {records.map((item, index) => (
           <tr key={index}>
-            <td>{item['patientId']}</td>
-            <td>{item.examId}</td>
+
+            <td><Link to={`/exams/${item.patientId}`}>{item.patientId}</Link></td>
+            <td><Link to={`/exam/${item.examId}`}>{item.examId}</Link></td>
             <td>{<img className="examPhotos" src={item.imageURL} alt={item.imageURL}/>}</td>
             <td>{item.keyFindings}</td>
             <td>{item.brixiaScores}</td>
