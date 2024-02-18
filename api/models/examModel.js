@@ -1,33 +1,101 @@
 const mongoose = require('mongoose');
+const mongoDB = require('mongodb')
 
 const examSchema = new mongoose.Schema({
-  PATIENT_ID: { type: String, required: true },
-  AGE: { type: Number, required: true },
-  SEX: { type: String, required: true },
-  ZIP: { type: Number, required: true },
-  LATEST_BMI: { type: Number, required: true },
-  'LATEST WEIGHT': { type: Number, required: true },
-  png_filename: { type: String, required: true },
-  exam_id: { type: String, required: true },
-  'ICU ADMIT': { type: String },
-  '# ICU ADMIT': { type: Number },
-  MORTALITY: { type: String },
+  patientId: { type: String, required: true },
+  examId: {type: String, required: true, unique: true},
+  age: { type: Number, required: true },
+  sex: { type: String, required: true },
+  bmi: { type: Number, required: true },
+  zipCode: { type: Number, required: true },
+  imageURL: { type: String, required: true },
+  keyFindings: { type: String, required: true },
+  brixiaScores: { type: String, required: true }
 });
 
-// examSchema.methods.updateExam(examID){
-//   //Used to update an individual exam
-// }
+examSchema.methods.safeFetch = function(){
+  const examObject = this.toObject();
+  delete examObject._id
+  delete examObject.__v
+  return examObject
+}
 
-// examSchema.methods.deleteExam(){
-//   //Used to delete an individual exam
-// }
+examSchema.statics.findByPatientId = async function(patientId){
+  console.log("Exam Model Find By Patient Id Class Method called.")
 
-// examSchema.methods.createExam(){
-//   //Used to create an exam
-// }
+  try{
+    const patient = await this.find({patientId: patientId})
+    return patient
+  }catch(err){
+    console.log("Error when finding patient by ID ", err)
+    throw err
+  }
+}
+
+
+examSchema.statics.findExam = async function(documentId){
+  console.log("Exam Model Find By Patient Id Class Method called.")
+
+  try{
+    // const convert = new ObjectId(documentId)
+    const exam = await this.aggregate(
+      [
+        {
+          '$match': {
+            '_id': documentId.toString()
+          }
+        }
+      ]
+      )
+    return exam
+  }catch(err){
+    console.log("Error when finding exam by ID ", err)
+    throw err
+  }
+}
+
+
+examSchema.statics.updateExam = async function(updatedExam){
+  console.log("Exam Model Create Exam Class Method called.")
+
+  try{
+    const exam = await this.findOneAndUpdate(
+      {_id: updatedExam._id},
+      {$set: updatedExam}, 
+      {new: true} //this option returns the updated document
+    )
+    return exam
+  }catch(err){
+    console.log("Error when updating exam: ", err)
+    throw err
+  }
+}
+
+examSchema.statics.deleteExam = async function (examData) {
+  console.log("Exam Model Delete Exam Instance Method called")
+
+  try{
+    const deletedExam = await this.deleteOne({_id: examData._id})
+    return deletedExam
+  }catch(err){
+    console.log("Error when trying to delete exam: ", err)
+    throw err
+  }
+}
+
+examSchema.statics.createExam = async function (examData){
+  console.log("Exam Model Create exam Method called.")
+
+  try{
+    const exam = new this({examData});
+    await exam.save();
+    return exam.safeFetch();
+
+  }catch(err){
+    console.log("Error when creating exam: ", err)
+  }
+}
 
 const Exam = mongoose.model('Exam', examSchema);
 
 module.exports = { Exam };
-
-//comment for testing slack github integration

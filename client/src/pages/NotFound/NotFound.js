@@ -7,7 +7,7 @@ const NotFound = () => {
     <div id='notFound-Div'>
       <h1>Page Not Found</h1>
 
-      <h3>Navigate to the <Link to="/">Home Page</Link></h3>
+      <h3>Navigate to the <Link to="/home">Home Page</Link></h3>
     </div>
   );
 };

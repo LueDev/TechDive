@@ -32,17 +32,17 @@ function toTitleCase(str) {
 
 // Best to use instance methods to isolate return data to what is safe/relevant
 userSchema.methods.safeFetch = function () {
-  const userObject = this.toObject();
-  userObject.firstname = toTitleCase(userObject.firstname);
-  userObject.lastname = toTitleCase(userObject.lastname);
+  const userObject = this.toObject()
+  userObject.firstname = toTitleCase(userObject.firstname)
+  userObject.lastname = toTitleCase(userObject.lastname)
   delete userObject._id
   delete userObject.admin
-  delete userObject.password,
-  delete userObject.roles,
-  delete userObject.createdAt;
-  delete userObject.updatedAt;
-  delete userObject.__v;
-  return userObject;
+  delete userObject.password
+  delete userObject.roles
+  delete userObject.createdAt
+  delete userObject.updatedAt
+  delete userObject.__v
+  return userObject
 };
 
 userSchema.statics.createUser = async function (userData) {
@@ -94,7 +94,7 @@ userSchema.statics.LoginUser = async function (email, password) {
 
     if (isPasswordValid) {
       console.log('Login successful');
-      return user; //could've used safeFetch(). TODO: ADD SAFEFETCH() HERE
+      return user.safeFetch(); //could've used safeFetch(). TODO: ADD SAFEFETCH() HERE
     } else {
       console.log('Invalid credentials');
     }
