@@ -60,6 +60,8 @@ const updateExam = async (req, res) => {
     const examIdentifier = req.params.id;
     const updateData = req.body;
 
+    const oldExamDetails = await Exam.findOne({examId: updateData.examId})
+
     const updatedExam = await Exam.findOneAndUpdate(
       { examId: examIdentifier },
       updateData,
@@ -76,6 +78,7 @@ const updateExam = async (req, res) => {
     try {
       NotificationController.pushOperationsEvent({
         message: "User has updated an exam",
+        previousExam: oldExamDetails,
         exam: updatedExam,
         endpoint: "PATCH: /exam/:id",
         user: req.user.user,
@@ -88,10 +91,12 @@ const updateExam = async (req, res) => {
       );
     }
 
+    console.log("OLD EXAM : ", oldExamDetails)
+    console.log("NEW EXAM : ", updatedExam)
     res.status(200).json({
       success: true,
       message: 'Exam updated successfully',
-      exam: updatedExam,
+      prevExamDetails: oldExamDetails,
       message: 'Exam updated successfully',
       exam: updatedExam,
     });
@@ -156,7 +161,6 @@ const deleteExam = async function (req, res) {
 
     res.status(500).json({
       success: false,
-
       message: "Exam not found or can't delete",
     });
   }
