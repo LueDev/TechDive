@@ -61,7 +61,7 @@ const RegisterForm = () => {
           required
         />
         {/* Include Remember me, Forgot password, and Sign in with Google */}
-        <button type="submit">Sign Up</button>
+        <button type="submit" onClick={()=>{navigate('/home')}}>Sign Up</button>
       </form>
 
 

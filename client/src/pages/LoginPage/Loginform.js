@@ -18,7 +18,7 @@ const LoginForm = () => {
     e.preventDefault();
     console.log('Login Form Submitted', loginForm);
     // Here, add your login logic, then navigate on success
-    navigate('/'); // Adjust the navigation target as needed
+    navigate('/home'); // Adjust the navigation target as needed
   };
 
   return (
@@ -50,7 +50,7 @@ const LoginForm = () => {
         </div>
         <button type="submit">Sign In</button>
         {/* If you have Google Sign-In implemented */}
-        <button type="button" onClick={() => navigate('/')}>Sign In with Google</button>
+        <button type="button" onClick={() => navigate('/home')}>Sign In with Google</button>
       </form>
       <p>Don't have an account? <a href="/register">Sign Up</a></p>
     </div>
