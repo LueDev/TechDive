@@ -26,7 +26,7 @@ const getExams = async (req, res) => {
     exams: exams,
   });
 };
-
+//needs authentication
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
 
@@ -92,6 +92,8 @@ const updateExam = async (req, res) => {
       success: true,
       message: 'Exam updated successfully',
       exam: updatedExam,
+      message: 'Exam updated successfully',
+      exam: updatedExam,
     });
   } catch (error) {
     console.log(error);
@@ -146,6 +148,11 @@ const deleteExam = async function (req, res) {
    
   } catch (error) {
     console.error(error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Exam not found or can't delete" 
+    });
+    console.error(error);
 
     res.status(500).json({
       success: false,
@@ -154,7 +161,6 @@ const deleteExam = async function (req, res) {
     });
   }
 };
-
 module.exports = {
   getExams,
   createExam,
