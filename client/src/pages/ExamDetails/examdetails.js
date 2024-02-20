@@ -1,38 +1,41 @@
 import React, { useState } from 'react';
-import PatientTable from '../../components/patientTable';
+import ExamTable from '../../components/examTable';
 import PaginationComponent from '../../components/pagination';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import PatientTable from '../../components/patientTable';
 
 
-const PatientDetails = () => {
+const ExamDetails = () => {
 
 
-    const [patientExamData, setPatientExamData] = useState([]);
+    const [patientExamData, setExamData] = useState([]);
 
     const dataSelected = useParams();
+    
 
-    let specificPatientID = '';
+    let specificExamID = '';
 
-    // checking if dataSelected.patientId exists
-    if (dataSelected.patientId !== undefined) {
-        specificPatientID = dataSelected.patientId;
+    // checking if dataSelected.ExamId exists
+    if (dataSelected.examId !== undefined) {
+        specificExamID = dataSelected.examId;
+        
     }
-
-    console.log(specificPatientID)
+    
+    console.log(specificExamID)
 
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_LOCALSERVER}/exams/${specificPatientID}`)
+        fetch(`${process.env.REACT_APP_LOCALSERVER}/examsId/${specificExamID}`)
         .then(res => res.json())
         .then(data => {
             const patients = Object.entries(data)[0][1]
-            setPatientExamData(patients)
+            setExamData(patients)
         })
     },[])
     const [currentPage, setCurrentPage] = useState(1);
 
-    // //Used to separate the data into chunks
+    // Used to separate the data into chunks
     const recordsPerPage = 15;
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
@@ -44,27 +47,26 @@ const PatientDetails = () => {
     
     return (
         <div className="main-content">
-          <h1>Patient Details</h1>
+          <h1>Exam Details</h1>
           {/* Example details - consider using dynamic data */}
-          <p>Patient ID: {specificPatientID}</p>
-          <p>Number of Exams: {patientExamData.length}</p>
+          <p>Exam for Patient: {specificExamID}</p>
     
           {/* Table to display patient data */}
           <div className="table-container">
-            <PatientTable records={records} />
+            <ExamTable records={records} />
     
-            <nav>
+            {/* <nav>
               <PaginationComponent
                 totalRecords={patientExamData.length}
                 recordsPerPage={recordsPerPage}
                 currentPage={currentPage}
                 onPageChange={changePage}
               />
-            </nav>
+            </nav> */}
           </div>
         </div>
       
       );
     };
 
-export default PatientDetails;
+export default ExamDetails;

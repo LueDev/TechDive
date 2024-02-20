@@ -12,6 +12,7 @@ import HomePage from "./pages/Home/Home";
 import PatientDetails from "./pages/PatientDetails/patientdetails";
 import Footer from './components/Footer/Footer.js';
 import AdminPage from './pages/Admin/Admin.js'
+import ExamDetails from './pages/ExamDetails/examdetails';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/patients" element={<PatientPage />} /> {/* Setup the route for PatientPage */}
             {/* <Route path="/patientdetails/" element={<PatientDetails/>} /> */}
             <Route path="/patientdetails/:patientId" element={<PatientDetails/>} />
+            <Route path="/examdetails/:examId" element={<ExamDetails/>} />
             {/* Define other routes here */}
             {/* <Route path="/patientdetails/:patientId" component={<PatientDetails/>} /> */}
           </Routes>

@@ -16,28 +16,100 @@
     padding: 1rem;
   }
   
-  .header-list {
-    list-style: none;
+.header-list {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end; /* Align items to the right */
+  margin: 0;
+  padding: 0;
+}
+  
+.header-item {
+  margin-left: 1rem; /* Spacing between menu items */
+}
+  
+.header-link {
+  text-decoration: none;
+  color: rgb(145, 155, 164);
+  font-weight: bold;
+  transition: color 0.3s ease;
+
+  /* Add more styles if needed */
+}
+  
+li:hover {
+  color: #35454e; /* Lighter blue on hover, replace with your preferred color */
+  background-color:rgb(248, 248, 248);
+}
+
+.notification-icon {
+  font-size: 30px; 
+  margin-right: 0px;
+}
+
+
+div.team_member img{
+  height: 55px;
+  width: 55px;
+  padding: 10px;
+  align-items: center;
+}
+
+/* Creating Header But Can Change */
+.header {
     display: flex;
-    justify-content: flex-end; /* Align items to the right */
-    margin: 0;
-    padding: 0;
-  }
+    justify-content: right;
+    align-items: center;
+    padding: 5px 20px;
+    background-color: rgb(248, 248, 248);
+    border-bottom: 1px solid #dddddd;
+}
+
+.notification-item,
+.profile-item,
+.user-menu-item {
+  margin-left: 0px;
+}
+.notification-item:hover,
+.profile-item:hover,
+.user-menu-item:hover {
+  background-color: #f2f2f2; 
+  border-radius: 50%; 
+}
   
-  .header-item {
-    margin-left: 2rem; /* Spacing between menu items */
+  .notification-icon {
+    margin-right: 10px;
   }
-  
-  .header-link {
-    text-decoration: none;
-    color: rgb(145, 155, 164);
+
+  .user-name-menu {
     font-weight: bold;
-    transition: color 0.3s ease;
-  
-    /* Add more styles if needed */
   }
-  
-  .header-link:hover {
-    color: #35454e; /* Lighter blue on hover, replace with your preferred color */
-  }
-  
+
+.alert-message:hover {
+    background-color: #f2f2f2; 
+    cursor: pointer; 
+}
+.alert-image{
+  height: 55px;
+  width: 55px;
+}
+.alert-message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; 
+}
+
+.alert-image {
+  width: 40px; 
+  height: 40px;
+  margin-right: 10px;
+}
+
+.alert-text {
+  margin: 0;
+}
+
+.modal-body {
+  max-height: 140px; 
+  overflow-y: auto; 
+}
