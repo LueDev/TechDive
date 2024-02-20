@@ -21,6 +21,7 @@ const PatientDetails = () => {
 
     console.log(specificPatientID)
 
+    // Maybe here
 
     useEffect(()=>{
         fetch(`${process.env.REACT_APP_LOCALSERVER}/exams/${specificPatientID}`)

@@ -28,7 +28,7 @@ function App() {
             <Route path="/patients" element={<PatientPage />} /> {/* Setup the route for PatientPage */}
             {/* <Route path="/patientdetails/" element={<PatientDetails/>} /> */}
             <Route path="/patientdetails/:patientId" element={<PatientDetails/>} />
-            <Route path="/examdetails/:examId" element={<ExamDetails/>} />
+            <Route path="/patientdetails/:patientId/examdetails/:examId" element={<ExamDetails/>} />
             {/* Define other routes here */}
             {/* <Route path="/patientdetails/:patientId" component={<PatientDetails/>} /> */}
           </Routes>

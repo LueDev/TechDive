@@ -24,9 +24,11 @@ const PatientTable = ({ records }) => {
         {records.map((item, index) => (
           <tr key={index}>
 
+
             <td><Link to={`/patientdetails/${item.patientId}`}>{item.patientId}</Link></td>
             {/* <Link to={`/examdetails`}>{item['examId']}</Link><td>{item.examId}</td> */}
-            <td><Link to={`/examdetails/${item.examId}`}>{item.examId}</Link></td>
+            {/* <td><Link to={`/examdetails/${item.examId}`}>{item.examId}</Link></td> */}
+            <td><Link to={`/patientdetails/${item.patientId}/examdetails/${item.examId}`}>{item.examId}</Link></td>
             <td>{<img className="examPhotos" src={item.imageURL} alt={item.imageURL}/>}</td>
             <td>{item.keyFindings}</td>
             <td>{item.brixiaScores}</td>

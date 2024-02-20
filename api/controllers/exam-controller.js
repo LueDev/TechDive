@@ -14,13 +14,31 @@ const getExams = async (req, res) => {
   });
 };
 
-// Retrieving Specific Exams
+// Retrieving Specific Patient Exams
 const getSpecificExams = async (req, res) => {
   const patientId = req.params.patientId;
   console.log(`Exams for patient ${patientId}`);
 
   try {
     const exams = await Exam.find({ patientId: patientId }).limit(50);
+    return res.status(200).json({
+      exams: exams,
+    });
+  } catch (error) {
+    console.error('Error fetching exams:', error);
+    return res.status(500).json({ message: 'Error fetching exams' });
+  }
+};
+
+// Get Exams Based on Exam ID and Patient ID 
+const getBasedExamID = async (req, res) => {
+  const examId = req.params.examId;
+  const patientId = req.params.patientId;
+  
+  console.log(`Exams for Exam ID ${examId}`);
+
+  try {
+    const exams = await Exam.find({ examId: examId, patientId: patientId  }).limit(50);
     return res.status(200).json({
       exams: exams,
     });
@@ -103,6 +121,7 @@ const deleteExam = async (req, res) => {
 module.exports = {
   getExams,
   getSpecificExams,
+  getBasedExamID,
   createExam,
   updateExam,
   deleteExam,
