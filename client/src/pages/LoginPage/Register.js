@@ -168,7 +168,7 @@ const RegisterForm = ({ toggleImagePosition }) => {
       </form>
 
       <p>
-        Already have an account? <a href="/">Sign In</a>
+        Already have an account? <a style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign In</a>
       </p>
     </div>
   );

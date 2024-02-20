@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/loginpage.css";
 
-const LoginForm = () => {
+const LoginForm = ({toggleImagePosition}) => {
   const navigate = useNavigate();
   const [loginForm, setLoginForm] = useState({
     email: '',
@@ -52,7 +52,7 @@ const LoginForm = () => {
         {/* If you have Google Sign-In implemented */}
         <button type="button" onClick={() => navigate('/home')}>Sign In with Google</button>
       </form>
-      <p>Don't have an account? <a href="/register">Sign Up</a></p>
+      <p>Don't have an account? <a style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign Up</a></p>
     </div>
   );
 };
