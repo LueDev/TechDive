@@ -22,6 +22,7 @@ const PatientDetails = () => {
 
     console.log(specificPatientID)
 
+    // Maybe here
 
     useEffect(()=>{
         fetch(`http://localhost:9000/exams/patient/${specificPatientID}`)

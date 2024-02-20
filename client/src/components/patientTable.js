@@ -24,6 +24,7 @@ const PatientTable = ({ records }) => {
         {records.map((item, index) => (
           <tr key={index}>
 
+
             <td><Link to={`/exams/${item.patientId}`}>{item.patientId}</Link></td>
             <td><Link to={`/exam/${item.examId}`}>{item.examId}</Link></td>
             <td>{<img className="examPhotos" src={item.imageURL} alt={item.imageURL}/>}</td>
