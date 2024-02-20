@@ -4,9 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../../styles/loginpage.css';
 
-const RegisterForm = ({toggleImagePosition}) => {
+const RegisterForm = ({ toggleImagePosition }) => {
   const navigate = useNavigate();
-
 
   const formik = useFormik({
     initialValues: {
@@ -50,65 +49,68 @@ const RegisterForm = ({toggleImagePosition}) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formik.values)
+        body: JSON.stringify(formik.values),
       };
 
-      const register = async () => { await fetch(
-        `${process.env.REACT_APP_LOCALSERVER}/users/register`,
-        registerConfigObj,
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          // alert('Registered Successfully. Redirecting to Home page');
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log('UNSUCCESSFUL REGISTRATION: ', err);
-        });
-      }
-
+      const register = async () => {
+        await fetch(
+          `${process.env.REACT_APP_LOCALSERVER}/users/register`,
+          registerConfigObj,
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // alert('Registered Successfully. Redirecting to Home page');
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log('UNSUCCESSFUL REGISTRATION: ', err);
+          });
+      };
 
       const loginConfigObj = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({email: formik.values.email, password: formik.values.password})
+        body: JSON.stringify({
+          email: formik.values.email,
+          password: formik.values.password,
+        }),
       };
 
-      console.log(loginConfigObj)
+      console.log(loginConfigObj);
 
-      const login = async () => { 
+      const login = async () => {
         await fetch(
-        `${process.env.REACT_APP_LOCALSERVER}/users/login`,
-        loginConfigObj,
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          // alert('Registered Successfully. Redirecting to Home page');
-          console.log(data);
-          // navigate('/home')
-        })
-        .catch((err) => {
-          console.log('UNSUCCESSFUL LOGIN: ', err);
-        });
-      }
+          `${process.env.REACT_APP_LOCALSERVER}/users/login`,
+          loginConfigObj,
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // alert('Registered Successfully. Redirecting to Home page');
+            console.log(data);
+            // navigate('/home')
+          })
+          .catch((err) => {
+            console.log('UNSUCCESSFUL LOGIN: ', err);
+          });
+      };
 
-      register()
-      login()
-      setTimeout(()=>{navigate("/home")}, 500)
+      register();
+      login();
+      setTimeout(() => {
+        navigate('/home');
+      }, 500);
     },
   });
 
+  // Add registration logic here and navigate on success
 
-  
-    // Add registration logic here and navigate on success
+  // navigate('/'); // Navigate to the home page or dashboard
 
-    // navigate('/'); // Navigate to the home page or dashboard
-
-  useEffect(() => {
-    console.log(formik.errors);
-  });
+  // useEffect(() => {
+  //   console.log(formik.errors);
+  // });
   return (
     <div className="register-form">
       <h1>Create New Account</h1>
