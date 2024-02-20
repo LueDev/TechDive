@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import axios from "axios"
 import '../../styles/loginpage.css';
 
 const RegisterForm = ({ toggleImagePosition }) => {
@@ -41,76 +42,25 @@ const RegisterForm = ({ toggleImagePosition }) => {
         )
         .required('Required'),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: () => {
+    
+      axios.post(`${process.env.REACT_APP_LOCALSERVER}/users/register`, formik.values)
+        // .then((res) => res.json())
+        .then((data) => {
+          // alert('Registered Successfully. Redirecting to Home page');
+          console.log("SUCCESS WITH AXIOS: ", data);
+        })
+        .catch((err) => {
+          console.log('UNSUCCESSFUL REGISTRATION: ', err);
+        });
+      
 
-      const registerConfigObj = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formik.values),
-      };
-
-      const register = async () => {
-        await fetch(
-          `${process.env.REACT_APP_LOCALSERVER}/users/register`,
-          registerConfigObj,
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            // alert('Registered Successfully. Redirecting to Home page');
-            console.log(data);
-          })
-          .catch((err) => {
-            console.log('UNSUCCESSFUL REGISTRATION: ', err);
-          });
-      };
-
-      const loginConfigObj = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formik.values.email,
-          password: formik.values.password,
-        }),
-      };
-
-      console.log(loginConfigObj);
-
-      const login = async () => {
-        await fetch(
-          `${process.env.REACT_APP_LOCALSERVER}/users/login`,
-          loginConfigObj,
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            // alert('Registered Successfully. Redirecting to Home page');
-            console.log(data);
-            // navigate('/home')
-          })
-          .catch((err) => {
-            console.log('UNSUCCESSFUL LOGIN: ', err);
-          });
-      };
-
-      register();
-      login();
-      setTimeout(() => {
-        navigate('/home');
-      }, 500);
     },
   });
 
-  // Add registration logic here and navigate on success
-
   // navigate('/'); // Navigate to the home page or dashboard
 
-  // useEffect(() => {
-  //   console.log(formik.errors);
-  // });
+
   return (
     <div className="register-form">
       <h1>Create New Account</h1>
@@ -168,7 +118,7 @@ const RegisterForm = ({ toggleImagePosition }) => {
       </form>
 
       <p>
-        Already have an account? <a style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign In</a>
+        Already have an account? <span style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign In</span>
       </p>
     </div>
   );

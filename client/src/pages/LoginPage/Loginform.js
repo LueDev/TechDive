@@ -46,13 +46,13 @@ const LoginForm = ({toggleImagePosition}) => {
           <label>
             <input type="checkbox" name="remember" /> Remember me
           </label>
-          <a href="/forgot-password">Forgot Password?</a>
+          <p style={{color:'blue', cursor:'pointer'}}>Forgot Password?</p>
         </div>
         <button type="submit">Sign In</button>
         {/* If you have Google Sign-In implemented */}
         <button type="button" onClick={() => navigate('/home')}>Sign In with Google</button>
       </form>
-      <p>Don't have an account? <a style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign Up</a></p>
+      <p>Don't have an account? <span style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign Up</span></p>
     </div>
   );
 };

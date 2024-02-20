@@ -10,7 +10,7 @@ const connectToRabbitMQ = async () => {
     const channel = await connection.createChannel();
     return channel;
   } catch (error) {
-    console.error('Failed to connect to RabbitMQ:', error);
+    console.error('RabbitMQ is offline', error);
     throw error;
   }
 };

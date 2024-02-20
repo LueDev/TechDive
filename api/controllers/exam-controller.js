@@ -10,8 +10,8 @@ const getExams = async (req, res) => {
 
   try {
     NotificationController.pushOperationsEvent({
-      message: "User has reached the home page.",
-      endpoint: "GET /",
+      message: 'User has reached the home page.',
+      endpoint: 'GET /',
       user: req.user.user,
       timestamp: Date.now(),
     });
@@ -37,8 +37,8 @@ const getOnePatientExams = async (req, res) => {
 
     try {
       NotificationController.pushOperationsEvent({
-        message: "User has retrieved the exams for a patient",
-        endpoint: "GET /exams/:patientId",
+        message: 'User has retrieved the exams for a patient',
+        endpoint: 'GET /exams/:patientId',
         user: req.user.user,
         patientId: patientId,
         exams: exams,
@@ -46,7 +46,7 @@ const getOnePatientExams = async (req, res) => {
       });
     } catch (error) {
       console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
       );
     }
     return res.status(200).json({
@@ -68,8 +68,8 @@ const getOneSpecificExam = async (req, res) => {
 
     try {
       NotificationController.pushOperationsEvent({
-        message: "User has retrieved a single exam",
-        endpoint: "GET /exam/:examId",
+        message: 'User has retrieved a single exam',
+        endpoint: 'GET /exam/:examId',
         user: req.user.user,
         examId: examId,
         exam: exam,
@@ -77,7 +77,7 @@ const getOneSpecificExam = async (req, res) => {
       });
     } catch (error) {
       console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
       );
     }
     return res.status(200).json({
@@ -90,27 +90,24 @@ const getOneSpecificExam = async (req, res) => {
   }
 };
 
-
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
 
-    const {examId, ...rest} = req.body
+  const newExamDetails = req.body;
 
-    const examFound = await Exam.find({examId: examId})
+  const examFound = await Exam.find({ examId: newExamDetails.examId });
 
-    try{
-      if(examFound){
-        
-      }
-    }catch(err){
-
+  try {
+    if (examFound) {
+      return res.status;
     }
+  } catch (err) {}
 
-
+  try {
     try {
-      NotificationController.pushOperationsEvent({
+      await NotificationController.pushOperationsEvent({
         message: "User has reached the home page. (endpoint = '/')",
-        endpoint: "POST /create",
+        endpoint: 'POST /create',
         user: req.user.user,
         timestamp: Date.now(),
       });
@@ -120,15 +117,15 @@ const createExam = async (req, res) => {
         error,
       );
     }
+  } catch (err) {
+    console.log('Error connecting to RabbitMQ');
+  }
 
-    res.status(200).json({
-      success: true,
-      message: 'Create Exams API is working.',
-    });
-
+  res.status(200).json({
+    success: true,
+    message: 'Create Exams API is working.',
+  });
 };
-
-
 
 const updateExam = async (req, res) => {
   console.log('Update Exams endpoint reached');
@@ -137,7 +134,7 @@ const updateExam = async (req, res) => {
     const examIdentifier = req.params.id;
     const updateData = req.body;
 
-    const oldExamDetails = await Exam.findOne({examId: updateData.examId})
+    const oldExamDetails = await Exam.findExam({ examId: updateData.examId });
 
     const updatedExam = await Exam.findOneAndUpdate(
       { examId: examIdentifier },
@@ -153,23 +150,27 @@ const updateExam = async (req, res) => {
     }
 
     try {
-      NotificationController.pushOperationsEvent({
-        message: "User has updated an exam",
-        previousExam: oldExamDetails,
-        exam: updatedExam,
-        endpoint: "PATCH: /exam/:id",
-        user: req.user.user,
-        timestamp: Date.now(),
-      });
-    } catch (error) {
-      console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
-        error,
-      );
+      try {
+        await NotificationController.pushOperationsEvent({
+          message: 'User has updated an exam',
+          previousExam: oldExamDetails,
+          exam: updatedExam,
+          endpoint: 'PATCH: /exam/:id',
+          user: req.user.user,
+          timestamp: Date.now(),
+        });
+      } catch (error) {
+        console.log(
+          'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
+          error,
+        );
+      }
+    } catch (err) {
+      console.log('Error connecting to RabbitMQ');
     }
 
-    console.log("OLD EXAM : ", oldExamDetails)
-    console.log("NEW EXAM : ", updatedExam)
+    console.log('OLD EXAM : ', oldExamDetails);
+    console.log('NEW EXAM : ', updatedExam);
     res.status(200).json({
       success: true,
       message: 'Exam updated successfully',
@@ -182,9 +183,7 @@ const updateExam = async (req, res) => {
 
     res.status(500).json({
       success: false,
-
       message: 'An error occurred while updating the exam',
-
       error: error.message,
     });
   }
@@ -192,10 +191,10 @@ const updateExam = async (req, res) => {
 
 const deleteExam = async function (req, res) {
   try {
-    const id = req.params.id
+    const id = req.params.id;
 
-    console.log(id)
-    const examToDelete = await Exam.findExam(id)
+    console.log(id);
+    const examToDelete = await Exam.findExam(id);
     const deletedExam = await Exam.deleteExam(id);
 
     if (!deletedExam) {
@@ -206,42 +205,38 @@ const deleteExam = async function (req, res) {
       });
     }
 
-       try {
-        NotificationController.pushOperationsEvent({
-        message: "User has deleted an exam",
-        exam: examToDelete,
-        user: req.user.user,
-        endpoint: "DELETE: /exam/:id",
-        timestamp: Date.now(),
-      });
-    } catch (error) {
-      console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
-        // error,
-      );
-    }    
+    try {
+      try {
+        await NotificationController.pushOperationsEvent({
+          message: 'User has deleted an exam',
+          exam: examToDelete,
+          user: req.user.user,
+          endpoint: 'DELETE: /exam/:id',
+          timestamp: Date.now(),
+        });
+      } catch (error) {
+        console.log(
+          'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
+        );
+      }
+    } catch (err) {
+      console.log('Error connecting to RabbitMQ');
+    }
 
     res.status(200).json({
       success: true,
       message: 'Exam deleted successfully',
-      exam: examToDelete
+      exam: examToDelete,
     });
-
-   
   } catch (error) {
     console.error(error);
-    res.status(500).json({ 
-      success: false, 
-      message: "Exam not found or can't delete" 
-    });
-    console.error(error);
-
     res.status(500).json({
       success: false,
       message: "Exam not found or can't delete",
     });
   }
 };
+
 module.exports = {
   getExams,
   getOnePatientExams,

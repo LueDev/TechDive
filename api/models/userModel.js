@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const {v4: uuidv4} = require('uuid')
 
 const userSchema = new mongoose.Schema({
+  internalid: { type: String, default: uuidv4()}, 
   firstname: { type: String, lowercase: true, required: true },
   lastname: { type: String, lowercase: true, required: true },
   email: { type: String, required: true, lowercase: true },
@@ -26,6 +28,8 @@ const userSchema = new mongoose.Schema({
   role: { type: String }
 });
 
+userSchema.index({ id: 1 });
+ 
 // Titlecase the firstname and lastname
 function toTitleCase(str) {
   return str.replace(/\b\w/g, (match) => match.toUpperCase());
