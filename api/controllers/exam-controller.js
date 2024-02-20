@@ -94,6 +94,19 @@ const getOneSpecificExam = async (req, res) => {
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
 
+    const {examId, ...rest} = req.body
+
+    const examFound = await Exam.find({examId: examId})
+
+    try{
+      if(examFound){
+        
+      }
+    }catch(err){
+
+    }
+
+
     try {
       NotificationController.pushOperationsEvent({
         message: "User has reached the home page. (endpoint = '/')",

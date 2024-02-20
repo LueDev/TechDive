@@ -12,6 +12,7 @@
     font-size: 0.9rem;
     color: #666;
   }
+
   
   .register-form form, .form-container form {
     display: flex;
@@ -61,6 +62,13 @@
   
   .register-section {
     left: 0;
+  }
+
+  .formik-error{
+    font-size: 0.9rem;
+    color: red;
+    margin-bottom: 1rem;
+    margin-top: 0;
   }
   
   .login-section {

@@ -20,10 +20,10 @@ const SplitPage = () => {
       <div className={`image-container ${imageOnLeft ? '' : 'slide-image'} ${isSliding ? 'on-top' : ''}`}>
       </div>
       <div className="register-section">
-        <RegisterForm />
+        <RegisterForm toggleImagePosition={toggleImagePosition} />
       </div>
       <div className="login-section">
-        <LoginForm />
+        <LoginForm toggleImagePosition={toggleImagePosition}/>
       </div>
       <button className="toggle-button" onClick={toggleImagePosition}>
         {imageOnLeft ? 'Register': 'Login' }

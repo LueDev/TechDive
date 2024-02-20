@@ -10,20 +10,20 @@ import { ExamContext } from "../../examcontext"
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const {examData} = useContext(ExamContext) 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    try{
+  //   try{
       
-    console.log("Calling from within UseEffect in Home.JS", examData)  
+  //   console.log("Calling from within UseEffect in Home.JS", examData)  
 
-    }catch(err){
-      console.log("Error from useEffect, ", err)
-    }
-  }, [examData])
+  //   }catch(err){
+  //     console.log("Error from useEffect, ", err)
+  //   }
+  // }, [examData])
 
   // const {examData} = useContext(ExamContext) 
-  console.log("Trying to fetch data from context")
-  console.log(examData)
+  // console.log("Trying to fetch data from context")
+  // console.log(examData)
  
 
   //Used to separate the data into chunks

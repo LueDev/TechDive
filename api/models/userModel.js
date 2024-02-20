@@ -22,7 +22,8 @@ const userSchema = new mongoose.Schema({
   admin: { type: String, default: false },
   createdAt: { type: Date, immutable: true, default: () => Date.now() },
   updatedAt: { type: Date, default: () => Date.now() },
-  roles: [{ type: String }],
+  permissions: [{ type: String }],
+  role: { type: String }
 });
 
 // Titlecase the firstname and lastname
@@ -38,7 +39,7 @@ userSchema.methods.safeFetch = function () {
   delete userObject._id
   delete userObject.admin
   delete userObject.password
-  delete userObject.roles
+  delete userObject.permissions
   delete userObject.createdAt
   delete userObject.updatedAt
   delete userObject.__v
@@ -51,7 +52,7 @@ userSchema.statics.createUser = async function (userData) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     if (admin === true) {
-      const roles = [
+      const permissions = [
         'View-Notifications',
         'View-Exams',
         'Update-Exams',
@@ -60,16 +61,16 @@ userSchema.statics.createUser = async function (userData) {
       ];
       const user = new this({
         ...rest,
-        roles: roles,
+        permissions: roles,
         password: hashedPassword,
       });
       await user.save();
       return user;
     } else {
-      const roles = ['View-Notifications', 'View-Exams'];
+      const permissions = ['View-Notifications', 'View-Exams'];
       const user = new this({
         ...rest,
-        roles: roles,
+        permissions: permissions,
         password: hashedPassword,
       });
       await user.save();

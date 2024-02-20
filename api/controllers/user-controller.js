@@ -35,8 +35,9 @@ const registerUser = async (req, res) => {
       redirectTo: '/',
     }); //redirects to the exams page, "/" upon creation of user
   } catch (error) {
+    console.log(error)
     res.status(500).json({
-      message: 'Users Registration Error - Internal Server Error',
+      message: 'Users Registration Error - Internal Server Error. Check RabbitMQ connection or Password validation not met',
       error: error,
     });
   }
