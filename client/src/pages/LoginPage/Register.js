@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios"
+import RoleSelector from "./RoleSelector"
 import '../../styles/loginpage.css';
+import { useEffect } from 'react';
 
 const RegisterForm = ({ toggleImagePosition }) => {
   const navigate = useNavigate();
+
+  useEffect(()=>{console.log(formik.values)})
 
   const formik = useFormik({
     initialValues: {
@@ -14,6 +17,7 @@ const RegisterForm = ({ toggleImagePosition }) => {
       lastname: '',
       email: '',
       password: '',
+      selectedRole: "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string()
@@ -53,7 +57,9 @@ const RegisterForm = ({ toggleImagePosition }) => {
           /[!@#$%^&*(),.?":{}|<>]/,
           'Password must contain at least one special character',
         )
-        .required('Required')
+        .required('Required'),
+      selectedRole: Yup.string()
+          .required("Required")
     }),
     onSubmit: () => {
     
@@ -124,6 +130,14 @@ const RegisterForm = ({ toggleImagePosition }) => {
         />
         {formik.touched.password && formik.errors.password ? (
           <span className="formik-error">{formik.errors.password}</span>
+        ) : null}
+
+          <RoleSelector 
+            selectedButton={formik.values.selectedRole}
+            onSelect={(buttonName) => formik.setFieldValue('selectedRole', buttonName)}  
+          />
+          {formik.touched.selectedRole && formik.errors.selectedRole ? (
+          <span className="formik-error">{formik.errors.selectedRole}</span>
         ) : null}
 
         {/* Include Remember me, Forgot password, and Sign in with Google */}

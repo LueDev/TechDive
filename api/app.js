@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -21,6 +22,18 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: process.env.ACCESS_TOKEN_SECRET, // Secret key used to sign the session ID cookie
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: true, // Set to true if your app is served over HTTPS
+    httpOnly: true, // Prevent client-side JavaScript from accessing the session cookie
+    maxAge: 15 * 60 * 1000 // Session cookie expiration time (in milliseconds), e.g., 15 mins
+  }
+}));
+
 connectDB();
 
 app.use('/', indexRouter);

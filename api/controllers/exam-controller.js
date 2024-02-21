@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { Exam } = require('../models/examModel');
+const UserController = require('../controllers/user-controller')
 const NotificationController = require('./notification-controller');
 
 const getExams = async (req, res) => {
@@ -156,7 +157,7 @@ const updateExam = async (req, res) => {
           previousExam: oldExamDetails,
           exam: updatedExam,
           endpoint: 'PATCH: /exam/:id',
-          user: req.user.user,
+          user: req.user,
           timestamp: Date.now(),
         });
       } catch (error) {
