@@ -30,7 +30,20 @@ const RegisterForm = ({ toggleImagePosition }) => {
         )
         .matches(/^[\p{L}]+$/u, "Can't contain non-letter unicode characters")
         .required('Required'),
-      email: Yup.string().email('Invalid email address').required('Required'),
+      email: Yup.string()
+      .email('Invalid email address')
+      .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, "Invalid email address")
+      .required('Required')
+      .test('email-unique', 'Email address is already taken', async function(value) {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_LOCALSERVER}/users/checkEmail/${value}`);
+          console.log(response.data)
+          return response.data// `true` if email is available, `false` otherwise
+        } catch (error) {
+          console.error('Error checking email availability:', error);
+          return false; // Return `false` in case of error
+        }
+      }),
       password: Yup.string()
         .min(8, 'Password must be at least 8 characters long')
         .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
@@ -40,7 +53,7 @@ const RegisterForm = ({ toggleImagePosition }) => {
           /[!@#$%^&*(),.?":{}|<>]/,
           'Password must contain at least one special character',
         )
-        .required('Required'),
+        .required('Required')
     }),
     onSubmit: () => {
     

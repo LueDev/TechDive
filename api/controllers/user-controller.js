@@ -11,6 +11,20 @@ const getUser = async (req, res) => {
   });
 };
 
+const checkEmail = async (req, res) => {
+  try {
+
+    const user = await User.findOne({ email:req.params.email});
+
+    user === null? res.status(200).send(true) : res.status(200).send(false) 
+
+  } catch (error) {
+    console.log("User email check failed: ", error);
+    res.status(401).send(false)
+  }
+}
+
+
 // Registration controller
 const registerUser = async (req, res) => {
   try {
@@ -122,6 +136,7 @@ const authenticateToken = (req, res, next) => {
 
 module.exports = {
   getUser,
+  checkEmail,
   registerUser,
   loginUser,
   authenticateToken,
