@@ -6,7 +6,7 @@ const connectDB = async () => {
     //   'mongodb://localhost:27017/testdb',
     // );
     const connection = await mongoose.connect(
-      'mongodb+srv://quipe-main:quipe-main2@techdrive-cluster0.dnnuuvx.mongodb.net/TechDive',
+      process.env.MONGO_URI,
     );
     
     console.log('MongoDB connected:', connection.connection.host);
