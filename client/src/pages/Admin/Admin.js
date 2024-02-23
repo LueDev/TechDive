@@ -8,7 +8,7 @@ import { ExamContext } from '../../examcontext';
 const Admin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [records, setRecords] = useState([]); // Define records as a state
-  const { examData, deleteExamById } = useContext(ExamContext);
+  const { examData, getExams, deleteExamById } = useContext(ExamContext);
   const recordsPerPage = 15;
 
   useEffect(() => {

@@ -35,7 +35,9 @@ const registerUser = async (req, res) => {
     const newUser = await User.createUser(userSignUpDetails);
     const payload = { user: newUser };
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
-    const options = { algorithm: 'HS256', expiresIn: '15m' };
+    const options = { algorithm: 'HS256', 
+      // expiresIn: '15m' 
+    };
     const accessToken = jwt.sign(payload, secretKey, options);
 
     console.log('ACCESS TOKEN: ', accessToken);

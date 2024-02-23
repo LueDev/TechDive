@@ -67,7 +67,7 @@ const RegisterForm = ({ toggleImagePosition }) => {
           console.log("SUCCESS WITH AXIOS: ", data);
           localStorage.setItem('token', data.data.accessToken)
           // console.log(sessionStorage.getItem('token'))
-          // navigate('/home')
+          navigate('/home')
         })
         .catch((err) => {
           console.log('UNSUCCESSFUL REGISTRATION: ', err);

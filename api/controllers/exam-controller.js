@@ -1,7 +1,4 @@
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const { Exam } = require('../models/examModel');
-const UserController = require('../controllers/user-controller')
 const NotificationController = require('./notification-controller');
 
 const getExams = async (req, res) => {
@@ -170,8 +167,8 @@ const updateExam = async (req, res) => {
       console.log('Error connecting to RabbitMQ');
     }
 
-    console.log('OLD EXAM : ', oldExamDetails);
-    console.log('NEW EXAM : ', updatedExam);
+    // console.log('OLD EXAM : ', oldExamDetails);
+    // console.log('NEW EXAM : ', updatedExam);
     res.status(200).json({
       success: true,
       message: 'Exam updated successfully',

@@ -8,12 +8,16 @@ import { ExamContext } from "../../examcontext"
 
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const {examData} = useContext(ExamContext) 
+  const {examData, getExams} = useContext(ExamContext) 
 
   const recordsPerPage = 15;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const records = examData.slice(firstIndex, lastIndex);
+
+  useEffect(() => {
+    getExams()
+  }, [])
 
   function changePage(id) {
     setCurrentPage(id);
