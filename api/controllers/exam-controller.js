@@ -11,7 +11,7 @@ const getExams = async (req, res) => {
 
   try {
     NotificationController.pushOperationsEvent({
-      message: 'User has reached the home page.',
+      message: 'User has retrieved all exams.',
       endpoint: 'GET /',
       user: req.user.user,
       timestamp: Date.now(),
@@ -34,7 +34,7 @@ const getOnePatientExams = async (req, res) => {
   console.log(`Exams for patient ${patientId}`);
 
   try {
-    const exams = await Exam.find({ patientId: patientId }).limit(50);
+    const exams = await Exam.find({ patientId: patientId });
 
     try {
       NotificationController.pushOperationsEvent({

@@ -1,46 +1,33 @@
 var createError = require('http-errors');
 var express = require('express');
-const session = require('express-session');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-
-//Connect to Mongo with this module and the mongoose model operations will read/write to mongoDB collections
-const connectDB = require('./db');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var authRouter = require('./routes/auth')
-var notificationRouter = require('./routes/notification')
-var adminRouter = require('./routes/admin')
-
-// const PORT = process.env.PORT || 3000
+var cookieParser = require('cookie-parser');
 var app = express();
+
 app.use(express.json());
+app.use(cookieParser())
 app.use(logger('dev'));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: process.env.ACCESS_TOKEN_SECRET, // Secret key used to sign the session ID cookie
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: true, // Set to true if your app is served over HTTPS
-    httpOnly: true, // Prevent client-side JavaScript from accessing the session cookie
-    maxAge: 15 * 60 * 1000 // Session cookie expiration time (in milliseconds), e.g., 15 mins
-  }
-}));
-
+const connectDB = require('./db');
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var authRouter = require('./routes/auth');
+var notificationRouter = require('./routes/notification');
+var adminRouter = require('./routes/admin');
 connectDB();
+
+app.use(logger('combined'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/admin', adminRouter)
-app.use('/auth', authRouter)
-app.use('/notifications', notificationRouter )
+app.use('/admin', adminRouter);
+app.use('/auth', authRouter);
+app.use('/notifications', notificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -57,7 +44,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.send('error');
 });
-
-// app.listen(PORT, console.log("Server is running on port ", PORT))
 
 module.exports = app;

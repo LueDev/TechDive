@@ -12,9 +12,9 @@ const getUser = async (req, res) => {
 };
 
 const findUser = async (internalid) => {
-  const foundUser = await User.findOne({internalid: internalid}) 
-  return foundUser.safeFetch()
-}
+  const foundUser = await User.findOne({ internalid: internalid });
+  return foundUser.safeFetch();
+};
 
 const checkEmail = async (req, res) => {
   try {
@@ -33,7 +33,7 @@ const registerUser = async (req, res) => {
       req.body);
 
     const newUser = await User.createUser(userSignUpDetails);
-    const payload = { user: newUser.safeFetch()};
+    const payload = { user: newUser };
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
     const options = { algorithm: 'HS256', expiresIn: '15m' };
     const accessToken = jwt.sign(payload, secretKey, options);
@@ -42,10 +42,10 @@ const registerUser = async (req, res) => {
 
     try {
       try {
-        await NotificationController.pushLoginEvent({
+        await NotificationController.pushRegistrationEvent({
           message: 'User Registration Event',
           endpoint: 'POST: /Register',
-          user: payload,
+          user: payload.user,
           timestamp: Date.now(),
         });
       } catch (error) {
@@ -55,10 +55,10 @@ const registerUser = async (req, res) => {
       console.log('Error connecting to RabbitMQ: ', err);
     }
 
-    req.session.jwtToken = accessToken;
-
-    res.status(201).json({ success: true, accessToken: accessToken });
-  } catch {
+    res.status(201)
+    .json({ success: true, accessToken: accessToken });
+  } catch(error) {
+    console.log("Error with registration: ", error)
     res.status(500).json({
       success: false,
       message: 'User Registration Error',
@@ -73,7 +73,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const userLoggedIn = await User.LoginUser(email, password);
-    const payload = { user: userLoggedIn.safeFetch() };
+    const payload = { user: userLoggedIn };
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
     const options = { algorithm: 'HS256', expiresIn: '15m' };
 
@@ -94,11 +94,12 @@ const loginUser = async (req, res) => {
       console.log('Error connecting to RabbitMQ: ', err);
     }
 
-    req.session.jwtToken = accessToken
+    req.session.jwtToken = accessToken;
+    req.user = payload.user
 
     res
       .status(200)
-      .json({ success: true, accessToken: accessToken, redirectTo: '/home' });
+      .json({ success: true, accessToken: accessToken});
   } catch {
     res.status(500).json({
       error: 'User Login Error - Invalid Credentials',
@@ -108,23 +109,23 @@ const loginUser = async (req, res) => {
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
+  // console.log(req.headers.authorization);
 
   if (!authHeader) {
-    res.status(500).json({ message: 'Bearer token not present.' });
-  } 
-    //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index, pos 1.
-    const token = authHeader && authHeader.split(' ')[1];
+    res.json({ message: 'Bearer token not present.', req: req });
+  }
+  //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index, pos 1.
+  const token = authHeader && authHeader.split(' ')[1];
 
-    //Unathorized / Unauthenticated
-    if (token == null) return res.status(401);
+  //Unathorized / Unauthenticated
+  if (token == null) return res.status(401);
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      if (err) return res.status(401); //Unauthorized
-      req.user = user;
-      //next() calls the next operation after our middleware. This is like saying, we're done authenticating, please proceed with the next callback method
-      next();
-    });
-  
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.status(401); //Unauthorized
+    req.user = user;
+    //next() calls the next operation after our middleware. This is like saying, we're done authenticating, please proceed with the next callback method
+    next();
+  });
 };
 
 module.exports = {
@@ -133,5 +134,5 @@ module.exports = {
   registerUser,
   loginUser,
   authenticateToken,
-  findUser
+  findUser,
 };

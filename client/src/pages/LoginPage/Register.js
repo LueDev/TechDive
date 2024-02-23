@@ -7,9 +7,6 @@ import '../../styles/loginpage.css';
 import { useEffect } from 'react';
 
 const RegisterForm = ({ toggleImagePosition }) => {
-  const navigate = useNavigate();
-
-  useEffect(()=>{console.log(formik.values)})
 
   const formik = useFormik({
     initialValues: {
@@ -68,17 +65,21 @@ const RegisterForm = ({ toggleImagePosition }) => {
         .then((data) => {
           // alert('Registered Successfully. Redirecting to Home page');
           console.log("SUCCESS WITH AXIOS: ", data);
+          localStorage.setItem('token', data.data.accessToken)
+          // console.log(sessionStorage.getItem('token'))
+          // navigate('/home')
         })
         .catch((err) => {
           console.log('UNSUCCESSFUL REGISTRATION: ', err);
-        });
-      
+        });       
 
     },
   });
 
   // navigate('/'); // Navigate to the home page or dashboard
+  const navigate = useNavigate();
 
+  useEffect(()=>{console.log(formik.values)})
 
   return (
     <div className="register-form">
