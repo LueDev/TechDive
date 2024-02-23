@@ -1,10 +1,15 @@
 services:
-  - name: rabbitmq
-    env: docker
-    dockerfilePath: dockerfile
-    plan: free
-    ports:
-      - port: 5672
-        protocol: TCP
-      - port: 15672
-        protocol: TCP
+- type: web
+  name: rabbitmq
+  env: docker
+  envVars:
+  - key: RABBITMQ_ERLANG_COOKIE
+    generateValue: true
+  - key: RABBITMQ_DEFAULT_USER
+    value: rabbitmq
+  - key: RABBITMQ_DEFAULT_PASS
+    generateValue: true
+  disk:
+    name: rabbitmq
+    mountPath: /var/lib/rabbitmq
+    sizeGB: 10

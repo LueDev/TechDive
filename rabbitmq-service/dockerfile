@@ -1,7 +1,9 @@
-FROM rabbitmq:3.8-management-alpine
+FROM rabbitmq:3.8.0-management
 
-# Expose ports for RabbitMQ and management UI
-EXPOSE 5672 15672
+COPY rabbitmq.conf /etc/rabbitmq/
 
-# Define volumes for data and logs
-VOLUME ["/var/lib/rabbitmq/", "/var/log/rabbitmq/"]
+ENV RABBITMQ_NODENAME=rabbit@localhost
+
+RUN chown rabbitmq:rabbitmq /etc/rabbitmq/rabbitmq.conf
+
+USER rabbitmq:rabbitmq
