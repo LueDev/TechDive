@@ -2,7 +2,7 @@ services:
   - name: rabbitmq
     env: docker
     dockerfilePath: dockerfile
-    plan: starter
+    plan: free
     ports:
       - port: 5672
         protocol: TCP
