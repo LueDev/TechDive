@@ -50,10 +50,12 @@ const ExamDetails = () => {
         <div className="main-content">
           <h1>Exam Details</h1>
           {/* Example details - consider using dynamic data */}
-          <p>Exam for Patient: {specificExamID}</p>
+          {/* <p>Exam for Patient: {specificExamID}</p> */}
+          <p>Detailed Patient Examination Record</p>
     
           {/* Table to display patient data */}
-          <div className="table-container">
+          {/* <div className="table-container"> */}
+          <div>
             <ExamTable records={records} />
     
             {/* <nav>
