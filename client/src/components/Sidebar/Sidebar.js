@@ -14,7 +14,7 @@ const Sidebar = () => {
     { id: 3, text: "Add Patient", icon: <BsClipboard2Plus/>, to: "/add" },
     { id: 4, text: "File Processing", icon: <IoFolderOutline/>, to: "/file" },
     { id: 5, text: "Patient Details", icon: <BsPerson/>, to: "/patients" },
-    { id: 6, text: "login", icon: <BsPerson/>, to: "/" }
+    { id: 6, text: "Dashboard", icon: <BsPerson/>, to: "/dashboard" }
 
   ];
 
