@@ -10,7 +10,10 @@ const examSchema = new mongoose.Schema({
   zipCode: { type: Number, required: true },
   imageURL: { type: String, required: true },
   keyFindings: { type: String, required: true },
-  brixiaScores: { type: String, required: true }
+  brixiaScores: { type: String, required: true },
+  createdAt: {type: Date, default: Date.now()},
+  updatedAt: {type: Date, default: Date.now()},
+  status: {type: String, default: "active"}
 });
 
 examSchema.methods.safeFetch = function(){
