@@ -1,35 +1,213 @@
-.two-column-table-container {
+/* styles.css */
+
+.container {
     display: flex;
-    }
+    align-items: flex-start;
+  }
   
-.two-column-table {
-     flex: 1;
-    }
-
-.data-row{
-    background-color: #f2f2f2;
-    border-radius: 10px;
+  .info-container {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    margin-right: 20px;
+    flex-direction: column;
+    z-index: -1;
+    position: absolute; 
+  }
+  
+  .profile-container {
+    z-index: -1;
+    display: flex;
+    align-items: right;
+    width: 700px; 
+    height: 100px;
+    flex-direction: column; 
+    /* align-items: right;  */
+}
+.profile-container p{
+    font-size: 16px;
+    font-weight: bold;
+    color: grey;
+    font-family: 'Open Sans', sans-serif;
+}
+  
+  .profile-image {
+    width: 80px; 
+    height: 80px;
+    border-radius: 50%; 
+    margin-right: 20px;
+    
+}
+  
+  .profile-info {
+    flex: 1;
+    display: flex;
+    /*Here*/
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 30%; /* Positioning */
+    border-left: 1px solid #ccc; 
+    justify-content: right;
 }
 
-.column {
-    padding: 0 10px; 
+  .profile-info-row{
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+      margin-top: 10px;
+  }
+  
+  .profile-info p {
+    margin-right: 10px; 
+  }
+  
+  .image-container {
+    flex: 1;
+    z-index: -1;
+    margin-left: -20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: left;
+    width:auto;
+    position:absolute;
+    border-radius: 20px;
 }
 
-.column div {
-    margin-bottom: 10px; 
+.image-container img{
+    height: 250px;
+    width: 250x;
 }
 
-.column strong {
-    margin-right: 5px; 
+.findings-div{
+    flex: 1;
+    margin-left: 350px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    display: flex;
+    justify-content: left;
+    width:300px;
+    position:absolute;
 }
 
-.image-container {
-    margin-left: 20px; 
+.findings-div h3{
+    font-size: 18.5px;
+    text-decoration: none;
+    font-weight: lighter;
+    color:black;
+    margin-right: 90px;
+    font-family: 'Open Sans', sans-serif;
+    
 }
 
-.examTablePhotos {
-    max-width: 100%;
-    height: 270px;
-    margin-bottom: 10px; 
-    border: 2px solid black; 
+.findings-div p{
+    margin: 0;
+    font-size: 12px; 
+    font-weight: normal;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    font-family: 'Montserrat', sans-serif;
 }
+
+
+
+
+
+.example-div{
+    flex: 1;
+    margin-top: 150px;
+    padding: 20px;
+    display: flex;
+    justify-content: left;
+    width:auto;
+    position:absolute;
+}
+
+.image-containers {
+    flex: 1;
+    margin-top: 150px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: left;
+    width:auto;
+    position:relative;
+    margin-left: -100px;
+}
+
+
+
+
+.vertical-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%; 
+    border-left: 1px solid #ccc; 
+  }
+  
+
+
+.profile-info-item p{
+
+    margin: 0;
+    font-size: 14px; 
+    font-weight: bold; 
+    color: #333; 
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid #ccc
+}
+.profile-info-line {
+    height: 1px;
+    background-color: #ccc;
+    margin-left: 50px;
+  }
+
+.profile-info-item h3{
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(145, 155, 164);
+    margin-right: 90px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+.additional-container h3{
+    font-size: 18.5px;
+    text-decoration: none;
+    font-weight: lighter;
+    color:black;
+    margin-right: 90px;
+    font-family: 'Open Sans', sans-serif;
+    
+}
+
+.additional-container p{
+    margin: 0;
+    font-size: 12px; 
+    font-weight: normal;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+
+.additional-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    /* background-color: #f9f9f9; */
+    background-color: white;
+    flex: 1;
+    display: flex;
+  }
+ 
+ 
+  
