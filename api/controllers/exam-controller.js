@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { Exam } = require('../models/examModel');
 const NotificationController = require('./notification-controller');
+const e = require('express');
 
 const getExams = async (req, res) => {
   console.log('Exams page');
@@ -90,29 +91,23 @@ const getOneSpecificExam = async (req, res) => {
   }
 };
 
-function checkExamId(value) {
-  if (Array.isArray(value)) {
-    // Convert the array to an object
-    const obj = Object.fromEntries(value.map((item, index) => [index, item]));
-    // Check if the resulting object contains the field 'examId'
-    if ('examId' in obj){throw new Error ("Exam ID already exists")}
-  } else if (typeof value === 'object') {
-    // Check if the object contains the field 'examId'
-    if ('examId' in value){throw new Error ("Exam ID already exists")
-  } else {
-    // Neither an array nor an object
-    throw new Error ("Value is neither Array or Object")
-  }
-}
-}
-
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
   const receivedData = req.body
-  console.log("receivedData:", receivedData)
   try{
-    const exam = await Exam.findExam({examId: receivedData.examId});
-    checkExamId(exam)
+    const exam = await Exam.findOne({examId: receivedData.examId});
+    if(exam == null)
+    {
+      const newExam = await Exam.createExam(receivedData)
+      res.status(201).json({
+        success: true,
+        message: 'Exam sucessfully created',
+      });
+    }
+
+    else{
+      {throw new Error ("Exam ID already exists")}
+    }
   } catch(e) {
     console.log('Exam ID already exists', e);
     res.status(406).json({
@@ -120,8 +115,6 @@ const createExam = async (req, res) => {
       message: 'The exam ID already exists'
     })
   }
-      //const newExam = await Exam.createExam(recievedData)
-      //console.log('new exam: ',newExam);
 
     try {
       NotificationController.pushOperationsEvent({
@@ -133,14 +126,8 @@ const createExam = async (req, res) => {
     } catch (error) {
       console.log(
         'RabbitMQ Is Offline or Authorize Token is not set on the route: '
-        //error,
       );
     }
-
-    res.status(200).json({
-      success: true,
-      message: 'Exam sucessfully created',
-    });
   };
 
 const updateExam = async (req, res) => {
