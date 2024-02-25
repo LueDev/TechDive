@@ -96,9 +96,6 @@ const loginUser = async (req, res) => {
       console.log('Error connecting to RabbitMQ: ', err);
     }
 
-    req.session.jwtToken = accessToken;
-    req.user = payload.user
-
     res
       .status(200)
       .json({ success: true, accessToken: accessToken});
