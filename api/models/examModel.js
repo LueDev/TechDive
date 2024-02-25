@@ -30,26 +30,7 @@ examSchema.statics.findByPatientId = async function(patientId){
     throw err
   }
 }
-examSchema.statics.findExam = async function(documentId){
-  console.log("Exam Model Find By Patient Id Class Method called.")
-  try{
-    // const convert = new ObjectId(documentId)
-    const exam = await this.aggregate(
-      [
-        {
-          $match:
-            {
-              _id: documentId
-            }
-        }
-      ]
-    )
-    return exam[0]
-  }catch(err){
-    console.log("Error when finding exam by ID ", err)
-    throw new Error("Error finding exam", err)
-  }
-}
+
 examSchema.statics.updateExam = async function(updatedExam){
   console.log("Exam Model Create Exam Class Method called.")
   try{
