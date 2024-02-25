@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mongoDB = require('mongodb')
 
 const examSchema = new mongoose.Schema({
   patientId: { type: String, required: true },
@@ -44,13 +43,17 @@ examSchema.statics.findExam = async function(documentId){
     const exam = await this.aggregate(
       [
         {
-          '$match': {
-            '_id': documentId.toString()
-          }
+          $match:
+            /**
+             * query: The query in MQL.
+             */
+            {
+              _id: "63d988ea7f953f000e82b023"
+            }
         }
       ]
-      )
-    return exam
+    )
+    return exam[0]
   }catch(err){
     console.log("Error when finding exam by ID ", err)
     throw err

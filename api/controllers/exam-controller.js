@@ -61,31 +61,31 @@ const getOnePatientExams = async (req, res) => {
 const getOneSpecificExam = async (req, res) => {
   const examId = req.params.examid;
 
-  try {
-    const exam = await Exam.find({ examId: examId }).limit(1);
+  const exam = await Exam.findExam({ examId: examId });
 
-    try {
-      NotificationController.pushOperationsEvent({
-        message: 'User has retrieved a single exam',
-        endpoint: 'GET /exam/:examId',
-        user: req.user.user,
-        examId: examId,
-        exam: exam,
-        timestamp: Date.now(),
-      });
-    } catch (error) {
-      console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
-      );
-    }
-    return res.status(200).json({
-      success: true,
+  console.log(exam)
+  // if (exam.examId == null) {
+  //   return res.status(500).json({ message: 'Error fetching exams' });
+  // }
+
+  try {
+    NotificationController.pushOperationsEvent({
+      message: 'User has retrieved a single exam',
+      endpoint: 'GET /exam/:examId',
+      user: req.user.user,
+      examId: examId,
       exam: exam,
+      timestamp: Date.now(),
     });
   } catch (error) {
-    console.error('Error fetching exams:', error);
-    return res.status(500).json({ message: 'Error fetching exams' });
+    console.log(
+      'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
+    );
   }
+  return res.status(200).json({
+    success: true,
+    exam: exam,
+  });
 };
 
 const createExam = async (req, res) => {
