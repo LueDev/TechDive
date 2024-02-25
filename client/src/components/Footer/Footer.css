@@ -18,21 +18,52 @@ footer {
 
 }
 
+p.footer-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
 /* container for images*/
-div.team_pics {
+div.team-pics {
     display: flex;
     margin: 0px;
     padding: 10px;
     align-items: center;
 }
 
-div.team_pics img{
-    height: 50px;
-    width: 50px;
+div.team-pics img{
     padding: 10px;
 }
 
-.team_member {
+div.team-member p {
+ font-size: 20px;
+ font-family: 'Lato', 'sans-serif';
+ font-weight: 800;
+}
+
+.team-member {
     text-align: center;
     margin: 0 10px;
 }
+
+/* This will ensure that your image covers the container without being distorted */
+img.team-member-image {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+}
+
+/* This makes only the image within a link slightly transparent on hover */
+a:hover img {
+    opacity: 0.8;
+  }
+
+  div p.footer-copyright {
+    font-size: 18px;
+    font-family: 'Lato', 'sans-serif';
+  }
+  

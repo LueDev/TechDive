@@ -1,4 +1,47 @@
-import React, { useState } from "react";
+/*import React from 'react';
+import './Form.css';
+
+function Form({ formik, fields }) {
+    return (
+        <form className="form" onSubmit={formik.handleSubmit}>
+            {fields.map(field => {
+                const fieldError = formik.touched[field.name] && formik.errors[field.name];
+                return (
+                    <div key={field.name}>
+                        {field.type === 'textarea' ? (
+                            <textarea
+                                className="form-input"
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values[field.name]}
+                                rows={field.rows || 3}
+                            />
+                        ) : (
+                            <input
+                                className="form-input"
+                                type={field.type || 'text'}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values[field.name]}
+                            />
+                        )}
+                        {fieldError && <div className="error">{formik.errors[field.name]}</div>}
+                    </div>
+                );
+            })}
+            <button className="btn-submit" type="submit">Submit</button>
+        </form>
+    );
+};
+
+export default Form;
+*/
+
+import React, { useState, useEffect } from "react";
 import './Form.css'
 
 function Form({ onSubmit, fields}) {
@@ -14,14 +57,6 @@ function Form({ onSubmit, fields}) {
         onSubmit(formData);
     };
 
-    
-
-
-  /* Divide fields into two groups
-  const half = Math.ceil(fields.length / 2);
-  const firstHalfFields = fields.slice(0, half);
-  const secondHalfFields = fields.slice(half);
-*/
   return (
     <>
         <form className="form" onSubmit={handleSubmit}>
@@ -52,8 +87,9 @@ function Form({ onSubmit, fields}) {
                     );
                 }
             })}
-        </form>
+            
     <button onSubmit={handleSubmit} className="btn-submit" type="submit">Submit</button>
+        </form>
     </>
     );
 };

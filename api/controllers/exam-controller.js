@@ -93,6 +93,20 @@ const getOneSpecificExam = async (req, res) => {
 
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
+  const recievedData = req.body
+  const exam = await Exam.find({examId: recievedData.examId});
+  console.log('api call exam:', exam);
+    
+  if(exam[0].examId)
+      {
+        console.log('Exam ID already exists', exam);
+        res.status(406).json({
+          success: false,
+          message: 'The exam ID already exists'
+        })
+
+      }
+      const newExam = await Exam.createExam(recievedData)
 
     try {
       NotificationController.pushOperationsEvent({
@@ -103,17 +117,16 @@ const createExam = async (req, res) => {
       });
     } catch (error) {
       console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
-        error,
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
+        //error,
       );
     }
 
     res.status(200).json({
       success: true,
-      message: 'Create Exams API is working.',
+      message: 'Exam sucessfully created',
     });
-
-};
+  };
 
 
 
