@@ -90,23 +90,38 @@ const getOneSpecificExam = async (req, res) => {
   }
 };
 
+function checkExamId(value) {
+  if (Array.isArray(value)) {
+    // Convert the array to an object
+    const obj = Object.fromEntries(value.map((item, index) => [index, item]));
+    // Check if the resulting object contains the field 'examId'
+    if ('examId' in obj){throw new Error ("Exam ID already exists")}
+  } else if (typeof value === 'object') {
+    // Check if the object contains the field 'examId'
+    if ('examId' in value){throw new Error ("Exam ID already exists")
+  } else {
+    // Neither an array nor an object
+    throw new Error ("Value is neither Array or Object")
+  }
+}
+}
 
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
-  const recievedData = req.body
-  const exam = await Exam.find({examId: recievedData.examId});
-  console.log('api call exam:', exam);
-    
-  if(exam[0].examId)
-      {
-        console.log('Exam ID already exists', exam);
-        res.status(406).json({
-          success: false,
-          message: 'The exam ID already exists'
-        })
-
-      }
-      const newExam = await Exam.createExam(recievedData)
+  const receivedData = req.body
+  console.log("receivedData:", receivedData)
+  try{
+    const exam = await Exam.findExam({examId: receivedData.examId});
+    checkExamId(exam)
+  } catch(e) {
+    console.log('Exam ID already exists', e);
+    res.status(406).json({
+      success: false,
+      message: 'The exam ID already exists'
+    })
+  }
+      //const newExam = await Exam.createExam(recievedData)
+      //console.log('new exam: ',newExam);
 
     try {
       NotificationController.pushOperationsEvent({
@@ -127,8 +142,6 @@ const createExam = async (req, res) => {
       message: 'Exam sucessfully created',
     });
   };
-
-
 
 const updateExam = async (req, res) => {
   console.log('Update Exams endpoint reached');
@@ -242,6 +255,7 @@ const deleteExam = async function (req, res) {
     });
   }
 };
+
 module.exports = {
   getExams,
   getOnePatientExams,
@@ -250,3 +264,4 @@ module.exports = {
   updateExam,
   deleteExam,
 };
+
