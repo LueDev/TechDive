@@ -4,10 +4,10 @@ const { App } = require('@slack/bolt');
 
 const rabbitMQUrl = process.env.CLOUDAMQPS_URI;
 // const slackWebhookUrl = process.env.SLACK_WEBHOOK;
-const app = new App({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  token: process.env.SLACK_BOT_TOKEN,
-});
+// const app = new App({
+//   signingSecret: process.env.SLACK_SIGNING_SECRET,
+//   token: process.env.SLACK_BOT_TOKEN,
+// });
 
 // Function to establish RabbitMQ connection
 const connectToRabbitMQ = async () => {
@@ -31,13 +31,13 @@ const closeRabbitMQConnection = async (connection, channel) => {
   }
 };
 
-const postMessage = async (message) => {
-  await app.client.chat.postMessage({
-    token: process.env.SLACK_BOT_TOKEN,
-    channel: process.env.SLACK_CHANNEL,
-    text: `${message.message}\n${message.user}\n`,
-  });
-};
+// const postMessage = async (message) => {
+//   await app.client.chat.postMessage({
+//     token: process.env.SLACK_BOT_TOKEN,
+//     channel: process.env.SLACK_CHANNEL,
+//     text: `${message.message}\n${message.user}\n`,
+//   });
+// };
 
 const consumeMessages = async (queueName) => {
   let connection, channel;
