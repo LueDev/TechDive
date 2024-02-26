@@ -1,13 +1,14 @@
 .form {
-    margin: 130px 220px 20px 250px;
-    padding: 20px;
+    /*margin: 130px 220px 20px 250px;*/
+    padding-left: 12%;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 75%;
-    position: relative;
+    /*position: relative;*/
     display: flex;
     flex-direction: column;
     align-items: center;
+    vertical-align: middle;
+    overflow: hidden;
   
 }
 
@@ -22,13 +23,15 @@
 }
 
 .btn-submit {
-    margin-left: 58%;
-    padding: 10px 20px;
+    /*margin-left: 58%;*/
+    vertical-align: middle;
+    padding: 10px 50px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 100%;
 }
 
 .btn-submit:hover {

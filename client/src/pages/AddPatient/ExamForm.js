@@ -86,9 +86,11 @@ import './ExamForm.css';
 const ExamForm = ({update}) => {
     const patientFields = [
         { name: 'patientId', placeholder: 'Patient ID'},
-        { name: 'age', placeholder: 'age'},
-        { name: 'sex', placeholder: 'sex'},
+        { name: 'age', placeholder: 'Age'},
+        { name: 'sex', placeholder: 'Sex'},
         { name: 'bmi', placeholder: 'BMI'},
+        {name: 'height', placeholder: 'Height'},
+        {name: 'weight', placeholder: 'Weight'},
         { name: 'zipCode', placeholder: 'Zip Code'},
         { name: 'examId', placeholder: 'Exam ID'},
         { name: 'keyFindings', placeholder: 'Key Findings', type: 'textarea'},
@@ -106,7 +108,7 @@ const ExamForm = ({update}) => {
             },
                 body: JSON.stringify(formData),
         })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => console.log(data))
     };
 

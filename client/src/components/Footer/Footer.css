@@ -1,12 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
-
 .footer-container {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
     margin-top: 20px;
     border: 100px;
     position: relative;
-    left: 58%;
+    width: 80%;;
+    box-sizing: border-box;
+    left: 75%;
     transform: translateX(-50%);
+    overflow: hidden;
 }
 
 footer {
@@ -26,6 +31,7 @@ p.footer-title {
 /* container for images*/
 div.team-pics {
     display: flex;
+    flex-grow: 1;
     margin: 0px;
     padding: 10px;
     align-items: center;
