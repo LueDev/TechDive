@@ -2,7 +2,7 @@ const amqp = require('amqplib');
 require('dotenv').config();
 const { App } = require('@slack/bolt');
 
-const rabbitMQUrl = process.env.LOCAL_AMQPS;
+const rabbitMQUrl = process.env.CLOUDAMQPS_URI;
 // const slackWebhookUrl = process.env.SLACK_WEBHOOK;
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -31,11 +31,13 @@ const closeRabbitMQConnection = async (connection, channel) => {
   }
 };
 
-const postMessage = async (message) => {await app.client.chat.postMessage({
-  token: process.env.SLACK_BOT_TOKEN,
-  channel: process.env.SLACK_CHANNEL,
-  text: `${message.message}\n${message.user}\n`,
-})}
+const postMessage = async (message) => {
+  await app.client.chat.postMessage({
+    token: process.env.SLACK_BOT_TOKEN,
+    channel: process.env.SLACK_CHANNEL,
+    text: `${message.message}\n${message.user}\n`,
+  });
+};
 
 const consumeMessages = async (queueName) => {
   let connection, channel;
@@ -96,7 +98,7 @@ const NotificationController = {
         'operations',
         Buffer.from(JSON.stringify(operationData)),
       );
-      postMessage(operationData)
+      postMessage(operationData);
       console.log('Event pushed to operations queue:', operationData);
     } catch (error) {
       console.error('Failed to push event to operations queue:', error);
