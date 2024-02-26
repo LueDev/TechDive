@@ -90,39 +90,45 @@ const getOneSpecificExam = async (req, res) => {
 
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
+  const receivedData = req.body
 
-  const newExamDetails = req.body;
+  console.log("DATA PASSED TO CREATE EXAM: /n", receivedData)
+  try{
+    const exam = await Exam.findOne({examId: receivedData.examId});
+    console.log("EXAM CREATED WITH MONGO: ", exam)
+    if(exam == null)
+    {
+      const newExam = await Exam.createExam(receivedData)
 
-  const examFound = await Exam.find({ examId: newExamDetails.examId });
-
-  try {
-    if (examFound) {
-      return res.status;
+      res.status(201).json({
+        success: true,
+        message: 'Exam sucessfully created',
+      });
     }
-  } catch (err) {}
+ 
+    else{
+      {throw new Error ("Exam ID already exists")}
+    }
+  } catch(e) {
+    console.log('Exam ID already exists', e);
+    res.status(406).json({
+      success: false,
+      message: 'The exam ID already exists'
+    })
+  }
 
-  try {
     try {
-      await NotificationController.pushOperationsEvent({
+      NotificationController.pushOperationsEvent({
         message: "User has reached the home page. (endpoint = '/')",
-        endpoint: 'POST /create',
+        endpoint: "POST /create",
         user: req.user.user,
         timestamp: Date.now(),
       });
     } catch (error) {
       console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
-        error,
+        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
       );
     }
-  } catch (err) {
-    console.log('Error connecting to RabbitMQ');
-  }
-
-  res.status(200).json({
-    success: true,
-    message: 'Create Exams API is working.',
-  });
 };
 
 const updateExam = async (req, res) => {

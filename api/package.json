@@ -8,6 +8,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@slack/bolt": "^3.17.1",
     "amqplib": "^0.10.3",
     "bcrypt": "^5.1.1",
     "build": "^0.1.4",

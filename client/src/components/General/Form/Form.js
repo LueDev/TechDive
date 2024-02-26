@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import './Form.css'
 
 function Form({ onSubmit, fields}) {
@@ -14,14 +15,6 @@ function Form({ onSubmit, fields}) {
         onSubmit(formData);
     };
 
-    
-
-
-  /* Divide fields into two groups
-  const half = Math.ceil(fields.length / 2);
-  const firstHalfFields = fields.slice(0, half);
-  const secondHalfFields = fields.slice(half);
-*/
   return (
     <>
         <form className="form" onSubmit={handleSubmit}>
@@ -52,8 +45,9 @@ function Form({ onSubmit, fields}) {
                     );
                 }
             })}
-        </form>
+            
     <button onSubmit={handleSubmit} className="btn-submit" type="submit">Submit</button>
+        </form>
     </>
     );
 };

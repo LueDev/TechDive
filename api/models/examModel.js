@@ -5,7 +5,9 @@ const examSchema = new mongoose.Schema({
   examId: {type: String, required: true, unique: true},
   age: { type: Number, required: true },
   sex: { type: String, required: true },
-  bmi: { type: Number, required: true },
+  height: { type: Number, required: true },
+  weight: { type: Number, required: true },
+  bmi: { type: Number, default: 7},
   zipCode: { type: Number, required: true },
   imageURL: { type: String, required: true },
   keyFindings: { type: String, required: true },
@@ -21,6 +23,19 @@ examSchema.methods.safeFetch = function(){
   delete examObject.__v
   return examObject
 }
+
+examSchema.pre('save', function(next) {
+
+//conversions for the BMI Formula : BMI= weight (kg) / height(m)^2
+console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI PRIOR TO OP: ", this.bmi)
+const kg = parseFloat(this.weight) * 0.45359237
+const meters = parseFloat(this.height) * 0.0254
+
+this.bmi = ((kg * kg) / (meters * kg)).toFixed(2);
+console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI AFTER OP: ", this.bmi)
+
+next();
+});
 
 examSchema.statics.findByPatientId = async function(patientId){
   console.log("Exam Model Find By Patient Id Class Method called.")
@@ -39,16 +54,13 @@ examSchema.statics.findExam = async function(documentId){
   console.log("Exam Model Find By Patient Id Class Method called.")
 
   try{
-    // const convert = new ObjectId(documentId)
     const exam = await this.aggregate(
       [
         {
           $match:
-            /**
-             * query: The query in MQL.
-             */
+
             {
-              _id: "63d988ea7f953f000e82b023"
+              _id: documentId
             }
         }
       ]
@@ -82,7 +94,7 @@ examSchema.statics.deleteExam = async function (examData) {
 
   try{
     const deletedExam = await this.deleteOne({_id: examData._id})
-    return deletedExam
+    return deletedExam.safeFetch()
   }catch(err){
     console.log("Error when trying to delete exam: ", err)
     throw err
@@ -93,7 +105,8 @@ examSchema.statics.createExam = async function (examData){
   console.log("Exam Model Create exam Method called.")
 
   try{
-    const exam = new this({examData});
+    const exam = new this({...examData});
+    console.log("CALLED FROM MODEL CREATE EXAM FUNC: \n", exam, "DATA: ", examData)
     await exam.save();
     return exam.safeFetch();
 
