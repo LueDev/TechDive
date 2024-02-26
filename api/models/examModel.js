@@ -30,7 +30,7 @@ examSchema.pre('save', function(next) {
 console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI PRIOR TO OP: ", this.bmi)
 const kg = parseFloat(this.weight) * 0.45359237
 const meters = parseFloat(this.height) * 0.0254
-
+ 
 this.bmi = ((kg * kg) / (meters * kg)).toFixed(2);
 console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI AFTER OP: ", this.bmi)
 
