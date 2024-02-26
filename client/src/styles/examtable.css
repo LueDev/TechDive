@@ -13,7 +13,7 @@
     margin-right: 20px;
     flex-direction: column;
     z-index: -1;
-    position: absolute; 
+    position: absolute;
   }
   
   .profile-container {
@@ -72,14 +72,13 @@
     background-color: #f9f9f9;
     display: flex;
     justify-content: left;
-    width:auto;
+    height:250px;
     position:absolute;
-    border-radius: 20px;
 }
 
 .image-container img{
-    height: 250px;
-    width: 250x;
+    height: auto;
+    width: auto;
 }
 
 .findings-div{
@@ -91,7 +90,9 @@
     display: flex;
     justify-content: left;
     width:300px;
+    height: 250px;
     position:absolute;
+    z-index: -1;
 }
 
 .findings-div h3{
@@ -123,7 +124,7 @@
     padding: 20px;
     display: flex;
     justify-content: left;
-    width:auto;
+    width:140;
     position:absolute;
 }
 

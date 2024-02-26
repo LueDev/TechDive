@@ -3,10 +3,72 @@ import Table from 'react-bootstrap/Table';
 import '../styles/App.css'
 import { Link } from 'react-router-dom';
 import '../styles/examtable.css';
-import { useState } from 'react';
+import  HeatMap  from 'react-heatmap-grid';
+
+const calculateBMI = (weight, height) => {
+  return weight / (height * height);
+};
 
 
 
+function HeatMapTable () {
+
+  // Creating 2D grid of weights X heights
+  const weights = Array.from({ length: 10 }, (_, i) => 50 + i * 10); // 50kg to 140kg
+  const heights = Array.from({ length: 10 }, (_, i) => 150 + i * 10); // 150cm to 240cm
+  
+  // Setting Labels for our axis
+  const xLabels = weights.map((weight) => `${weight} kg`);
+  const yLabels = heights.map((height) => `${height}cm`);
+  
+  // Creating data
+  const data = heights.map((height) =>
+  weights.map((weight) => {
+    const bmi = calculateBMI(weight, height / 100); // Convert height to meters
+    return bmi
+  })
+);
+
+    const cellStyle = (background, value, min, max, data, x, y) => ({
+      
+      background: getColor(value),
+      fontSize: '10px', 
+      border: '1px solid #fff', 
+      boxSizing: 'border-box',
+  
+    });
+  
+    
+    const getColor = (bmi) => {
+      if (bmi < 18.5) return '#fc8d62'; // Under weight : orange
+      else if (bmi >= 18.5 && bmi < 25) return '#66c2a5'; // Normal : green
+      else if (bmi >= 25 && bmi < 30) return '#FDDA0D'; // Overweight : yellow
+      else return '#e78ac3'; // Obese : pink
+    };
+
+
+
+
+  return(
+    <div >
+
+    <div className='info-container' > 
+      <HeatMap xLabels={xLabels} yLabels={yLabels} data={data}
+      xLabelsStyle={{fontSize:'10px'}}
+      yLabelWidth={60}
+      cellStyle={cellStyle}
+      onClick={(x, y ) => ({}) }
+      onMouseEnterCell={(x, y) =>({})}
+      />
+    </div>
+    </div>
+  );
+  
+}
+
+
+
+  
 const ExamTable = ({ records }) => {
 
     const generatedImageUrl = 'https://thispersondoesnotexist.com/';
@@ -89,8 +151,18 @@ const ExamTable = ({ records }) => {
           </div>
           ))}
           </div>
-        </div>
-      </div>    
+
+
+          <div className='example-div' style={{marginTop:'440px', zIndex:'-1', marginLeft:'-40px'}}>
+              <div >
+                <h2 style={{marginLeft:'200px'}}>Body Mass Index</h2>  
+                <HeatMapTable/>
+              </div>
+            
+      </div>
+
+    </div>
+    </div>    
   );
 }
 
