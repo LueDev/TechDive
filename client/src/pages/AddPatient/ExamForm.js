@@ -28,12 +28,12 @@ const ExamForm = () => {
         validationSchema: Yup.object({
             patientId: Yup.string().matches(
                 /^COVID-[0-9]*$/,
-                "Invalid patient ID: Must follow the COVID-<numbers> format and is case-insensitive")
+                "Invalid patient ID: Must follow the COVID-<numbers> format")
             .required('Required'),
             age: Yup.number()
             .typeError("Invalid input: Age must be a number")
-            .min(1, 'Age must be at least 1.')
-            .max(122, 'Age must be 122 or less.') //Based on oldest living person ever documented
+            .min(1, 'Invalid input: Age must be at least 1.')
+            .max(122, 'Invalid input: Age must be 122 or less.') //Based on oldest living person ever documented
             .required('Required')
             .positive(),
             sex: Yup.string().matches(
@@ -45,26 +45,28 @@ const ExamForm = () => {
             .required('Required')
             .positive(),
             height: Yup.number()
-            .typeError("Invalid Input: Height must be a number")
+            .typeError("Invalid input: Height must be a number")
             .min(18, 'Invalid input: Height must be at least 18 inches')
             .max(108, 'Invalid input: Height cannot exceed 108 inches')
             .required('Required')
             .positive() ,
             weight: Yup.number()
-            .min(1, "Weight must be at least 1 lb")
-            .max(1400, "Weight cannot be over 1,400 lbs")
+            .typeError("Invalid input: Weight must be a number")
+            .min(1, "Invalid input: Weight must be at least 1 lb")
+            .max(1400, "Invalid input: Weight cannot be over 1,400 lbs")
             .required('Required').positive(),
             zipCode: Yup.string().matches(
                 /^[0-9]{5}$/, 
-                "Invalid zip code: Must be 5 digits long")
+                "Invalid input: Zip code must be 5 digits long")
             .required('Required'),
             examId: Yup.string().matches(
                  /^Exam-[0-9]*$/i, 
-                 "Invalid Exam ID: must follow the EXAM-<numbers> format and is case-insensitive")
+                 "Invalid exam ID: must follow the EXAM-<numbers> format")
             .required('Required'),
             keyFindings: Yup.string()
             .required('Required'),
-            brixiaScores: Yup.string().matches(/^([0-9],[0-9])(,[0-9],[0-9]){1,2}$/, 'Brixia scores must be at least 2 numbers, at most 6, and in range 0-6 (seperated by commas)')
+            brixiaScores: Yup.string().matches(
+                /^([0-9],[0-9])(,[0-9],[0-9]){1,2}$/, 'Invalid input: Brixia scores must be at least 2')
             .required('Required'),
             imageUrl: Yup.string()
             .required('Required')
