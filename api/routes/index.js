@@ -6,7 +6,7 @@ const ExamController = require('../controllers/exam-controller');
 //Get Specific Exams
 router.get('/exams/patient/:patientId', ExamController.getOnePatientExams);
 router.get('/exam/:examId', ExamController.getOneSpecificExam);
-router.get('/', authenticateToken, ExamController.getExams); //router.get('/', authenticateToken, ExamController.getExams);
+router.get('/', ExamController.getExams); //router.get('/', authenticateToken, ExamController.getExams);
 // router.get('/patient/:id', ExamController.getOnePatient); //individual exam controller with JWT: router.get('/exam/:id', authenticateToken, ExamController.getExams);
 // router.get('/exam/:id', ExamController.getOneExam); //individual exam controller with JWT: router.get('/exam/:id', authenticateToken, ExamController.getExams);
 router.patch('/exam/:id', ExamController.updateExam); //update individual exam with JWT controller: router.patch('/exam/:id', authenticateToken, ExamController.updateExam);
