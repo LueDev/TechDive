@@ -2,16 +2,7 @@
 
 .footer-container {
     display: flex;
-    flex-direction: row;
-    vertical-align: middle;
-    margin-top: 20px;
-    border: 100px;
-    position: relative;
-    width: 80%;;
-    box-sizing: border-box;
-    left: 75%;
-    transform: translateX(-50%);
-    overflow: hidden;
+    flex-direction: column;
 }
 
 footer {
@@ -26,6 +17,8 @@ footer {
 p.footer-title {
     font-size: 22px;
     font-weight: 600;
+    margin-top:2rem;
+    margin-bottom: 0rem;
 }
 
 /* container for images*/
