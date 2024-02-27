@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const examSchema = new mongoose.Schema({
-  patientId: { type: String, required: true },
-  examId: {type: String, required: true, unique: true},
-  age: { type: Number, required: true },
-  sex: { type: String, required: true },
-  bmi: { type: Number, required: true },
-  zipCode: { type: Number, required: true },
+  patientId: { type: String, required: true, match: [/^COVID-[0-9]*$/i, 'patientId must follow the COVID-<numbers> format and is case-insensitive'] },
+  examId: {type: String, required: true, unique: true, match: [/^EXAM-[0-9]*$/i, 'examId must follow the EXAM-<numbers> format and is case-insensitive']},
+  age: { type: Number, required: true, min: [1, 'Age must be strictly positive'], max: [122, 'Age cannot exceed 122'] },
+  sex: { type: String, required: true, match: [/^(M|F|X)$/, 'Sex must be M,F, or X'] },
+  bmi: { type: Number, required: true, min: [1, 'bmi must be strictly positive'], max: [100, 'bmi cannot exceed 100' ] },
+  zipCode: { type: Number, required: true, match: [/^[0-9]{5}$/, 'Zipcode must be exactly 5 digits long'] },
   imageURL: { type: String, required: true },
   keyFindings: { type: String, required: true },
-  brixiaScores: { type: String, required: true },
+  brixiaScores: { type: String, required: true, match: [ /^([0-9],[0-9])(,[0-9],[0-9]){1,2}$/, 'Brixia scores must be at least 2 numbers, at most 6, and in range 0-6 (seperated by commas)'] },
   createdAt: {type: Date, default: Date.now()},
   updatedAt: {type: Date, default: Date.now()},
   status: {type: String, default: "active"}
