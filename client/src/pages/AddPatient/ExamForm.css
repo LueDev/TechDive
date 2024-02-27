@@ -1,8 +1,4 @@
 .patient-info-title
 {
-    position: relative;
-    top: 2px; /* Adjust as needed */
-    vertical-align: middle;
-    left: 55%;
-    transform: translateX(-50%);
+    margin-bottom: 2rem;
 }
