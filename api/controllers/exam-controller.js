@@ -94,6 +94,16 @@ const getOneSpecificExam = async (req, res) => {
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
   const receivedData = req.body
+  let examPattern = /^EXAM-[0-9]*/i;
+
+  if(!receivedData.examId || !examPattern.test(receivedData.examId))
+  {
+    res.status(422).json({
+      success:false,
+      message: "Unprocessable Entity: Exam creation failed, invalid or missing exam ID"
+    });
+  }
+
   try{
     const exam = await Exam.findOne({examId: receivedData.examId});
     if(exam == null)
