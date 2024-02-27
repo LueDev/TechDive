@@ -9,7 +9,6 @@ const ExamForm = () => {
         { name: 'patientId', placeholder: 'Patient ID'},
         { name: 'age', placeholder: 'Age'},
         { name: 'sex', placeholder: 'Sex'},
-        { name: 'bmi', placeholder: 'BMI'},
         {name: 'height', placeholder: 'Height'},
         {name: 'weight', placeholder: 'Weight'},
         { name: 'zipCode', placeholder: 'Zip Code'},
@@ -31,42 +30,44 @@ const ExamForm = () => {
                 "Invalid patient ID: Must follow the COVID-<numbers> format")
             .required('Required'),
             age: Yup.number()
-            .typeError("Invalid input: Age must be a number")
+            .typeError("Invalid input: Age must be a number.")
             .min(1, 'Invalid input: Age must be at least 1.')
             .max(122, 'Invalid input: Age must be 122 or less.') //Based on oldest living person ever documented
             .required('Required')
-            .positive(),
+            .positive('Invalid input: Age must be a positive number.'),
             sex: Yup.string().matches(
                 /^(M|F|X)$/,
                 "Invalid marker: Must be M, F, or X")
             .required('Required'),
+            /* Will be caculated automatically and connected to the DB
             bmi: Yup.number()
-            .typeError("Invalid input: BMI must be a number") //incoporate formula: bmi = weight(lb)/height^2 * 703
+            .typeError("Invalid input: BMI must be a number")
             .required('Required')
-            .positive(),
+            .positive(),*/
             height: Yup.number()
-            .typeError("Invalid input: Height must be a number")
-            .min(18, 'Invalid input: Height must be at least 18 inches')
-            .max(108, 'Invalid input: Height cannot exceed 108 inches')
+            .typeError("Invalid input: Height must be a number.")
+            .min(18, 'Invalid input: Height must be at least 18 inches.')
+            .max(108, 'Invalid input: Height cannot exceed 108 inches.')
             .required('Required')
-            .positive() ,
+            .positive('Invalid input: Height must be a positive number.') ,
             weight: Yup.number()
-            .typeError("Invalid input: Weight must be a number")
-            .min(1, "Invalid input: Weight must be at least 1 lb")
-            .max(1400, "Invalid input: Weight cannot be over 1,400 lbs")
-            .required('Required').positive(),
+            .typeError("Invalid input: Weight must be a number.")
+            .min(1, "Invalid input: Weight must be at least 1 lb.")
+            .max(1400, "Invalid input: Weight cannot be over 1,400 lbs.")
+            .required('Required')
+            .positive("Invalid input: Weight must be a positive number."),
             zipCode: Yup.string().matches(
                 /^[0-9]{5}$/, 
-                "Invalid input: Zip code must be 5 digits long")
+                "Invalid input: Zip code must be 5 digits long.")
             .required('Required'),
             examId: Yup.string().matches(
                  /^Exam-[0-9]*$/i, 
-                 "Invalid exam ID: must follow the EXAM-<numbers> format")
+                 "Invalid exam ID: must follow the EXAM-<numbers> format/")
             .required('Required'),
             keyFindings: Yup.string()
             .required('Required'),
             brixiaScores: Yup.string().matches(
-                /^([0-9],[0-9])(,[0-9],[0-9]){1,2}$/, 'Invalid input: Brixia scores must be at least 2')
+                /^\d(?:,\d){0,6}$/, 'Invalid input: Brixia scores must be at least 1, at most 6 (i.e: 1,2,3) OR values are out of range [0-6].')
             .required('Required'),
             imageUrl: Yup.string()
             .required('Required')
