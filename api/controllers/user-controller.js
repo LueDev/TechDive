@@ -111,9 +111,9 @@ const authenticateToken = (req, res, next) => {
   // console.log(req.headers.authorization);
 
   if (!authHeader) {
-    res.json({ message: 'Bearer token not present.', req: req });
+    res.json({ message: 'Bearer token not present.', req: authHeader });
   }
-  //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index, pos 1.
+  //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index.
   const token = authHeader && authHeader.split(' ')[1];
 
   //Unathorized / Unauthenticated

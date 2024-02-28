@@ -3,6 +3,7 @@ require('dotenv').config();
 const { App } = require('@slack/bolt');
 
 const rabbitMQUrl = process.env.CLOUDAMQPS_URI;
+// Disabled until final reveal when .env is added to the .gitignore while not testing
 // const slackWebhookUrl = process.env.SLACK_WEBHOOK;
 // const app = new App({
 //   signingSecret: process.env.SLACK_SIGNING_SECRET,

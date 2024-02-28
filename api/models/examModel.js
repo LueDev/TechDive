@@ -27,12 +27,12 @@ examSchema.methods.safeFetch = function(){
 examSchema.pre('save', function(next) {
 
 //conversions for the BMI Formula : BMI= weight (kg) / height(m)^2
-console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI PRIOR TO OP: ", this.bmi)
+// console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI PRIOR TO OP: ", this.bmi)
 const kg = parseFloat(this.weight) * 0.45359237
 const meters = parseFloat(this.height) * 0.0254
  
 this.bmi = ((kg * kg) / (meters * kg)).toFixed(2);
-console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI AFTER OP: ", this.bmi)
+// console.log("RIGHT BEFORE THE SAVE FUNCTION. BMI AFTER OP: ", this.bmi)
 
 next();
 });
@@ -48,30 +48,6 @@ examSchema.statics.findByPatientId = async function(patientId){
     throw err
   }
 }
-
-
-examSchema.statics.findExam = async function(documentId){
-  console.log("Exam Model Find By Patient Id Class Method called.")
-
-  try{
-    const exam = await this.aggregate(
-      [
-        {
-          $match:
-
-            {
-              _id: documentId
-            }
-        }
-      ]
-    )
-    return exam[0]
-  }catch(err){
-    console.log("Error when finding exam by ID ", err)
-    throw err
-  }
-}
-
 
 examSchema.statics.updateExam = async function(updatedExam){
   console.log("Exam Model Create Exam Class Method called.")
@@ -93,8 +69,9 @@ examSchema.statics.deleteExam = async function (examData) {
   console.log("Exam Model Delete Exam Instance Method called")
 
   try{
+    // const foundExam = await this.findOne({_id: examData.id})
     const deletedExam = await this.deleteOne({_id: examData._id})
-    return deletedExam.safeFetch()
+    return deletedExam
   }catch(err){
     console.log("Error when trying to delete exam: ", err)
     throw err

@@ -31,7 +31,7 @@ const getOnePatientExams = async (req, res) => {
   console.log(`Exams for patient ${patientId}`);
 
   try {
-    const exams = await Exam.find({ patientId: patientId });
+    const exams = await Exam.findOne({ patientId: patientId });
 
     try {
       NotificationController.pushOperationsEvent({
@@ -59,16 +59,17 @@ const getOnePatientExams = async (req, res) => {
 
 // Retrieving Specific Exams
 const getOneSpecificExam = async (req, res) => {
-  const examId = req.params.examid;
+  const examId = req.params.examId;
 
-  const exam = await Exam.findExam({ examId: examId });
+  const exam = await Exam.findOne({examId: examId});
 
   console.log(exam)
-  // if (exam.examId == null) {
-  //   return res.status(500).json({ message: 'Error fetching exams' });
-  // }
 
-  try {
+  try{
+
+    if(exam == null){throw new Error("Exam not found")}
+    
+    try {
     NotificationController.pushOperationsEvent({
       message: 'User has retrieved a single exam',
       endpoint: 'GET /exam/:examId',
@@ -82,10 +83,16 @@ const getOneSpecificExam = async (req, res) => {
       'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
     );
   }
-  return res.status(200).json({
+  res.status(200).json({
     success: true,
     exam: exam,
   });
+  }catch(err){
+    res.status(404).json({
+      success: false,
+      exam: "Not found",
+    });
+  }
 };
 
 const createExam = async (req, res) => {

@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String }
 });
 
-userSchema.index({ id: 1 });
+userSchema.index({ internalid: 1 });
  
 // Titlecase the firstname and lastname
 function toTitleCase(str) {
