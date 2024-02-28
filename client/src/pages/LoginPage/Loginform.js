@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 import '../../styles/loginpage.css';
 
 const LoginForm = ({ toggleImagePosition }) => {
@@ -14,11 +15,36 @@ const LoginForm = ({ toggleImagePosition }) => {
     setLoginForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login Form Submitted', loginForm);
-    // Here, add your login logic, then navigate on success
-    navigate('/home'); // Adjust the navigation target as needed
+  // const handleLoginSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log('Login Form Submitted', loginForm);
+  //   // Here, add your login logic, then navigate on success
+  //   navigate('/home'); // Adjust the navigation target as needed
+  // };
+
+  const handleLoginSubmit = async (values) => {
+    const formData = {
+      email: values.email,
+      password: values.password,
+    };
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_LOCALSERVER}/users/login`,
+        formData,
+      );
+      console.log('SUCCESS WITH AXIOS: ', response.data);
+      localStorage.setItem('token', response.data.accessToken);
+      navigate('/home');
+      return
+    } catch (error) {
+      console.log(
+        'UNSUCCESSFUL LOGIN: ',
+        error.response ? error.response.data : 'An error occurred',
+      );
+      // setErrorMessage(
+      //   'Login failed. Please check your credentials and try again.',
+      // );
+    }
   };
 
   return (
