@@ -3,20 +3,41 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
 
 function ForgotPasswordModal({ show, handleClose }) {
-  
-    const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Completed: ", e);
-    handleClose()
+    console.log('Completed: ', email);
+
+    fetch(`${process.env.REACT_APP_LOCALSERVER}/auth/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }), // Assuming 'email' is the variable containing the email address
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Email sent successfully: ', data);
+      })
+      .catch((error) => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+
+    handleClose();
   };
 
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState('');
 
   const handleChangeEmail = (e) => {
-    setEmail(() => e.target.value)
-  }
+    setEmail(() => e.target.value);
+  };
 
   return (
     <>
@@ -40,8 +61,7 @@ function ForgotPasswordModal({ show, handleClose }) {
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
-            >
-            </Form.Group>
+            ></Form.Group>
             <Button variant="primary" type="submit">
               Submit
             </Button>
