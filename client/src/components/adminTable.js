@@ -77,7 +77,7 @@ const AdminTable = ({ records }) => {
                   </button>
                   <button
                     className="actionButton"
-                    onClick={() => deleteExamById(item.examId)}
+                    onClick={() => deleteExamById({...item})}
                   >
                     <img
                       className="deletePatient"

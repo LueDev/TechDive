@@ -52,8 +52,8 @@ userSchema.methods.safeFetch = function () {
 
 userSchema.statics.createUser = async function (userData) {
   try {
-    const { password, admin, ...rest } = userData;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const { admin, ...rest } = userData;
+    // const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     if (admin === true) {
       const permissions = [
@@ -66,7 +66,7 @@ userSchema.statics.createUser = async function (userData) {
       const user = new this({
         ...rest,
         permissions: roles,
-        password: hashedPassword,
+        // password: hashedPassword,
       });
       await user.save();
       return user;
@@ -75,7 +75,7 @@ userSchema.statics.createUser = async function (userData) {
       const user = new this({
         ...rest,
         permissions: permissions,
-        password: hashedPassword,
+        // password: hashedPassword,
       });
       await user.save();
       return user;
@@ -86,29 +86,31 @@ userSchema.statics.createUser = async function (userData) {
 };
 
 userSchema.statics.LoginUser = async function (email, password) {
-  try {
-    // Find the user by email
+  // Find the user by email
     const user = await this.findOne({ email });
+    console.log("USER MODEL - MONGO USER FOUND: ", user)
 
     if (!user) {
       throw new Error('User not found');
     }
 
     const storedHashedPassword = user.password;
+    console.log("USER MODEL-STORED HASHED PW: ", storedHashedPassword)
     const isPasswordValid = await bcrypt.compare(
       password,
       storedHashedPassword,
     );
 
+    console.log("USER MODEL - isPasswordValid Result: ", isPasswordValid)
+
     if (isPasswordValid) {
       console.log('Login successful');
-      return user.safeFetch(); //could've used safeFetch(). TODO: ADD SAFEFETCH() HERE
+      return user; //could've used safeFetch(). TODO: ADD SAFEFETCH() HERE
     } else {
       console.log('Invalid credentials');
+      throw new Error('User Model Login Error - Invalid Credentials');
     }
-  } catch (error) {
-    throw new Error('User Model Login Error - Internal Server Error');
-  }
+  
 };
 
 // Whenever we use the save function, this function below will encrypt the user password if it's been changed.
@@ -116,11 +118,13 @@ userSchema.pre('save', async function (next) {
   const user = this;
   if (!user.isModified('password')) return next();
 
-  bcrypt.hash(user.password, saltRounds, (err, hash) => {
-    if (err) return next(err);
-    user.password = hash;
+  try {
+    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+    user.password = hashedPassword;
     next();
-  });
+  } catch (error) {
+    return next(error);
+  }
 });
 
 const User = mongoose.model('User', userSchema);

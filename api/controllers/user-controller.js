@@ -96,9 +96,10 @@ const loginUser = async (req, res) => {
       console.log('Error connecting to RabbitMQ: ', err);
     }
 
-    res.status(200).json({ success: true, accessToken: accessToken });
+    res.status(200).json({ success: true, accessToken: accessToken, user: userLoggedIn });
   } catch {
     res.status(500).json({
+      success: "false",
       error: 'User Login Error - Invalid Credentials',
     });
   }

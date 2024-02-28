@@ -78,13 +78,13 @@ examSchema.statics.updateExam = async function (updatedExam) {
     throw err;
   }
 };
-examSchema.statics.deleteExam = async function (examData) {
+examSchema.statics.deleteExam = async function (examId) {
   console.log('Exam Model Delete Exam Instance Method called');
   try {
-    const deletedExam = await this.deleteOne({ _id: examData });
-    return deletedExam.safeFetch();
+    const deletedExam = await this.deleteOne({ _id: examId });
+    return true
   } catch (err) {
-    console.log('Error when trying to delete exam: ', err);
+    console.log('EXAM MODEL - Error when trying to delete exam: ', err);
     throw err;
   }
 };

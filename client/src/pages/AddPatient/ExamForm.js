@@ -11,10 +11,6 @@ const ExamForm = () => {
     { name: 'sex', placeholder: 'Sex' },
     { name: 'height', placeholder: 'Height' },
     { name: 'weight', placeholder: 'Weight' },
-    { name: 'age', placeholder: 'age' },
-    { name: 'sex', placeholder: 'sex' },
-    { name: 'height', placeholder: 'height in inches' },
-    { name: 'weight', placeholder: 'weight in pounds' },
     { name: 'zipCode', placeholder: 'Zip Code' },
     { name: 'examId', placeholder: 'Exam ID' },
     { name: 'keyFindings', placeholder: 'Key Findings', type: 'textarea' },
@@ -83,8 +79,8 @@ const ExamForm = () => {
 
   const handleUserSubmit = (event) => {
     event.preventDefault();
-    console.log('user Data:', formik.values);
-    fetch('http://localhost:9000/create', {
+    console.log('user Data:', JSON.stringify(formik.values));
+    fetch(`${process.env.REACT_APP_LOCALSERVER}/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

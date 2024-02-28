@@ -85,7 +85,7 @@ const NotificationController = {
         newRegistration: userData,
       });
     } catch (error) {
-      console.error('Failed to push event to registration queue:', error);
+      // console.error('Failed to push event to registration queue:', error);
       throw error;
     }
   },
@@ -101,7 +101,7 @@ const NotificationController = {
       postMessage(operationData);
       console.log('Event pushed to operations queue:', operationData);
     } catch (error) {
-      console.error('Failed to push event to operations queue:', error);
+      // console.error('Failed to push event to operations queue:', error);
       throw error;
     }
   },

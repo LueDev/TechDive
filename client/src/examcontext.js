@@ -25,14 +25,16 @@ const ExamProvider = ({ children }) => {
       });
   };
 
-  const deleteExamById = async (examId) => {
+  const deleteExamById = async (examData) => {
+
+    // console.log("EXAM CONTEXT DELETE FUNC: ", examId)
     if (window.confirm('Are you sure you want to delete this exam?')) {
       try {
         await axios.delete(
-          `${process.env.REACT_APP_LOCALSERVER}/admin/exams/${examId}`,
+          `${process.env.REACT_APP_LOCALSERVER}/admin/exams/${examData.examId}`,
         );
         setExamData((prevExams) =>
-          prevExams.filter((exam) => exam.examId !== examId),
+          prevExams.filter((exam) => exam.examId !== examData.examId),
         );
       } catch (error) {
         console.error('Error deleting exam:', error);

@@ -62,12 +62,10 @@ const getOnePatientExams = async (req, res) => {
 const getOneSpecificExam = async (req, res) => {
   const examId = req.params.examid;
 
-  const exam = await Exam.findExam({ examId: examId });
+  const exam = await Exam.findOne({ examId: examId });
 
   console.log(exam);
-  // if (exam.examId == null) {
-  //   return res.status(500).json({ message: 'Error fetching exams' });
-  // }
+
 
   try {
     NotificationController.pushOperationsEvent({
@@ -144,7 +142,7 @@ const updateExam = async (req, res) => {
     const examIdentifier = req.params.id;
     const updateData = req.body;
 
-    const oldExamDetails = await Exam.findExam({ examId: updateData.examId });
+    const oldExamDetails = await Exam.findOne({ examId: updateData.examId });
 
     const updatedExam = await Exam.findOneAndUpdate(
       { examId: examIdentifier },
@@ -172,7 +170,7 @@ const updateExam = async (req, res) => {
       } catch (error) {
         console.log(
           'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
-          error,
+          // error,
         );
       }
     } catch (err) {
@@ -201,11 +199,12 @@ const updateExam = async (req, res) => {
 
 const deleteExam = async function (req, res) {
   try {
-    const id = req.params.id;
+    const id = req.params.id
 
-    console.log(id);
-    const examToDelete = await Exam.findExam(id);
-    const deletedExam = await Exam.deleteExam(id);
+    console.log("EXAM CONTROLLER PARAM ID RECEIVED: ", id);
+    const examFound = await Exam.findOne({examId: id});
+    console.log(examFound)
+    const deletedExam = await Exam.deleteExam(examFound._id);
 
     if (!deletedExam) {
       // If null, meaning no document was found/deleted
@@ -236,7 +235,7 @@ const deleteExam = async function (req, res) {
     res.status(200).json({
       success: true,
       message: 'Exam deleted successfully',
-      exam: examToDelete,
+      exam: examFound,
     });
   } catch (error) {
     console.error(error);
