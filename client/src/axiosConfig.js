@@ -1,12 +1,14 @@
 import axios from 'axios';
 
 const getJwtTokenFromCookie = () => {
-    const cookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('jwt='));
-    if (cookie) {
-      return cookie.split('=')[1];
-    }
-    return null;
-  };
+  const cookie = document.cookie
+    .split(';')
+    .find((cookie) => cookie.trim().startsWith('jwt='));
+  if (cookie) {
+    return cookie.split('=')[1];
+  }
+  return null;
+};
 
 const setupAxiosInterceptors = () => {
   axios.interceptors.request.use(
@@ -19,7 +21,7 @@ const setupAxiosInterceptors = () => {
     },
     function (error) {
       return Promise.reject(error);
-    }
+    },
   );
 };
 

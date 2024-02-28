@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "../../styles/loginpage.css";
+import '../../styles/loginpage.css';
 
-const LoginForm = ({toggleImagePosition}) => {
+const LoginForm = ({ toggleImagePosition }) => {
   const navigate = useNavigate();
   const [loginForm, setLoginForm] = useState({
     email: '',
@@ -11,7 +11,7 @@ const LoginForm = ({toggleImagePosition}) => {
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
-    setLoginForm(prev => ({ ...prev, [name]: value }));
+    setLoginForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleLoginSubmit = (e) => {
@@ -46,13 +46,23 @@ const LoginForm = ({toggleImagePosition}) => {
           <label>
             <input type="checkbox" name="remember" /> Remember me
           </label>
-          <p style={{color:'blue', cursor:'pointer'}}>Forgot Password?</p>
+          <p style={{ color: 'blue', cursor: 'pointer' }}>Forgot Password?</p>
         </div>
         <button type="submit">Sign In</button>
         {/* If you have Google Sign-In implemented */}
-        <button type="button" onClick={() => navigate('/home')}>Sign In with Google</button>
+        <button type="button" onClick={() => navigate('/home')}>
+          Sign In with Google
+        </button>
       </form>
-      <p>Don't have an account? <span style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign Up</span></p>
+      <p>
+        Don't have an account?{' '}
+        <span
+          style={{ color: 'blue', cursor: 'pointer' }}
+          onClick={toggleImagePosition}
+        >
+          Sign Up
+        </span>
+      </p>
     </div>
   );
 };

@@ -10,12 +10,11 @@ import ExamForm from './pages/AddPatient/ExamForm';
 import NotFound from './pages/NotFound/NotFound';
 import AdminPage from './pages/Admin/Admin';
 import SplitPage from './pages/LoginPage/splitpage'; // Assuming this is the correct path
-import PatientDetails from "./pages/PatientDetails/patientdetails";
+import PatientDetails from './pages/PatientDetails/patientdetails';
 
 import PatientDetails from './pages/PatientDetails/patientdetails';
 import Footer from './components/Footer/Footer.js';
-import DashboardChart from "./pages/dashboard/dashboard.js";
-
+import DashboardChart from './pages/dashboard/dashboard.js';
 
 function App() {
   return (

@@ -1,29 +1,29 @@
 // keeps track of the patient that was cliced on
 import React, { createContext, useState, useEffect } from 'react';
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const ExamContext = createContext();
 
-
 const ExamProvider = ({ children }) => {
-
   const [examData, setExamData] = useState([]);
   const navigate = useNavigate();
 
   const getExams = async () => {
-    await axios.get(`${process.env.REACT_APP_LOCALSERVER}/`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }).then(response => {
-      console.log('Response from protected route:', response);
-      setExamData([...response.data.exams]);
-
-    }).catch(error => {
-      console.error('Error accessing protected route:', error.response.data);
-      navigate('/')
-    });
-  }
+    await axios
+      .get(`${process.env.REACT_APP_LOCALSERVER}/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response) => {
+        console.log('Response from protected route:', response);
+        setExamData([...response.data.exams]);
+      })
+      .catch((error) => {
+        console.error('Error accessing protected route:', error.response.data);
+        navigate('/');
+      });
+  };
 
   const deleteExamById = async (examId) => {
     if (window.confirm('Are you sure you want to delete this exam?')) {
@@ -58,17 +58,20 @@ const ExamProvider = ({ children }) => {
     }
   };
 
-
   useEffect(() => {
     //MUST name .env vars with the prefix REACT_APP_ to call with React components.
-    console.log(examData)
-        
-}, []);
-
+    console.log(examData);
+  }, []);
 
   return (
     <ExamContext.Provider
-      value={{ examData, setExamData, getExams, deleteExamById, updateExamById}}
+      value={{
+        examData,
+        setExamData,
+        getExams,
+        deleteExamById,
+        updateExamById,
+      }}
     >
       {children}
     </ExamContext.Provider>

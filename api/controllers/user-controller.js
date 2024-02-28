@@ -35,8 +35,9 @@ const registerUser = async (req, res) => {
     const newUser = await User.createUser(userSignUpDetails);
     const payload = { user: newUser };
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
-    const options = { algorithm: 'HS256', 
-      // expiresIn: '15m' 
+    const options = {
+      algorithm: 'HS256',
+      // expiresIn: '15m'
     };
     const accessToken = jwt.sign(payload, secretKey, options);
 
@@ -57,10 +58,9 @@ const registerUser = async (req, res) => {
       console.log('Error connecting to RabbitMQ: ', err);
     }
 
-    res.status(201)
-    .json({ success: true, accessToken: accessToken });
-  } catch(error) {
-    console.log("Error with registration: ", error)
+    res.status(201).json({ success: true, accessToken: accessToken });
+  } catch (error) {
+    console.log('Error with registration: ', error);
     res.status(500).json({
       success: false,
       message: 'User Registration Error',
@@ -96,9 +96,7 @@ const loginUser = async (req, res) => {
       console.log('Error connecting to RabbitMQ: ', err);
     }
 
-    res
-      .status(200)
-      .json({ success: true, accessToken: accessToken});
+    res.status(200).json({ success: true, accessToken: accessToken });
   } catch {
     res.status(500).json({
       error: 'User Login Error - Invalid Credentials',

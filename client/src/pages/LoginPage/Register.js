@@ -1,20 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from "axios"
-import RoleSelector from "./RoleSelector"
+import axios from 'axios';
+import RoleSelector from './RoleSelector';
 import '../../styles/loginpage.css';
 import { useEffect } from 'react';
 
 const RegisterForm = ({ toggleImagePosition }) => {
-
   const formik = useFormik({
     initialValues: {
       firstname: '',
       lastname: '',
       email: '',
       password: '',
-      selectedRole: "",
+      selectedRole: '',
     },
     validationSchema: Yup.object({
       firstname: Yup.string()
@@ -32,19 +31,28 @@ const RegisterForm = ({ toggleImagePosition }) => {
         .matches(/^[\p{L}]+$/u, "Can't contain non-letter unicode characters")
         .required('Required'),
       email: Yup.string()
-      .email('Invalid email address')
-      .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, "Invalid email address")
-      .required('Required')
-      .test('email-unique', 'Email address is already taken', async function(value) {
-        try {
-          const response = await axios.get(`${process.env.REACT_APP_LOCALSERVER}/users/checkEmail/${value}`);
-          console.log(response.data)
-          return response.data// `true` if email is available, `false` otherwise
-        } catch (error) {
-          console.error('Error checking email availability:', error);
-          return false; // Return `false` in case of error
-        }
-      }),
+        .email('Invalid email address')
+        .matches(
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/,
+          'Invalid email address',
+        )
+        .required('Required')
+        .test(
+          'email-unique',
+          'Email address is already taken',
+          async function (value) {
+            try {
+              const response = await axios.get(
+                `${process.env.REACT_APP_LOCALSERVER}/users/checkEmail/${value}`,
+              );
+              console.log(response.data);
+              return response.data; // `true` if email is available, `false` otherwise
+            } catch (error) {
+              console.error('Error checking email availability:', error);
+              return false; // Return `false` in case of error
+            }
+          },
+        ),
       password: Yup.string()
         .min(8, 'Password must be at least 8 characters long')
         .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
@@ -55,31 +63,34 @@ const RegisterForm = ({ toggleImagePosition }) => {
           'Password must contain at least one special character',
         )
         .required('Required'),
-      selectedRole: Yup.string()
-          .required("Required")
+      selectedRole: Yup.string().required('Required'),
     }),
     onSubmit: () => {
-    
-      axios.post(`${process.env.REACT_APP_LOCALSERVER}/users/register`, formik.values)
+      axios
+        .post(
+          `${process.env.REACT_APP_LOCALSERVER}/users/register`,
+          formik.values,
+        )
         // .then((res) => res.json())
         .then((data) => {
           // alert('Registered Successfully. Redirecting to Home page');
-          console.log("SUCCESS WITH AXIOS: ", data);
-          localStorage.setItem('token', data.data.accessToken)
+          console.log('SUCCESS WITH AXIOS: ', data);
+          localStorage.setItem('token', data.data.accessToken);
           // console.log(sessionStorage.getItem('token'))
-          navigate('/home')
+          navigate('/home');
         })
         .catch((err) => {
           console.log('UNSUCCESSFUL REGISTRATION: ', err);
-        });       
-
+        });
     },
   });
 
   // navigate('/'); // Navigate to the home page or dashboard
   const navigate = useNavigate();
 
-  useEffect(()=>{console.log(formik.values)})
+  useEffect(() => {
+    console.log(formik.values);
+  });
 
   return (
     <div className="register-form">
@@ -133,11 +144,13 @@ const RegisterForm = ({ toggleImagePosition }) => {
           <span className="formik-error">{formik.errors.password}</span>
         ) : null}
 
-          <RoleSelector 
-            selectedButton={formik.values.selectedRole}
-            onSelect={(buttonName) => formik.setFieldValue('selectedRole', buttonName)}  
-          />
-          {formik.touched.selectedRole && formik.errors.selectedRole ? (
+        <RoleSelector
+          selectedButton={formik.values.selectedRole}
+          onSelect={(buttonName) =>
+            formik.setFieldValue('selectedRole', buttonName)
+          }
+        />
+        {formik.touched.selectedRole && formik.errors.selectedRole ? (
           <span className="formik-error">{formik.errors.selectedRole}</span>
         ) : null}
 
@@ -146,7 +159,13 @@ const RegisterForm = ({ toggleImagePosition }) => {
       </form>
 
       <p>
-        Already have an account? <span style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign In</span>
+        Already have an account?{' '}
+        <span
+          style={{ color: 'blue', cursor: 'pointer' }}
+          onClick={toggleImagePosition}
+        >
+          Sign In
+        </span>
       </p>
     </div>
   );

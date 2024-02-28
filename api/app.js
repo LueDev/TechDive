@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(logger('dev'));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));

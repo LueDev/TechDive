@@ -2,19 +2,19 @@
 import React from 'react';
 import '../styles/mystyle.css';
 import { NavLink } from 'react-router-dom';
-import { TbActivityHeartbeat } from "react-icons/tb";
-import { BsPerson } from "react-icons/bs";
-import { BsClipboard2Plus } from "react-icons/bs";
-import { IoFolderOutline } from "react-icons/io5";
-import { SiWorldhealthorganization } from "react-icons/si";
+import { TbActivityHeartbeat } from 'react-icons/tb';
+import { BsPerson } from 'react-icons/bs';
+import { BsClipboard2Plus } from 'react-icons/bs';
+import { IoFolderOutline } from 'react-icons/io5';
+import { SiWorldhealthorganization } from 'react-icons/si';
 
 const Sidebar = () => {
   const lists = [
-    { id: 1, text: "Home", icon: <TbActivityHeartbeat/>, to: "/home"},
-    { id: 2, text: "Admin", icon: <BsPerson/>, to: "/admin"},
-    { id: 3, text: "Add Patient", icon: <BsClipboard2Plus/> },
-    { id: 4, text: "File Processing", icon: <IoFolderOutline/> },
-    { id: 5, text: "Patient Details", icon: <BsPerson/>, to: "/patients" }
+    { id: 1, text: 'Home', icon: <TbActivityHeartbeat />, to: '/home' },
+    { id: 2, text: 'Admin', icon: <BsPerson />, to: '/admin' },
+    { id: 3, text: 'Add Patient', icon: <BsClipboard2Plus /> },
+    { id: 4, text: 'File Processing', icon: <IoFolderOutline /> },
+    { id: 5, text: 'Patient Details', icon: <BsPerson />, to: '/patients' },
   ];
 
   return (
@@ -25,10 +25,10 @@ const Sidebar = () => {
       </div>
       <ul>
         {lists.map((list) => (
-          <li key={list.id} >
-            <NavLink 
-              to={list.to} 
-              activeClassName="active-link" 
+          <li key={list.id}>
+            <NavLink
+              to={list.to}
+              activeClassName="active-link"
               className="sidebar-link"
               end
             >

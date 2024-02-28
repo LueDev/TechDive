@@ -64,7 +64,7 @@ const getOneSpecificExam = async (req, res) => {
 
   const exam = await Exam.findExam({ examId: examId });
 
-  console.log(exam)
+  console.log(exam);
   // if (exam.examId == null) {
   //   return res.status(500).json({ message: 'Error fetching exams' });
   // }
@@ -91,52 +91,51 @@ const getOneSpecificExam = async (req, res) => {
 
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
-  const receivedData = req.body
+  const receivedData = req.body;
   let examPattern = /^EXAM-[0-9]*/i;
 
-  if(!receivedData.examId || !examPattern.test(receivedData.examId))
-  {
+  if (!receivedData.examId || !examPattern.test(receivedData.examId)) {
     res.status(422).json({
-      success:false,
-      message: "Unprocessable Entity: Exam creation failed, invalid or missing exam ID"
+      success: false,
+      message:
+        'Unprocessable Entity: Exam creation failed, invalid or missing exam ID',
     });
   }
 
-  try{
-    const exam = await Exam.findOne({examId: receivedData.examId});
-    if(exam == null)
-    {
-      const newExam = await Exam.createExam(receivedData)
+  try {
+    const exam = await Exam.findOne({ examId: receivedData.examId });
+    if (exam == null) {
+      const newExam = await Exam.createExam(receivedData);
       res.status(201).json({
         success: true,
         message: 'Exam sucessfully created',
       });
+    } else {
+      {
+        throw new Error('Exam ID already exists');
+      }
     }
-
-    else{
-      {throw new Error ("Exam ID already exists")}
-    }
-  } catch(e) {
+  } catch (e) {
     console.log('Exam ID already exists', e);
     res.status(406).json({
       success: false,
-      message: 'The exam ID already exists'
-    })
+      message: 'The exam ID already exists',
+    });
   }
 
-    try {
-      NotificationController.pushOperationsEvent({
-        message: "User has reached the home page. (endpoint = '/')",
-        endpoint: "POST /create",
-        user: req.user.user,
-        timestamp: Date.now(),
-      });
-    } catch (error) {
-      console.log(
-        'RabbitMQ Is Offline or Authorize Token is not set on the route: '
-      );
-    }
-  };
+  try {
+    NotificationController.pushOperationsEvent({
+      message: "User has reached the home page. (endpoint = '/')",
+      endpoint: 'POST /create',
+      user: req.user.user,
+      timestamp: Date.now(),
+    });
+  } catch (error) {
+    console.log(
+      'RabbitMQ Is Offline or Authorize Token is not set on the route: ',
+    );
+  }
+};
 
 const updateExam = async (req, res) => {
   console.log('Update Exams endpoint reached');
@@ -256,4 +255,3 @@ module.exports = {
   updateExam,
   deleteExam,
 };
-

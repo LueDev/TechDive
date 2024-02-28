@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const {v4: uuidv4} = require('uuid')
+const { v4: uuidv4 } = require('uuid');
 
 const userSchema = new mongoose.Schema({
-  internalid: { type: String, default: uuidv4()}, 
+  internalid: { type: String, default: uuidv4() },
   firstname: { type: String, lowercase: true, required: true },
   lastname: { type: String, lowercase: true, required: true },
   email: { type: String, required: true, lowercase: true },
@@ -25,11 +25,11 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, immutable: true, default: () => Date.now() },
   updatedAt: { type: Date, default: () => Date.now() },
   permissions: [{ type: String }],
-  role: { type: String }
+  role: { type: String },
 });
 
 userSchema.index({ id: 1 });
- 
+
 // Titlecase the firstname and lastname
 function toTitleCase(str) {
   return str.replace(/\b\w/g, (match) => match.toUpperCase());
@@ -37,17 +37,17 @@ function toTitleCase(str) {
 
 // Best to use instance methods to isolate return data to what is safe/relevant
 userSchema.methods.safeFetch = function () {
-  const userObject = this.toObject()
-  userObject.firstname = toTitleCase(userObject.firstname)
-  userObject.lastname = toTitleCase(userObject.lastname)
-  delete userObject._id
-  delete userObject.admin
-  delete userObject.password
-  delete userObject.permissions
-  delete userObject.createdAt
-  delete userObject.updatedAt
-  delete userObject.__v
-  return userObject
+  const userObject = this.toObject();
+  userObject.firstname = toTitleCase(userObject.firstname);
+  userObject.lastname = toTitleCase(userObject.lastname);
+  delete userObject._id;
+  delete userObject.admin;
+  delete userObject.password;
+  delete userObject.permissions;
+  delete userObject.createdAt;
+  delete userObject.updatedAt;
+  delete userObject.__v;
+  return userObject;
 };
 
 userSchema.statics.createUser = async function (userData) {
@@ -94,8 +94,11 @@ userSchema.statics.LoginUser = async function (email, password) {
       throw new Error('User not found');
     }
 
-    const storedHashedPassword = user.password
-    const isPasswordValid = await bcrypt.compare(password, storedHashedPassword);
+    const storedHashedPassword = user.password;
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      storedHashedPassword,
+    );
 
     if (isPasswordValid) {
       console.log('Login successful');

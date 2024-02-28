@@ -1,21 +1,21 @@
 .main-header {
-    width: 100%;
-    background-color: #FFF; /* or any color you prefer */
-    /*padding: 10px 20px;
+  width: 100%;
+  background-color: #fff; /* or any color you prefer */
+  /*padding: 10px 20px;
     /*box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* optional: adds a subtle shadow for depth */
-    z-index: 1000; /* ensures the header stays above other content */
-    position: fixed; /* keeps the header at the top */
-    top: 0;
-    left: 0;
-  }
-  
-  /* HeaderBar.css */
+  z-index: 1000; /* ensures the header stays above other content */
+  position: fixed; /* keeps the header at the top */
+  top: 0;
+  left: 0;
+}
+
+/* HeaderBar.css */
 
 .header-nav {
-    background-color: rgb(248, 248, 248);
-    padding: 1rem;
-  }
-  
+  background-color: rgb(248, 248, 248);
+  padding: 1rem;
+}
+
 .header-list {
   list-style: none;
   display: flex;
@@ -23,11 +23,11 @@
   margin: 0;
   padding: 0;
 }
-  
+
 .header-item {
   margin-left: 1rem; /* Spacing between menu items */
 }
-  
+
 .header-link {
   text-decoration: none;
   color: rgb(145, 155, 164);
@@ -36,19 +36,18 @@
 
   /* Add more styles if needed */
 }
-  
+
 li:hover {
   color: #35454e; /* Lighter blue on hover, replace with your preferred color */
-  background-color:rgb(248, 248, 248);
+  background-color: rgb(248, 248, 248);
 }
 
 .notification-icon {
-  font-size: 30px; 
+  font-size: 30px;
   margin-right: 0px;
 }
 
-
-div.team_member img{
+div.team_member img {
   height: 55px;
   width: 55px;
   padding: 10px;
@@ -57,12 +56,12 @@ div.team_member img{
 
 /* Creating Header But Can Change */
 .header {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    padding: 5px 20px;
-    background-color: rgb(248, 248, 248);
-    border-bottom: 1px solid #dddddd;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 5px 20px;
+  background-color: rgb(248, 248, 248);
+  border-bottom: 1px solid #dddddd;
 }
 
 .notification-item,
@@ -73,34 +72,34 @@ div.team_member img{
 .notification-item:hover,
 .profile-item:hover,
 .user-menu-item:hover {
-  background-color: #f2f2f2; 
-  border-radius: 50%; 
+  background-color: #f2f2f2;
+  border-radius: 50%;
 }
-  
-  .notification-icon {
-    margin-right: 10px;
-  }
 
-  .user-name-menu {
-    font-weight: bold;
-  }
+.notification-icon {
+  margin-right: 10px;
+}
+
+.user-name-menu {
+  font-weight: bold;
+}
 
 .alert-message:hover {
-    background-color: #f2f2f2; 
-    cursor: pointer; 
+  background-color: #f2f2f2;
+  cursor: pointer;
 }
-.alert-image{
+.alert-image {
   height: 55px;
   width: 55px;
 }
 .alert-message {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .alert-image {
-  width: 40px; 
+  width: 40px;
   height: 40px;
   margin-right: 10px;
 }
@@ -110,6 +109,6 @@ div.team_member img{
 }
 
 .modal-body {
-  max-height: 140px; 
-  overflow-y: auto; 
+  max-height: 140px;
+  overflow-y: auto;
 }

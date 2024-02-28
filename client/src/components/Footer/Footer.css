@@ -1,68 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 .footer-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 footer {
-    font-family: 'Lato', 'sans-serif';
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-
+  font-family: 'Lato', 'sans-serif';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 p.footer-title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-top:2rem;
-    margin-bottom: 0rem;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0rem;
 }
 
 /* container for images*/
 div.team-pics {
-    display: flex;
-    flex-grow: 1;
-    margin: 0px;
-    padding: 10px;
-    align-items: center;
+  display: flex;
+  flex-grow: 1;
+  margin: 0px;
+  padding: 10px;
+  align-items: center;
 }
 
-div.team-pics img{
-    padding: 10px;
+div.team-pics img {
+  padding: 10px;
 }
 
 div.team-member p {
- font-size: 20px;
- font-family: 'Lato', 'sans-serif';
- font-weight: 800;
+  font-size: 20px;
+  font-family: 'Lato', 'sans-serif';
+  font-weight: 800;
 }
 
 .team-member {
-    text-align: center;
-    margin: 0 10px;
+  text-align: center;
+  margin: 0 10px;
 }
 
 /* This will ensure that your image covers the container without being distorted */
 img.team-member-image {
-    border-radius: 50%;
-    height: 120px;
-    width: 120px;
-    overflow: hidden;
-    background-position: center;
-    background-size: cover;
-    display: inline-block;
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
 }
 
 /* This makes only the image within a link slightly transparent on hover */
 a:hover img {
-    opacity: 0.8;
-  }
+  opacity: 0.8;
+}
 
-  div p.footer-copyright {
-    font-size: 18px;
-    font-family: 'Lato', 'sans-serif';
-  }
-  
+div p.footer-copyright {
+  font-size: 18px;
+  font-family: 'Lato', 'sans-serif';
+}

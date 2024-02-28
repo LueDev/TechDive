@@ -8,23 +8,32 @@ const RoleSelector = ({ selectedButton, onSelect }) => {
   return (
     <div>
       <button
-      type='button'
+        type="button"
         onClick={() => handleButtonClick('Visitor')}
-        style={{ margin: "0 10px", backgroundColor: selectedButton === 'Visitor' ? 'green' : 'black'}}
+        style={{
+          margin: '0 10px',
+          backgroundColor: selectedButton === 'Visitor' ? 'green' : 'black',
+        }}
       >
         Visitor
       </button>
       <button
-      type='button'
+        type="button"
         onClick={() => handleButtonClick('Radiologist')}
-        style={{ margin: "0 10px", backgroundColor: selectedButton === 'Radiologist' ? 'green' : 'black' }}
+        style={{
+          margin: '0 10px',
+          backgroundColor: selectedButton === 'Radiologist' ? 'green' : 'black',
+        }}
       >
         Radiologist
       </button>
       <button
-      type='button'
+        type="button"
         onClick={() => handleButtonClick('Doctor')}
-        style={{ margin: "0 10px 10px", backgroundColor: selectedButton === 'Doctor' ? 'green' : 'black' }}
+        style={{
+          margin: '0 10px 10px',
+          backgroundColor: selectedButton === 'Doctor' ? 'green' : 'black',
+        }}
       >
         Doctor
       </button>

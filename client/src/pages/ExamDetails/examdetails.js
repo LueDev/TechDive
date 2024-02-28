@@ -5,60 +5,57 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PatientTable from '../../components/patientTable';
 
-
 const ExamDetails = () => {
+  const [patientExamData, setExamData] = useState([]);
+  const dataSelected = useParams();
 
+  //console.log(`This is the data  ${JSON.stringify(dataSelected)}` )
 
-    const [patientExamData, setExamData] = useState([]);
-    const dataSelected = useParams();
+  let specificExamID = '';
+  let patientId = '';
 
-    //console.log(`This is the data  ${JSON.stringify(dataSelected)}` ) 
-    
+  // checking if dataSelected.ExamId exists
+  if (dataSelected.examId !== undefined) {
+    specificExamID = dataSelected.examId;
+    patientId = dataSelected.patientId;
+  }
 
-    let specificExamID = '';
-    let patientId = '';
+  useEffect(() => {
+    //fetch(`${process.env.REACT_APP_LOCALSERVER}/examsId/${specificExamID}`)
+    fetch(
+      `${process.env.REACT_APP_LOCALSERVER}/exams/${patientId}/examsId/${specificExamID}`,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const patients = Object.entries(data)[0][1];
+        setExamData(patients);
+      });
+  }, []);
+  const [currentPage, setCurrentPage] = useState(1);
 
-    // checking if dataSelected.ExamId exists
-    if (dataSelected.examId !== undefined)  {
-        specificExamID = dataSelected.examId;
-        patientId = dataSelected.patientId;
-    }
+  // Used to separate the data into chunks
+  const recordsPerPage = 15;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = patientExamData.slice(firstIndex, lastIndex);
 
+  function changePage(id) {
+    setCurrentPage(id);
+  }
 
-    useEffect(()=>{
-        //fetch(`${process.env.REACT_APP_LOCALSERVER}/examsId/${specificExamID}`)
-        fetch(`${process.env.REACT_APP_LOCALSERVER}/exams/${patientId}/examsId/${specificExamID}`)
-        .then(res => res.json())
-        .then(data => {
-            const patients = Object.entries(data)[0][1]
-            setExamData(patients)
-        })
-    },[])
-    const [currentPage, setCurrentPage] = useState(1);
+  return (
+    <div className="main-content">
+      <h1>Exam Details</h1>
+      {/* Example details - consider using dynamic data */}
+      {/* <p>Exam for Patient: {specificExamID}</p> */}
+      <p>Detailed Patient Examination Record</p>
 
-    // Used to separate the data into chunks
-    const recordsPerPage = 15;
-    const lastIndex = currentPage * recordsPerPage;
-    const firstIndex = lastIndex - recordsPerPage;
-    const records = patientExamData.slice(firstIndex, lastIndex);
+      {/* Table to display patient data */}
+      {/* <div className="table-container"> */}
+      <div>
+        <ExamTable records={records} />
 
-    function changePage(id) {
-        setCurrentPage(id);
-    }
-    
-    return (
-        <div className="main-content">
-          <h1>Exam Details</h1>
-          {/* Example details - consider using dynamic data */}
-          {/* <p>Exam for Patient: {specificExamID}</p> */}
-          <p>Detailed Patient Examination Record</p>
-    
-          {/* Table to display patient data */}
-          {/* <div className="table-container"> */}
-          <div>
-            <ExamTable records={records} />
-    
-            {/* <nav>
+        {/* <nav>
               <PaginationComponent
                 totalRecords={patientExamData.length}
                 recordsPerPage={recordsPerPage}
@@ -66,10 +63,9 @@ const ExamDetails = () => {
                 onPageChange={changePage}
               />
             </nav> */}
-          </div>
-        </div>
-      
-      );
-    };
+      </div>
+    </div>
+  );
+};
 
 export default ExamDetails;

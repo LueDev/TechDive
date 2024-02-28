@@ -17,7 +17,7 @@ const Admin = () => {
     // Update records state based on the current page and examData
     setRecords(examData.slice(firstIndex, lastIndex));
   }, [examData, currentPage, recordsPerPage]); // Depend on examData and currentPage
-  
+
   function changePage(id) {
     setCurrentPage(id);
   }
@@ -29,7 +29,10 @@ const Admin = () => {
       <div className="search-bar-container d-flex justify-content-end">
         <Form>
           <InputGroup>
-            <Form.Control placeholder="Search patient" className="search-input" />
+            <Form.Control
+              placeholder="Search patient"
+              className="search-input"
+            />
           </InputGroup>
         </Form>
       </div>
