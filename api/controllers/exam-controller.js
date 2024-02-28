@@ -1,6 +1,5 @@
 const { Exam } = require('../models/examModel');
 const NotificationController = require('./notification-controller');
-const e = require('express');
 
 const getExams = async (req, res) => {
   console.log('Exams page');
