@@ -13,7 +13,7 @@ import SplitPage from './pages/LoginPage/splitpage'; // Assuming this is the cor
 import PatientDetails from "./pages/PatientDetails/patientdetails";
 import Footer from './components/Footer/Footer.js';
 import DashboardChart from "./pages/dashboard/dashboard.js";
-
+import ResetPassword from "./pages/ResetPassword/resetpass.js";
 
 function App() {
   return (
@@ -29,7 +29,8 @@ function App() {
             <Route path="/admin" element={<MainLayout><AdminPage /></MainLayout>} />
             <Route path="/exams/:patientid" element={<MainLayout><PatientDetails /></MainLayout>} />
             <Route path="/add" element={<MainLayout><ExamForm /></MainLayout>} />
-            
+            <Route path="/reset" element={<ResetPassword/>} />
+
             {/*Please include the exam details page on the react route below. The routing is setup for this. */}
             <Route path="/exam/:examid" element={<MainLayout><PatientDetails /></MainLayout>} />
             <Route path ="/dashboard" element={<MainLayout><DashboardChart /></MainLayout>} />
