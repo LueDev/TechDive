@@ -15,20 +15,21 @@ const ExamDetails = () => {
   let patientId = '';
 
   // checking if dataSelected.ExamId exists
-  if (dataSelected.examId !== undefined) {
-    specificExamID = dataSelected.examId;
-    patientId = dataSelected.patientId;
-  }
+  // if (dataSelected.examId !== undefined) {
+  //   specificExamID = dataSelected.examId;
+  //   patientId = dataSelected.patientId;
+  // }
 
   useEffect(() => {
     //fetch(`${process.env.REACT_APP_LOCALSERVER}/examsId/${specificExamID}`)
     fetch(
-      `${process.env.REACT_APP_LOCALSERVER}/exams/${patientId}/examsId/${specificExamID}`,
+      `${process.env.REACT_APP_LOCALSERVER}/exam/${specificExamID}`,
     )
       .then((res) => res.json())
       .then((data) => {
-        const patients = Object.entries(data)[0][1];
-        setExamData(patients);
+        console.log("IN EXAM DETAILS: ", data)
+        // const patients = Object.entries(data)[0][1];
+        // setExamData(patients);
       });
   }, []);
   const [currentPage, setCurrentPage] = useState(1);

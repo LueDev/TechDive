@@ -62,9 +62,7 @@ const getOneSpecificExam = async (req, res) => {
   const examId = req.params.examid;
 
   const exam = await Exam.findOne({ examId: examId });
-
-  console.log(exam);
-
+  // console.log(exam);
 
   try {
     NotificationController.pushOperationsEvent({

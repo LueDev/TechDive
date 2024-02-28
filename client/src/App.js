@@ -6,6 +6,7 @@ import './styles/App.css';
 import MainLayout from './mainlayout'; // Import the Layout component
 import HomePage from './pages/Home/Home';
 import PatientPage from './pages/PatientPage/patientpage';
+import ExamDetails from "./pages/ExamDetails/examdetails.js"
 import ExamForm from './pages/AddPatient/ExamForm';
 import NotFound from './pages/NotFound/NotFound';
 import AdminPage from './pages/Admin/Admin';
@@ -65,7 +66,7 @@ function App() {
             element={
               <ExamProvider>
                 <MainLayout>
-                  <PatientDetails />
+                  <ExamDetails/>
                 </MainLayout>
               </ExamProvider>
             }

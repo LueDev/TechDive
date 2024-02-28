@@ -143,7 +143,7 @@ const ExamTable = ({ records }) => {
 
         <div
           className="example-div"
-          style={{ marginTop: '440px', zIndex: '-1', marginLeft: '-40px' }}
+          style={{ marginTop: '440px', zIndex: '99', marginLeft: '-40px' }}
         >
           <div>
             <h2 style={{ marginLeft: '200px' }}>Body Mass Index</h2>
