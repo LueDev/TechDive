@@ -14,6 +14,8 @@ import PatientDetails from "./pages/PatientDetails/patientdetails";
 
 import PatientDetails from './pages/PatientDetails/patientdetails';
 import Footer from './components/Footer/Footer.js';
+import DashboardChart from "./pages/dashboard/dashboard.js";
+
 
 function App() {
   return (

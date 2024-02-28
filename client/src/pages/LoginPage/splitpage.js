@@ -5,7 +5,7 @@ import '../../styles/loginpage.css';
 
 const SplitPage = () => {
   const [imageOnLeft, setImageOnLeft] = useState(true);
-  const [isSliding, setIsSliding] = useState(false); // New state to track sliding
+  const [isSliding, setIsSliding] = useState(false); 
 
   const toggleImagePosition = () => {
     setIsSliding(true); // Begin sliding
