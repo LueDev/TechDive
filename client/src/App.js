@@ -11,9 +11,6 @@ import NotFound from './pages/NotFound/NotFound';
 import AdminPage from './pages/Admin/Admin';
 import SplitPage from './pages/LoginPage/splitpage'; // Assuming this is the correct path
 import PatientDetails from './pages/PatientDetails/patientdetails';
-
-import PatientDetails from './pages/PatientDetails/patientdetails';
-import Footer from './components/Footer/Footer.js';
 import DashboardChart from './pages/dashboard/dashboard.js';
 
 function App() {
@@ -52,6 +49,7 @@ function App() {
               </ExamProvider>
             }
           />
+          // TODO: Fixme
           <Route
             path="/add"
             element={
@@ -72,7 +70,7 @@ function App() {
               </ExamProvider>
             }
           />
-          <Route
+          {/* <Route
             path="/file"
             element={
               <ExamProvider>
@@ -81,7 +79,8 @@ function App() {
                 </MainLayout>
               </ExamProvider>
             }
-          />
+          /> */}
+            <Route path ="/dashboard" element={<MainLayout><DashboardChart /></MainLayout>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

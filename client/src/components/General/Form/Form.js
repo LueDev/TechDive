@@ -1,20 +1,6 @@
-
-import React, { useState, useEffect } from "react";
 import './Form.css'
 
-function Form({ onSubmit, fields}) {
-    const [formData, setFormData] = useState({});
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({ ...prevState, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit(formData);
-    };
-
+function Form({formik, fields, onSubmit}) {
   return (
     <>
     <div className='form-cont'>
@@ -50,12 +36,11 @@ function Form({ onSubmit, fields}) {
                         {fieldError && <div className='formik-error'>{formik.errors[field.name]}</div>}
                         </div>
                     );
-                }
-            })}
-            
-    <button onSubmit={handleSubmit} className="btn-submit" type="submit">Submit</button>
+                        })}
+                <button className="btn-submit" type="submit">Submit</button>  
         </form>
-    </>
+        </div>
+        </>
     );
 }
 

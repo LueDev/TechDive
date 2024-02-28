@@ -15,21 +15,22 @@
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
-    "dotenv": "^16.4.1",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "express-session": "^1.18.0",
     "http-errors": "~1.6.3",
     "jade": "^0.29.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.1.1",
-    "morgan": "~1.9.1",
+    "mongoose": "^8.2.0",
+    "morgan": "^1.10.0",
     "node-rsa": "^1.1.1",
-    "nodemailer": "^6.9.9",
-    "openpgp": "^5.11.0",
+    "nodemailer": "^6.9.10",
+    "openpgp": "^5.11.1",
+    "uuid": "^9.0.1",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
-    "nodemon": "^3.0.3",
+    "nodemon": "^3.1.0",
     "prettier": "^3.2.5"
   }
 }

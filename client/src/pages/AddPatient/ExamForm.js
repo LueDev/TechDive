@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
 const ExamForm = () => {
-const ExamForm = () => {
     const patientFields = [
         { name: 'patientId', placeholder: 'Patient ID'},
         { name: 'age', placeholder: 'Age'},
