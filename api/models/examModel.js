@@ -16,7 +16,6 @@ const examSchema = new mongoose.Schema({
   updatedAt: {type: Date, default: Date.now()},
   status: {type: String, default: "active"}
 });
-
 examSchema.methods.safeFetch = function(){
   const examObject = this.toObject();
   delete examObject._id
@@ -39,7 +38,6 @@ next();
 
 examSchema.statics.findByPatientId = async function(patientId){
   console.log("Exam Model Find By Patient Id Class Method called.")
-
   try{
     const patient = await this.find({patientId: patientId})
     return patient
@@ -75,11 +73,10 @@ examSchema.statics.findExam = async function(documentId){
 
 examSchema.statics.updateExam = async function(updatedExam){
   console.log("Exam Model Create Exam Class Method called.")
-
   try{
     const exam = await this.findOneAndUpdate(
       {_id: updatedExam._id},
-      {$set: updatedExam}, 
+      {$set: updatedExam},
       {new: true} //this option returns the updated document
     )
     return exam
@@ -88,10 +85,8 @@ examSchema.statics.updateExam = async function(updatedExam){
     throw err
   }
 }
-
 examSchema.statics.deleteExam = async function (examData) {
   console.log("Exam Model Delete Exam Instance Method called")
-
   try{
     const deletedExam = await this.deleteOne({_id: examData._id})
     return deletedExam.safeFetch()
@@ -100,21 +95,16 @@ examSchema.statics.deleteExam = async function (examData) {
     throw err
   }
 }
-
 examSchema.statics.createExam = async function (examData){
   console.log("Exam Model Create exam Method called.")
-
   try{
     const exam = new this({...examData});
     console.log("CALLED FROM MODEL CREATE EXAM FUNC: \n", exam, "DATA: ", examData)
     await exam.save();
     return exam.safeFetch();
-
   }catch(err){
     console.log("Error when creating exam: ", err)
   }
 }
-
 const Exam = mongoose.model('Exam', examSchema);
-
 module.exports = { Exam };

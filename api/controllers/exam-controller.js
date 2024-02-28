@@ -1,5 +1,6 @@
 const { Exam } = require('../models/examModel');
 const NotificationController = require('./notification-controller');
+const e = require('express');
 
 const getExams = async (req, res) => {
   console.log('Exams page');
@@ -91,21 +92,27 @@ const getOneSpecificExam = async (req, res) => {
 const createExam = async (req, res) => {
   console.log('Create Exams endpoint reached');
   const receivedData = req.body
+  let examPattern = /^EXAM-[0-9]*/i;
 
-  console.log("DATA PASSED TO CREATE EXAM: /n", receivedData)
+  if(!receivedData.examId || !examPattern.test(receivedData.examId))
+  {
+    res.status(422).json({
+      success:false,
+      message: "Unprocessable Entity: Exam creation failed, invalid or missing exam ID"
+    });
+  }
+
   try{
     const exam = await Exam.findOne({examId: receivedData.examId});
-    console.log("EXAM CREATED WITH MONGO: ", exam)
     if(exam == null)
     {
       const newExam = await Exam.createExam(receivedData)
-
       res.status(201).json({
         success: true,
         message: 'Exam sucessfully created',
       });
     }
- 
+
     else{
       {throw new Error ("Exam ID already exists")}
     }
@@ -129,7 +136,7 @@ const createExam = async (req, res) => {
         'RabbitMQ Is Offline or Authorize Token is not set on the route: '
       );
     }
-};
+  };
 
 const updateExam = async (req, res) => {
   console.log('Update Exams endpoint reached');
@@ -249,3 +256,4 @@ module.exports = {
   updateExam,
   deleteExam,
 };
+

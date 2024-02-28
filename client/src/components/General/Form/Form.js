@@ -17,31 +17,38 @@ function Form({ onSubmit, fields}) {
 
   return (
     <>
-        <form className="form" onSubmit={handleSubmit}>
+    <div className='form-cont'>
+        <form className="form" onSubmit={onSubmit}> 
             {fields.map(field => {
-                if (field.type === 'textarea') {
+                const fieldError = formik.touched[field.name] && formik.errors[field.name];
                     return (
-                        <textarea
-                            className="form-input"
-                            key={field.name}
-                            name={field.name}
-                            placeholder={field.placeholder}
-                            onChange={handleChange}
-                            value={formData[field.name] || ''}
-                            rows={field.rows || 3} // Use the rows attribute from field definition, defaulting to 3 if not specified
+                        <div key={field.name} className='form-fields'>
+                        {field.type === 'textarea' ? ( //if (field.type === 'textarea')
+                            <textarea
+                                className="form-input"
+                                key={field.name}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values[field.name]}//formData[field.name] || ''}
+                                rows={field.rows || 3} // Use the rows attribute from field definition, defaulting to 3 if not specified
+                            />
+                        ): (
+                            <input
+                                className="form-input"
+                                key={field.name}
+                                type={field.type || 'text'}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values[field.name] || ''}
                         />
-                    );
-                } else {
-                    return (
-                        <input
-                            className="form-input"
-                            key={field.name}
-                            type={field.type || 'text'}
-                            name={field.name}
-                            placeholder={field.placeholder}
-                            onChange={handleChange}
-                            value={formData[field.name] || ''}
-                        />
+                        )}
+
+                        {fieldError && <div className='formik-error'>{formik.errors[field.name]}</div>}
+                        </div>
                     );
                 }
             })}
@@ -50,6 +57,6 @@ function Form({ onSubmit, fields}) {
         </form>
     </>
     );
-};
+}
 
 export default Form;
