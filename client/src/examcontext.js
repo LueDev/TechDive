@@ -61,7 +61,6 @@ const ExamProvider = ({ children }) => {
   useEffect(() => {
     //MUST name .env vars with the prefix REACT_APP_ to call with React components.
     console.log(examData);
-
   }, [examData]);
 
   return (

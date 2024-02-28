@@ -16,8 +16,7 @@ const Admin = () => {
     const firstIndex = lastIndex - recordsPerPage;
     // Update records state based on the current page and examData
     setRecords(examData.slice(firstIndex, lastIndex));
-    
-  }, [ examData, currentPage, recordsPerPage]); // Depend on examData and currentPage
+  }, [examData, currentPage, recordsPerPage]); // Depend on examData and currentPage
 
   function changePage(id) {
     setCurrentPage(id);

@@ -80,7 +80,14 @@ function App() {
               </ExamProvider>
             }
           /> */}
-            <Route path ="/dashboard" element={<MainLayout><DashboardChart /></MainLayout>} />
+          <Route
+            path="/dashboard"
+            element={
+              <MainLayout>
+                <DashboardChart />
+              </MainLayout>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
