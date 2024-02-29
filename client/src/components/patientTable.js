@@ -27,7 +27,7 @@ const PatientTable = ({ records }) => {
                 <Link to={`/exams/${item.patientId}`}>{item.patientId}</Link>
               </td>
               <td>
-                <Link to={`/exam/${item.examId}`}>{item.examId}</Link>
+                <Link to={`/exams/${item.patientId}/examId/${item.examId}`}>{item.examId}</Link>
               </td>
               <td>
                 {

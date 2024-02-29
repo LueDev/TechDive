@@ -125,7 +125,7 @@ const ExamTable = ({ records }) => {
         </div>
 
         <div className="example-div">
-          <div className="image-container">
+          <div className="image-containerr">
             {records.map((item, index) => (
               <img key={index} style={{ width: '300px' }} src={item.imageURL} />
             ))}

@@ -62,7 +62,7 @@ function App() {
             }
           />
           <Route
-            path="/exam/:examid"
+            path="/exams/:patientId/examId/:examId"
             element={
               <ExamProvider>
                 <MainLayout>

@@ -57,6 +57,24 @@ const getOnePatientExams = async (req, res) => {
   }
 };
 
+// Get Exams Based on Exam ID and Patient ID 
+const getBasedExamID = async (req, res) => {
+  const examId = req.params.examId;
+  const patientId = req.params.patientId;
+  
+  console.log(`Exams for Exam ID ${examId}`);
+
+  try {
+    const exams = await Exam.find({ examId: examId, patientId: patientId  }).limit(50);
+    return res.status(200).json({
+      exams: exams,
+    });
+  } catch (error) {
+    console.error('Error fetching exams:', error);
+    return res.status(500).json({ message: 'Error fetching exams' });
+  }
+};
+
 // Retrieving Specific Exams
 const getOneSpecificExam = async (req, res) => {
   const examId = req.params.examid;
@@ -174,8 +192,6 @@ const updateExam = async (req, res) => {
       console.log('Error connecting to RabbitMQ');
     }
 
-    // console.log('OLD EXAM : ', oldExamDetails);
-    // console.log('NEW EXAM : ', updatedExam);
     res.status(200).json({
       success: true,
       message: 'Exam updated successfully',
@@ -250,4 +266,5 @@ module.exports = {
   createExam,
   updateExam,
   deleteExam,
+  getBasedExamID
 };
