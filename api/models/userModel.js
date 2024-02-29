@@ -113,6 +113,19 @@ userSchema.statics.LoginUser = async function (email, password) {
   
 };
 
+userSchema.statics.updateUser = async function (email, updatedPassword) {
+  try {
+    const user = await this.findOne(email);
+    if (!user) throw new Error('User not found');
+    Object.assign(user, updatedPassword);
+    user.updatedAt = new Date();
+    await user.save();
+    return user;
+  } catch (error) {
+    throw new Error('Error updating user: ' + error.message);
+  }
+};
+
 // Whenever we use the save function, this function below will encrypt the user password if it's been changed.
 userSchema.pre('save', async function (next) {
   const user = this;

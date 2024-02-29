@@ -5,6 +5,7 @@ import { ExamProvider } from './examcontext';
 import './styles/App.css';
 import MainLayout from './mainlayout'; // Import the Layout component
 import HomePage from './pages/Home/Home';
+import ResetPassword from './pages/ResetPassword/resetpass.js';
 import PatientPage from './pages/PatientPage/patientpage';
 import ExamDetails from "./pages/ExamDetails/examdetails.js"
 import ExamForm from './pages/AddPatient/ExamForm';
@@ -89,6 +90,7 @@ function App() {
               </MainLayout>
             }
           />
+          <Route path="/reset" element={<ResetPassword/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
