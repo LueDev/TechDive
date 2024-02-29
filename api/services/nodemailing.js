@@ -29,7 +29,7 @@ const sendEmail = async (subject, to, htmlContent) => {
 
 const sendForgotPasswordEmail = async (userEmail) => {
     const emailSubject = 'Forgot Password';
-    const emailContent = `<p>Please reset your password <a src="${process.env.REACT_LOCALSERVER}">here</a></p>`;
+    const emailContent = `<p>Please reset your password <a href="${process.env.REACT_LOCALSERVER}/reset">here</a></p>`;
 
     await sendEmail(emailSubject, userEmail, emailContent);
 };
