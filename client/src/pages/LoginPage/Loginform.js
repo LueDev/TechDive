@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ForgotPasswordModal from "../../components/ForgotPasswordModal/ForgotPasswordModal"
 import "../../styles/loginpage.css";
 
-const LoginForm = () => {
+const LoginForm = ({toggleImagePosition}) => {
   const navigate = useNavigate();
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
   });
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -19,6 +21,14 @@ const LoginForm = () => {
     console.log('Login Form Submitted', loginForm);
     // Here, add your login logic, then navigate on success
     navigate('/home'); // Adjust the navigation target as needed
+  };
+
+  const handleForgotPasswordClick = () => {
+    setShowForgotPasswordModal(true);
+  };
+
+  const handleCloseForgotPasswordModal = () => {
+    setShowForgotPasswordModal(false);
   };
 
   return (
@@ -46,13 +56,14 @@ const LoginForm = () => {
           <label>
             <input type="checkbox" name="remember" /> Remember me
           </label>
-          <a href="/forgot-password">Forgot Password?</a>
+          <p style={{color:'blue', cursor:'pointer'}} onClick={handleForgotPasswordClick}>Forgot Password?</p>
         </div>
         <button type="submit">Sign In</button>
         {/* If you have Google Sign-In implemented */}
         <button type="button" onClick={() => navigate('/home')}>Sign In with Google</button>
       </form>
-      <p>Don't have an account? <a href="/register">Sign Up</a></p>
+      <p>Don't have an account? <span style={{color:"blue", cursor:"pointer"}} onClick={toggleImagePosition}>Sign Up</span></p>
+      <ForgotPasswordModal show={showForgotPasswordModal} handleClose={handleCloseForgotPasswordModal} />
     </div>
   );
 };

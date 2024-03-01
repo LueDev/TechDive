@@ -1,0 +1,75 @@
+.parentContainer {
+    /* width:100vw; */
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; 
+}
+
+.containerr {
+    background-color: white;
+    width: 500px; 
+    padding: 20px;
+    box-shadow: 0 16px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    margin: auto;
+  }
+  
+  .headerr img.logo {
+    max-width: 100%; /* Adjust this if the logo appears too large */
+    margin-bottom: 20px;
+  }
+  
+  img.logo2 { /* Assuming you add the class logo2 to the img tag for logo2 */
+    width: 100px; /* Smaller size */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    text-align: center;
+    color: #333;
+    margin: 20px 0;
+  }
+  
+  .form-group {
+    width: 100%; /* Ensures form elements take full width of container */
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box ;
+  }
+  
+  .reset-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .reset-btn:hover {
+    background-color: #0056b3;
+  }
+  .reset-form {
+    width: -webkit-fill-available; /* for a full width within its parent container */
+  }

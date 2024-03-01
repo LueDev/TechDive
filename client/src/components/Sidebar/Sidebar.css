@@ -48,24 +48,22 @@ li {
   cursor: pointer;
 }
 
-li a{
-  display:block;
+li a {
+  display: block;
 }
 
 li:hover {
   background-color: #0056b3;
 }
 
-.sidebar-links
-{
+.sidebar-links {
   text-decoration: none;
-
 }
 
 .sidebar {
   width: 218px;
   height: 100%;
-  background-color: #007EF2;
+  background-color: #007ef2;
   color: white;
   position: fixed;
   top: 0;
@@ -74,13 +72,13 @@ li:hover {
 }
 
 .sidebar-title {
-  align-items: center; 
+  align-items: center;
   margin-bottom: 3px;
   padding: 20px;
-  margin-top:10px;
+  margin-top: 10px;
   display: flex;
   margin-left: 25px;
-  }
+}
 
 .sidebar-title span {
   margin-left: 5px;
@@ -93,7 +91,7 @@ li:hover {
 }
 
 .toggle-button {
-  background-color: #007EF2;
+  background-color: #007ef2;
   color: white;
   border: none;
   padding: 10px;
@@ -113,19 +111,17 @@ li {
 
 .sidebar li:hover {
   background-color: #555;
-
-
 }
-
 
 .sidebar-link {
   display: block;
   color: white;
   padding: 15px;
-  text-decoration: none; 
-  transition: background-color 0.3s ease; 
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-.sidebar-link:hover, .sidebar-link.active-link {
+.sidebar-link:hover,
+.sidebar-link.active-link {
   background-color: #555;
 }

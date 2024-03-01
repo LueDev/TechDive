@@ -1,7 +1,3 @@
-.patient-info-title
-{
-    position: absolute;
-    top: 60px; /* Adjust as needed */
-    right: 31%;
-    transform: translateX(-50%);
+.patient-info-title {
+  margin-bottom: 2rem;
 }

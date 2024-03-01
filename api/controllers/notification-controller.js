@@ -1,7 +1,13 @@
 const amqp = require('amqplib');
+require('dotenv').config();
+const { App } = require('@slack/bolt');
 
-// RabbitMQ connection URL
-const rabbitMQUrl = 'amqp://localhost:5672';
+const rabbitMQUrl = process.env.CLOUDAMQPS_URI;
+// const slackWebhookUrl = process.env.SLACK_WEBHOOK;
+// const app = new App({
+//   signingSecret: process.env.SLACK_SIGNING_SECRET,
+//   token: process.env.SLACK_BOT_TOKEN,
+// });
 
 // Function to establish RabbitMQ connection
 const connectToRabbitMQ = async () => {
@@ -10,14 +16,51 @@ const connectToRabbitMQ = async () => {
     const channel = await connection.createChannel();
     return channel;
   } catch (error) {
-    console.error('Failed to connect to RabbitMQ:', error);
+    console.error('RabbitMQ is offline', error);
     throw error;
   }
 };
 
-// User controller methods
+const closeRabbitMQConnection = async (connection, channel) => {
+  try {
+    await channel.close();
+    await connection.close();
+  } catch (error) {
+    console.error('Error closing RabbitMQ connection', error);
+    throw error;
+  }
+};
+
+// const postMessage = async (message) => {
+//   await app.client.chat.postMessage({
+//     token: process.env.SLACK_BOT_TOKEN,
+//     channel: process.env.SLACK_CHANNEL,
+//     text: `${message.message}\n${message.user}\n`,
+//   });
+// };
+
+const consumeMessages = async (queueName) => {
+  let connection, channel;
+  try {
+    ({ connection, channel } = await connectToRabbitMQ());
+    await channel.assertQueue(queueName);
+    await channel.consume(queueName, (message) => {
+      console.log('Event received from queue:', message.content.toString());
+      sendMessageToSlack(
+        `New message from ${queueName} queue: ${message.content.toString()}`,
+      );
+    });
+  } catch (error) {
+    console.error(`Failed to consume messages from ${queueName} queue:`, error);
+    throw error;
+  } finally {
+    if (connection && channel) {
+      await closeRabbitMQConnection(connection, channel);
+    }
+  }
+};
+
 const NotificationController = {
-  // Method to push event to login queue
   pushLoginEvent: async (userData) => {
     try {
       const channel = await connectToRabbitMQ();
@@ -30,7 +73,6 @@ const NotificationController = {
     }
   },
 
-  // Method to push event to registration queue
   pushRegistrationEvent: async (userData) => {
     try {
       const channel = await connectToRabbitMQ();
@@ -43,12 +85,10 @@ const NotificationController = {
         newRegistration: userData,
       });
     } catch (error) {
-      console.error('Failed to push event to registration queue:', error);
+      // console.error('Failed to push event to registration queue:', error);
       throw error;
     }
   },
-
-  // Method to push event to operations queue
 
   pushOperationsEvent: async (operationData) => {
     try {
@@ -58,14 +98,14 @@ const NotificationController = {
         'operations',
         Buffer.from(JSON.stringify(operationData)),
       );
+      postMessage(operationData);
       console.log('Event pushed to operations queue:', operationData);
     } catch (error) {
-      console.error('Failed to push event to operations queue:', error);
+      // console.error('Failed to push event to operations queue:', error);
       throw error;
     }
   },
 
-  // Controller method to handle GET request for notifications
   getNotification: async (req, res) => {
     try {
       const channel = await connectToRabbitMQ();
@@ -85,6 +125,18 @@ const NotificationController = {
 
       throw error;
     }
+  },
+
+  consumeOperationsQueue: async () => {
+    await consumeMessages('operations');
+  },
+
+  consumeRegistrationQueue: async () => {
+    await consumeMessages('registration');
+  },
+
+  consumeLoginQueue: async () => {
+    await consumeMessages('login');
   },
 };
 

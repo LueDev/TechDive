@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const { v4: uuidv4 } = require('uuid');
 
 const userSchema = new mongoose.Schema({
+  internalid: { type: String, default: uuidv4() },
   firstname: { type: String, lowercase: true, required: true },
   lastname: { type: String, lowercase: true, required: true },
   email: { type: String, required: true, lowercase: true },
@@ -22,8 +24,11 @@ const userSchema = new mongoose.Schema({
   admin: { type: String, default: false },
   createdAt: { type: Date, immutable: true, default: () => Date.now() },
   updatedAt: { type: Date, default: () => Date.now() },
-  roles: [{ type: String }],
+  permissions: [{ type: String }],
+  role: { type: String },
 });
+
+userSchema.index({ id: 1 });
 
 // Titlecase the firstname and lastname
 function toTitleCase(str) {
@@ -32,26 +37,26 @@ function toTitleCase(str) {
 
 // Best to use instance methods to isolate return data to what is safe/relevant
 userSchema.methods.safeFetch = function () {
-  const userObject = this.toObject()
-  userObject.firstname = toTitleCase(userObject.firstname)
-  userObject.lastname = toTitleCase(userObject.lastname)
-  delete userObject._id
-  delete userObject.admin
-  delete userObject.password
-  delete userObject.roles
-  delete userObject.createdAt
-  delete userObject.updatedAt
-  delete userObject.__v
-  return userObject
+  const userObject = this.toObject();
+  userObject.firstname = toTitleCase(userObject.firstname);
+  userObject.lastname = toTitleCase(userObject.lastname);
+  delete userObject._id;
+  delete userObject.admin;
+  delete userObject.password;
+  delete userObject.permissions;
+  delete userObject.createdAt;
+  delete userObject.updatedAt;
+  delete userObject.__v;
+  return userObject;
 };
 
 userSchema.statics.createUser = async function (userData) {
   try {
-    const { password, admin, ...rest } = userData;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const { admin, ...rest } = userData;
+    // const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     if (admin === true) {
-      const roles = [
+      const permissions = [
         'View-Notifications',
         'View-Exams',
         'Update-Exams',
@@ -60,17 +65,17 @@ userSchema.statics.createUser = async function (userData) {
       ];
       const user = new this({
         ...rest,
-        roles: roles,
-        password: hashedPassword,
+        permissions: roles,
+        // password: hashedPassword,
       });
       await user.save();
       return user;
     } else {
-      const roles = ['View-Notifications', 'View-Exams'];
+      const permissions = ['View-Notifications', 'View-Exams'];
       const user = new this({
         ...rest,
-        roles: roles,
-        password: hashedPassword,
+        permissions: permissions,
+        // password: hashedPassword,
       });
       await user.save();
       return user;
@@ -81,25 +86,43 @@ userSchema.statics.createUser = async function (userData) {
 };
 
 userSchema.statics.LoginUser = async function (email, password) {
-  try {
-    // Find the user by email
+  // Find the user by email
     const user = await this.findOne({ email });
+    console.log("USER MODEL - MONGO USER FOUND: ", user)
 
     if (!user) {
       throw new Error('User not found');
     }
 
-    const storedHashedPassword = user.password
-    const isPasswordValid = await bcrypt.compare(password, storedHashedPassword);
+    const storedHashedPassword = user.password;
+    console.log("USER MODEL-STORED HASHED PW: ", storedHashedPassword)
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      storedHashedPassword,
+    );
+
+    console.log("USER MODEL - isPasswordValid Result: ", isPasswordValid)
 
     if (isPasswordValid) {
       console.log('Login successful');
-      return user.safeFetch(); //could've used safeFetch(). TODO: ADD SAFEFETCH() HERE
+      return user; //could've used safeFetch(). TODO: ADD SAFEFETCH() HERE
     } else {
       console.log('Invalid credentials');
+      throw new Error('User Model Login Error - Invalid Credentials');
     }
+  
+};
+
+userSchema.statics.updateUser = async function (email, updatedPassword) {
+  try {
+    const user = await this.findOne(email);
+    if (!user) throw new Error('User not found');
+    Object.assign(user, updatedPassword);
+    user.updatedAt = new Date();
+    await user.save();
+    return user;
   } catch (error) {
-    throw new Error('User Model Login Error - Internal Server Error');
+    throw new Error('Error updating user: ' + error.message);
   }
 };
 
@@ -108,11 +131,13 @@ userSchema.pre('save', async function (next) {
   const user = this;
   if (!user.isModified('password')) return next();
 
-  bcrypt.hash(user.password, saltRounds, (err, hash) => {
-    if (err) return next(err);
-    user.password = hash;
+  try {
+    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+    user.password = hashedPassword;
     next();
-  });
+  } catch (error) {
+    return next(error);
+  }
 });
 
 const User = mongoose.model('User', userSchema);

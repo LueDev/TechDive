@@ -1,103 +1,116 @@
 /* Style for the registration and login forms */
-.register-form, .form-container {
-    max-width: 400px;
-    margin: auto;
-  }
-  
-  .register-form h1, .form-container h1 {
-    margin-bottom: 0.5rem;
-  }
-  
-  .register-form p, .form-container p {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  .register-form form, .form-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .register-form input, .form-container input {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .register-form button, .form-container button {
-    padding: 0.5rem;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 1rem;
-  }
-  
-  .register-form a, .form-container a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  /* SplitPage layout */
-  .split-page {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    overflow: hidden; /* Hide overflow to manage sliding effect */
-  }
-  
-  .register-section, .login-section {
-    width: 50%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.5s ease-in-out; /* Smooth transition for form appearance */
-  }
-  
-  .register-section {
-    left: 0;
-  }
-  
-  .login-section {
-    right: 0;
-  }
-  
-  /* Overlay image container */
-  .image-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    background: url('../image/loginpage.png') no-repeat center center / cover;
-    transition: left 0.5s ease-in-out;
-    z-index: 3;
-    box-shadow: 0 0 15px 5px rgba(0,0,0,0.5); /* Soft shadow around the edges */
-  }
+.register-form,
+.form-container {
+  max-width: 400px;
+  margin: auto;
+}
 
-  
-  
-  /* Adjust the image position to reveal the form */
-  .slide-image {
-    left: 50%; /* Slide to reveal the form */
-  }
-  
-  /* Toggle button to switch forms */
-  .toggle-button {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4; /* Above image and forms */
-    padding: 0.5rem;
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  }
-  
+.register-form h1,
+.form-container h1 {
+  margin-bottom: 0.5rem;
+}
+
+.register-form p,
+.form-container p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.register-form form,
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form input,
+.form-container input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.register-form button,
+.form-container button {
+  padding: 0.5rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+.register-form a,
+.form-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* SplitPage layout */
+.split-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden; /* Hide overflow to manage sliding effect */
+}
+
+.register-section,
+.login-section {
+  width: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease-in-out; /* Smooth transition for form appearance */
+}
+
+.register-section {
+  left: 0;
+}
+
+.formik-error {
+  font-size: 0.9rem;
+  color: red;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.login-section {
+  right: 0;
+}
+
+/* Overlay image container */
+.image-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: url('../image/loginpage.png') no-repeat center center / cover;
+  transition: left 0.5s ease-in-out;
+  z-index: 3;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5); /* Soft shadow around the edges */
+}
+
+/* Adjust the image position to reveal the form */
+.slide-image {
+  left: 50%; /* Slide to reveal the form */
+}
+
+/* Toggle button to switch forms */
+.toggle-button {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4; /* Above image and forms */
+  padding: 0.5rem;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}

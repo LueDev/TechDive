@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 //import React, { useState } from 'react';
 import './Sidebar.css';
 import { TbActivityHeartbeat } from 'react-icons/tb';
@@ -9,15 +9,13 @@ import { SiWorldhealthorganization } from 'react-icons/si';
 
 const Sidebar = () => {
   const lists = [
-    { id: 1, text: "Home", icon: <TbActivityHeartbeat/>, to: "/home"},
-    { id: 2, text: "Admin", icon: <BsPerson/>, to: "/admin"},
-    { id: 3, text: "Add Patient", icon: <BsClipboard2Plus/>, to: "/add" },
-    { id: 4, text: "File Processing", icon: <IoFolderOutline/>, to: "/file" },
-    { id: 5, text: "Patient Details", icon: <BsPerson/>, to: "/patients" },
-    { id: 6, text: "login", icon: <BsPerson/>, to: "/" }
-
+    { id: 1, text: 'Home', icon: <TbActivityHeartbeat />, to: '/home' },
+    { id: 2, text: 'Admin', icon: <BsPerson />, to: '/admin' },
+    { id: 3, text: 'Add Patient', icon: <BsClipboard2Plus />, to: '/add' },
+    // { id: 4, text: 'File Processing', icon: <IoFolderOutline />, to: '/file' },
+    // { id: 5, text: 'Patient Details', icon: <BsPerson />, to: '/patients' },
+    { id: 6, text: 'Dashboard', icon: <BsPerson />, to: '/dashboard' },
   ];
-
 
   return (
     <div className="sidebar">
@@ -32,14 +30,16 @@ const Sidebar = () => {
       <ul>
         {lists.map((list) => (
           <li key={list.id}>
-          <NavLink 
-              to={list.to} 
-              activeClassName="active-link" 
+            <NavLink
+              to={list.to}
+              activeClassName="active-link"
               className="sidebar-link"
               end
             >
               {list.icon}
-              <span style={{ marginLeft: '10px', width: '100%' }}>{list.text}</span>
+              <span style={{ marginLeft: '10px', width: '100%' }}>
+                {list.text}
+              </span>
             </NavLink>
           </li>
         ))}

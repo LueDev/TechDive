@@ -11,121 +11,139 @@ const getUser = async (req, res) => {
   });
 };
 
+const findUser = async (internalid) => {
+  const foundUser = await User.findOne({ internalid: internalid });
+  return foundUser.safeFetch();
+};
+
+const checkEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    user === null ? res.status(200).send(true) : res.status(200).send(false);
+  } catch (error) {
+    console.log('User email check failed: ', error);
+    res.status(401).send(false);
+  }
+};
+
 // Registration controller
 const registerUser = async (req, res) => {
   try {
     const userSignUpDetails = ({ firstname, lastname, email, password, admin } =
       req.body);
+
     const newUser = await User.createUser(userSignUpDetails);
+    const payload = { user: newUser };
+    const secretKey = process.env.ACCESS_TOKEN_SECRET;
+    const options = {
+      algorithm: 'HS256',
+      // expiresIn: '15m'
+    };
+    const accessToken = jwt.sign(payload, secretKey, options);
+
+    console.log('ACCESS TOKEN: ', accessToken);
 
     try {
-      NotificationController.pushRegistrationEvent({
-        message: "User has registered.",
-        endpoint: "POST: /Register",
-        user: newUser.safeFetch(),
-        timestamp: Date.now(),
-      });
-    } catch (error) {
-      console.log('RabbitMQ Is Offline: ');
+      try {
+        await NotificationController.pushRegistrationEvent({
+          message: 'User Registration Event',
+          endpoint: 'POST: /Register',
+          user: payload.user,
+          timestamp: Date.now(),
+        });
+      } catch (error) {
+        console.log('RabbitMQ Is Offline: ');
+      }
+    } catch (err) {
+      console.log('Error connecting to RabbitMQ: ', err);
     }
 
-    res.status(201).json({
-      message: 'User registered successfully',
-      user: newUser.safeFetch(),
-      redirectTo: '/',
-    }); //redirects to the exams page, "/" upon creation of user
+    res.status(201).json({ success: true, accessToken: accessToken });
   } catch (error) {
+    console.log('Error with registration: ', error);
     res.status(500).json({
-      message: 'Users Registration Error - Internal Server Error',
-      error: error,
+      success: false,
+      message: 'User Registration Error',
+      description:
+        'The user schema was not followed during the registration process.',
     });
   }
 };
 
-// Login controller
 const loginUser = async (req, res) => {
   console.log('User Login Page Reached');
   try {
     const { email, password } = req.body;
     const userLoggedIn = await User.LoginUser(email, password);
-
     const payload = { user: userLoggedIn };
-    // console.log("PAYLOAD: ", payload)
     const secretKey = process.env.ACCESS_TOKEN_SECRET;
-    // console.log("SECRET: ", secretKey)
     const options = { algorithm: 'HS256', expiresIn: '15m' };
-    // console.log("OPTIONS: ", options)
 
-    // Set expiration time for the JWT (15 minutes)
-    const accessToken = await jwt.sign(
-      payload,
-      secretKey,
-      options,
-      function (err, data) {
-        if (err) {
-          console.log('Error during JWT creation: ', err);
-        } else {
-          // console.log("Created JWT Token Successfully: ", data )
-          try {
-            NotificationController.pushLoginEvent({
-              message: "User has registered.",
-              endpoint: "POST: /Login",
-              user: payload,
-              timestamp: Date.now(),
-            });
-          } catch (error) {
-            console.log('RabbitMQ Is Offline: ');
-          }
-          res
-            .status(200)
-            .json({ accessToken: data, redirectTo: 'http://localhost:9000/' });
-        }
-      },
-    );
+    const accessToken = jwt.sign(payload, secretKey, options);
+
+    try {
+      try {
+        await NotificationController.pushLoginEvent({
+          message: 'User Login Event',
+          endpoint: 'POST: /Login',
+          user: payload,
+          timestamp: Date.now(),
+        });
+      } catch (error) {
+        console.log('Error pushing to login queue: ', error);
+      }
+    } catch (err) {
+      console.log('Error connecting to RabbitMQ: ', err);
+    }
+
+    res.status(200).json({ success: true, accessToken: accessToken, user: userLoggedIn });
   } catch {
     res.status(500).json({
+      success: "false",
       error: 'User Login Error - Invalid Credentials',
     });
   }
 };
 
+const updateUser = async (req, res) => {
+  const {email, password} = req.body; // Contains the updated user data
+
+  try {
+    const updatedUser = await User.updateUser(email, updatedData);
+    res.status(200).json(updatedUser.safeFetch());
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
+  // console.log(req.headers.authorization);
 
   if (!authHeader) {
-    res.status(500).json({ message: 'Bearer token not present.' });
-  } else {
-    //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index, pos 1.
-
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    //Unathorized / Unauthenticated
-    if (token == null) return res.status(401);
-
-    //Handles server timeout in the event of a present bearer token but inaccurate to the
-    //TODO: the timeout causes this error: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-    // Need another way to measure time to then display res.status(500)
-    // setTimeout(()=>{
-    //   console.log("Inside JWT Verify timeout")
-    //   return res.status(500).json({message: "Server timeout. Bearer token inaccurate."})
-    // }, 1500)
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      if (err) return res.status(401); //Unauthorized
-
-      //otherwise, this user is who they say they are and we set req.user to user
-      req.user = user;
-
-      //next() calls the next operation after our middleware. This is like saying, we're done authenticating, please proceed with the next callback method
-      next();
-    });
+    res.json({ message: 'Bearer token not present.', req: req });
   }
+  //Bearer [Token] separated by a whitespace so split by whitespace and grab the second index, pos 1.
+  const token = authHeader && authHeader.split(' ')[1];
+
+  //Unathorized / Unauthenticated
+  if (token == null) return res.status(401);
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.status(401); //Unauthorized
+    req.user = user;
+    //next() calls the next operation after our middleware. This is like saying, we're done authenticating, please proceed with the next callback method
+    next();
+  });
 };
 
 module.exports = {
   getUser,
+  checkEmail,
   registerUser,
   loginUser,
   authenticateToken,
+  findUser,
+  updateUser
 };

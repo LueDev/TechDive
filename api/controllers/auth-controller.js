@@ -1,4 +1,5 @@
 const openpgp = require('openpgp');
+const nodemailer = require('../services/nodemailing')
 
 // Function to generate a key pair
 const generateKeyPair = async (firstname, lastname, email) => {
@@ -50,7 +51,20 @@ const sendMessage = async (req, res) => {
     }
 };
 
+const sendPasswordReset = async (req, res) => {
+
+    const {email} = req.body
+
+     try{
+        nodemailer.sendForgotPasswordEmail(email)
+        res.status(200).json({success: true, message: `email sent to ${email}`})
+    }catch(err){
+        res.status(200).json({success: false, message: `email not sent to ${email}`})
+    }
+}
+
 module.exports = {
     getPublicKey,
-    sendMessage
+    sendMessage,
+    sendPasswordReset
 };

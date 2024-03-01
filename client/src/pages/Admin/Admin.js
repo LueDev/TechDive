@@ -7,20 +7,41 @@ import { ExamContext } from '../../examcontext';
 
 const Admin = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [records, setRecords] = useState([]); // Define records as a state
-  const { examData, deleteExamById } = useContext(ExamContext);
+  const { examData, getExams, deleteExamById } = useContext(ExamContext);
+  const [search, setSearch] = useState('');
+  const [filteredRecords, setFilteredRecords] = useState([]);
   const recordsPerPage = 15;
+
+  useEffect(() => {
+    getExams();
+  }, []);
 
   useEffect(() => {
     const lastIndex = currentPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
-    // Update records state based on the current page and examData
-    setRecords(examData.slice(firstIndex, lastIndex));
-  }, [examData, currentPage, recordsPerPage]); // Depend on examData and currentPage
-  
+    setFilteredRecords(examData.filter(filterObjectBySearch));
+  }, [examData, currentPage, recordsPerPage, search]);
+
   function changePage(id) {
     setCurrentPage(id);
   }
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const filterObjectBySearch = (obj) => {
+    if (!search) return true;
+    return Object.values(obj).some((value) => {
+      if (typeof value === 'string' && value.toLowerCase().includes(search.toLowerCase())) {
+        return true;
+      }
+      if (typeof value === 'number' && value.toString().includes(search)) {
+        return true;
+      }
+      return false;
+    });
+  };
 
   return (
     <div className="main-content">
@@ -29,16 +50,21 @@ const Admin = () => {
       <div className="search-bar-container d-flex justify-content-end">
         <Form>
           <InputGroup>
-            <Form.Control placeholder="Search patient" className="search-input" />
+            <Form.Control
+              placeholder="Search patient"
+              className="search-input"
+              value={search}
+              onChange={handleSearchChange}
+            />
           </InputGroup>
         </Form>
       </div>
 
-      <div className="table-container" key={examData.length}>
-        <AdminTable records={records} deleteExam={deleteExamById} />
+      <div className="table-container" key={filteredRecords.length}>
+        <AdminTable records={filteredRecords} deleteExam={deleteExamById} />
         <nav>
           <PaginationComponent
-            totalRecords={examData.length}
+            totalRecords={filteredRecords.length}
             recordsPerPage={recordsPerPage}
             currentPage={currentPage}
             onPageChange={changePage}

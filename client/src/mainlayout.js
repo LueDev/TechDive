@@ -1,14 +1,14 @@
 import React from 'react';
-import Header from './components/header'; 
-import Sidebar from './components/Sidebar/Sidebar'; 
-import Footer from './components/Footer/Footer'; 
+import Header from './components/header';
+import Sidebar from './components/Sidebar/Sidebar';
+import Footer from './components/Footer/Footer';
 
 const MainLayout = ({ children }) => {
   return (
     <>
       <Header />
       <Sidebar />
-        {children} 
+      {children}
       <Footer />
     </>
   );
