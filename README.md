@@ -2,12 +2,34 @@
 
 ## Getting Started
 
-This skeleton contains two different applications -- a front end, or "client," created with "Create React App," and a back end, or "API," created with Express.
-
-In order to make [both](2024-02-29_both.md) of them work together, you'll need to run both, but you can run just one or the other to start. As you begin working on this project, you'll first focus on the client, so you can more or less ignore the API portion of the code for now.
-
 This repository contains two applications, our front-end in `client` and our back-end in `api`.
-In order to have the application work properly
+In order to have the application work properly, you will need to start the back-end and then the front-end.
+
+Additionally, you will need to create a `.env` file on both the front-end and back-end for their respective environmental variables.
+
+1. In the root of the `client` folder, create a `.env` file containing the following:
+
+
+```
+REACT_APP_LOCALSERVER=http://localhost:9000
+```
+`REACT_APP_LOCALSERVER` is where the client application will fetch data from the backend.
+Make sure that this matches the port where the back-end service is running.
+You may replace this with the URL to your deployed back-end in production.
+
+2. In the root of the `api` folder, create a `.env` file containing the following:
+```
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+CLOUDAMQPS_URI=
+LOCAL_AMQP=
+MONGO_URI=
+SLACK_WEBHOOK=
+SLACK_SIGNING_SECRET=
+SLACK_BOT_TOKEN=
+SLACK_CHANNEL=
+REACT_REDIRECT="http://localhost:3000"
+```
 
 ## Client
 
