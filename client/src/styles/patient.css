@@ -1,0 +1,5 @@
+.patient-details {
+  padding: 20px;
+  margin-left: 218px; /* Offset by the sidebar width */
+  margin-top: 60px; /* Offset by the header height if needed */
+}

@@ -1,0 +1,106 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.sidebar {
+  width: 250px; /* Assuming your sidebar width is 250px */
+  /* Your other sidebar styles */
+}
+
+.main-content {
+  /* App.css */
+  display: flex;
+  flex-direction: column;
+  /* This will center the table horizontally */
+  margin-left: 250px; /* Adjust this to match the width of your sidebar */
+  padding: 20px; /* Add padding if needed */
+  text-align: left;
+}
+
+.table-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  /*max-width: 90%;*/
+  overflow-x: auto; /* Allows table to scroll on small screens */
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse; /* Collapses border to look more modern */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Adds subtle shadow to table */
+  background-color: white; /* Set a background color */
+}
+
+.table thead {
+  background-color: #f8f9fa; /* Slightly different background for the header */
+}
+
+.table thead th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600; /* Make header fonts a bit bolder */
+  border-bottom: 2px solid #dee2e6; /* Adds a border to the header bottom */
+  color: #495057; /* Dark grey color for the text */
+}
+
+.table tbody td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6; /* Adds a border to each row */
+  color: #495057; /* Dark grey color for the text */
+}
+
+.table tbody tr:nth-of-type(even) {
+  background-color: #f2f2f2; /* Zebra stripes for the table rows */
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef; /* Hover effect for table rows */
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none; /* Removes the border from the last row */
+}
+
+.examPhotos {
+  width: 100%;
+}
+
+/* App.css */
+
+.search-input {
+  border-radius: 20px; /* Gives the input a rounded appearance */
+  border: 1px solid #ced4da; /* Bootstrap's default border color for inputs */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+  width: 250px; /* Sets a fixed width for the input */
+  transition: all 0.3s ease; /* Smooth transition for focus effect */
+}
+
+.search-input:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* More pronounced shadow on focus */
+  border-color: #80bdff; /* Bootstrap's default focus border color */
+}
+.search-bar-container {
+  margin-left: auto; /* This pushes the search bar container to the right */
+  width: auto; /* Or set a specific width if you prefer */
+}
