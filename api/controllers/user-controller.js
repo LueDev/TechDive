@@ -109,7 +109,7 @@ const updateUser = async (req, res) => {
   const {email, password} = req.body; // Contains the updated user data
 
   try {
-    const updatedUser = await User.updateUser(email, updatedData);
+    const updatedUser = await User.updateUser(email, password);
     res.status(200).json(updatedUser.safeFetch());
   } catch (error) {
     res.status(500).json({ error: error.message });

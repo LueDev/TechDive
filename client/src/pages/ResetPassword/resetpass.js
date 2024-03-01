@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom'
 import logo from './medexams.png'; 
 import logo2 from './usericon.png';
+import axios from 'axios'
 import "./style.css";
 
 function ResetPassword() {
@@ -10,13 +11,22 @@ function ResetPassword() {
 
     const navigate = useNavigate()
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Email:', email);
         console.log('New Password:', newPassword);
-        // navigate('/')
-    };
 
+        // try {
+        //     const response = await axios.put(`${process.env.REACT_APP_LOCALSERVER}/users/update/`, {
+        //         email: email,
+        //         newPassword: newPassword
+        //     });
+        //     console.log('Reset password response:', response.data);
+            navigate('/');
+        // } catch (error) {
+        //     console.error('Error resetting password:', error);
+        // }
+    };
     return (
         <div class="parentContainer">
         <div className="containerr">
