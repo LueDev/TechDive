@@ -1,10 +1,13 @@
-# Hack.Diversity Tech Dive Template
+# MedExams
 
 ## Getting Started
 
 This skeleton contains two different applications -- a front end, or "client," created with "Create React App," and a back end, or "API," created with Express.
 
-In order to make both of them work together, you'll need to run both, but you can run just one or the other to start. As you begin working on this project, you'll first focus on the client, so you can more or less ignore the API portion of the code for now.
+In order to make [both](2024-02-29_both.md) of them work together, you'll need to run both, but you can run just one or the other to start. As you begin working on this project, you'll first focus on the client, so you can more or less ignore the API portion of the code for now.
+
+This repository contains two applications, our front-end in `client` and our back-end in `api`.
+In order to have the application work properly
 
 ## Client
 
@@ -37,11 +40,6 @@ This project includes a RabbitMQ service, which is an open-source message broker
 ### Prerequisites
 
 - Ensure Docker and Docker Compose are installed on your machine. Installation guides can be found on the [official Docker website](https://docs.docker.com/get-docker/) and [Docker Compose documentation](https://docs.docker.com/compose/install/).
-
-### Directory Structure
-
-- `rabbitmq-service/` - Contains the Docker Compose file and README.
-  - `docker-compose.yaml` - Defines the RabbitMQ service setup.
 
 ### Running RabbitMQ
 
@@ -78,14 +76,13 @@ Refer to the `docker-compose.yaml` for RabbitMQ service configurations. You can 
 
 For comprehensive RabbitMQ configurations and Docker Compose options, visit the [RabbitMQ documentation](https://www.rabbitmq.com/documentation.html) and [Docker Compose documentation](https://docs.docker.com/compose/).
 
-# Mongoose Models README
+## Models
 
-## Exam Model
+### Exam Model
 
 The `exam` model represents a medical examination record in the database.
 
-### Schema:
-
+```
 - `patientId`: String (required) - The unique identifier of the patient associated with the exam.
 - `examId`: String (required, unique) - The unique identifier of the exam.
 - `age`: Number (required) - The age of the patient at the time of the exam.
@@ -98,13 +95,13 @@ The `exam` model represents a medical examination record in the database.
 - `createdAt`: Date - The date and time when the exam was created. (Default: current date and time)
 - `updatedAt`: Date - The date and time when the exam was last updated. (Default: current date and time)
 - `status`: String - The status of the exam. (Default: "active")
+```
 
-## User Model
+### User Model
 
 The `user` model represents a user account in the system.
 
-### Schema:
-
+```
 - `internalid`: String - The internal unique identifier of the user. (Default: Generated UUID)
 - `firstname`: String (required) - The first name of the user.
 - `lastname`: String (required) - The last name of the user.
@@ -115,26 +112,26 @@ The `user` model represents a user account in the system.
 - `updatedAt`: Date - The date and time when the user account was last updated. (Default: current date and time)
 - `permissions`: [String] - An array of permissions granted to the user.
 - `role`: String - The role of the user in the system.
+```
 
-# Controllers README
+## Controllers
 
-## Notifications Controller
+### Notifications Controller
 
 The `NotificationsController` handles the communication with RabbitMQ and Slack for sending and receiving messages.
 
-### Dependencies:
+#### Dependencies
 
 - `amqplib`: Library for RabbitMQ communication.
 - `node-fetch`: Library for making HTTP requests.
 - `dotenv`: Library for loading environment variables.
 
-### Functions:
+#### Functions
 
 1. `connectToRabbitMQ`: Establishes a connection to RabbitMQ and returns a channel.
 2. `closeRabbitMQConnection`: Closes the RabbitMQ connection and channel.
 3. `sendMessageToSlack`: Sends a message to Slack using a webhook URL.
 4. `consumeMessages`: Consumes messages from a specified queue in RabbitMQ and sends them to Slack.
-
 5. `pushLoginEvent`: Pushes a login event to the login queue in RabbitMQ.
 6. `pushRegistrationEvent`: Pushes a registration event to the registration queue in RabbitMQ.
 7. `pushOperationsEvent`: Pushes an operations event to the operations queue in RabbitMQ.
@@ -143,18 +140,18 @@ The `NotificationsController` handles the communication with RabbitMQ and Slack 
 10. `consumeRegistrationQueue`: Consumes messages from the registration queue.
 11. `consumeLoginQueue`: Consumes messages from the login queue.
 
-## Exam Controller
+### Exam Controller
 
 The `ExamController` handles CRUD operations related to exams in the system.
 
-### Dependencies:
+#### Dependencies
 
 - `Exam` model: Represents the exam data structure.
 - `NotificationController`: Handles notifications for exam-related events.
 - `jwt`: Library for handling JSON Web Tokens.
 - `dotenv`: Library for loading environment variables.
 
-### Functions:
+#### Functions
 
 1. `getExams`: Retrieves all exams from the database and sends a notification to RabbitMQ.
 2. `getOnePatientExams`: Retrieves exams for a specific patient and sends a notification to RabbitMQ.
@@ -163,18 +160,18 @@ The `ExamController` handles CRUD operations related to exams in the system.
 5. `updateExam`: Updates an existing exam record in the database and sends a notification to RabbitMQ.
 6. `deleteExam`: Deletes an existing exam record from the database and sends a notification to RabbitMQ.
 
-## User Controller
+### User Controller
 
 The `UserController` handles user authentication, registration, and profile management.
 
-### Dependencies:
+#### Dependencies
 
 - `User` model: Represents the user data structure.
 - `NotificationController`: Handles notifications for user-related events.
 - `jwt`: Library for handling JSON Web Tokens.
 - `dotenv`: Library for loading environment variables.
 
-### Functions:
+#### Functions
 
 1. `getUser`: Returns a success message indicating that the users API is working.
 2. `checkEmail`: Checks if a given email exists in the database.
@@ -183,13 +180,13 @@ The `UserController` handles user authentication, registration, and profile mana
 5. `authenticateToken`: Middleware function to authenticate user requests using JWT tokens.
 6. `findUser`: Retrieves user details based on the internalid.
 
-# Backend Endpoints
+## Backend Endpoints
 
-## Express App
+### Express App
 
 The `app.js` file configures the Express application, sets up middleware, and defines the routes.
 
-### Dependencies:
+#### Dependencies
 
 - `http-errors`: Library for creating HTTP errors.
 - `express`: Web framework for Node.js.
@@ -198,7 +195,7 @@ The `app.js` file configures the Express application, sets up middleware, and de
 - `cors`: Middleware for enabling Cross-Origin Resource Sharing (CORS).
 - `cookie-parser`: Middleware for parsing cookies in HTTP requests.
 
-### Middleware Used:
+#### Middleware Used
 
 1. `express.json()`: Parses incoming JSON requests.
 2. `cookieParser()`: Parses cookies attached to incoming requests.
@@ -207,29 +204,29 @@ The `app.js` file configures the Express application, sets up middleware, and de
 5. `express.urlencoded({ extended: false })`: Parses URL-encoded data from incoming requests.
 6. `express.static()`: Serves static files from the `public` directory.
 
-### Routes:
+#### Routes
 
 1. `/`: Index route.
 2. `/users`: User routes.
 3. `/admin`: Admin routes.
 4. `/auth`: Authentication routes.
 
-## Admin Routes
+#### Admin Routes
 
 The admin routes handle CRUD operations for exams and message reception.
 
-### Endpoints:
+##### Endpoints
 
 1. `GET /`: Retrieves all exams.
 2. `POST /receive-message`: Creates a new exam.
 3. `DELETE /exams/:id`: Deletes an exam by ID.
 4. `PUT /exams/up/:id`: Updates an exam by ID.
 
-## Exam Routes
+#### Exam Routes
 
 The exam routes handle CRUD operations for exams.
 
-### Endpoints:
+##### Endpoints
 
 1. `GET /exams/patient/:patientId`: Retrieves exams for a specific patient.
 2. `GET /exam/:examId`: Retrieves a specific exam by exam ID.
@@ -238,11 +235,11 @@ The exam routes handle CRUD operations for exams.
 5. `DELETE /exam/:id`: Deletes an exam by ID.
 6. `POST /create`: Creates a new exam.
 
-## User Routes
+#### User Routes
 
 The user routes handle user authentication and registration.
 
-### Endpoints:
+##### Endpoints:
 
 1. `GET /`: Returns a success message indicating that the users API is working.
 2. `POST /login`: Logs in a user.
