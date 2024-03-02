@@ -29,6 +29,7 @@
   /* App.css */
   display: flex;
   flex-direction: column;
+  margin-bottom: 25px;
   /* This will center the table horizontally */
   margin-left: 250px; /* Adjust this to match the width of your sidebar */
   padding: 20px; /* Add padding if needed */
