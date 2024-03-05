@@ -72,7 +72,7 @@ const HomePage = () => {
       </div>
 
       <div className="table-container">
-        <PatientTable records={search ? filteredExams : examData} />
+        <PatientTable records={search ? filteredExams : records} />
 
         <nav>
           <PaginationComponent

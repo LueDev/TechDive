@@ -19,7 +19,7 @@ const PaginationComponent = ({
       <ul className="pagination">
         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
           <a
-            href="#!"
+            href={`#page-${currentPage}`}
             className="page-link"
             onClick={() => {
               if (currentPage !== 1) {
@@ -36,7 +36,7 @@ const PaginationComponent = ({
             className={`page-item ${currentPage === number ? 'active' : ''}`}
           >
             <a
-              href="#!"
+              href={`#page-${currentPage}`}
               className="page-link"
               onClick={() => onPageChange(number)}
             >
@@ -48,7 +48,7 @@ const PaginationComponent = ({
           className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}
         >
           <a
-            href="#!"
+            href={`#page-${currentPage}`}
             className="page-link"
             onClick={() => {
               if (currentPage !== totalPages) {
