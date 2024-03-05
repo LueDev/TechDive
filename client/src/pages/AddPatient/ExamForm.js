@@ -1,5 +1,4 @@
 import Form from '../../components/General/Form/Form.js';
-//import { data } from '../../mockdata.js';
 import './ExamForm.css';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -22,6 +21,7 @@ const ExamForm = () => {
     values[field.name] = '';
     return values;
   }, {});
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Yup.object({
@@ -40,11 +40,6 @@ const ExamForm = () => {
       sex: Yup.string()
         .matches(/^(M|F|X)$/, 'Invalid marker: Must be M, F, or X')
         .required('Required'),
-      /* Will be caculated automatically and connected to the DB
-            bmi: Yup.number()
-            .typeError("Invalid input: BMI must be a number")
-            .required('Required')
-            .positive(),*/
       height: Yup.number()
         .typeError('Invalid input: Height must be a number.')
         .min(18, 'Invalid input: Height must be at least 18 inches.')
@@ -66,6 +61,7 @@ const ExamForm = () => {
           'Invalid exam ID: must follow the EXAM-<numbers> format/',
         )
         .required('Required'),
+
       keyFindings: Yup.string().required('Required'),
       brixiaScores: Yup.string()
         .matches(
@@ -73,12 +69,10 @@ const ExamForm = () => {
           'Invalid input: Brixia scores must be at least 1, at most 6 (i.e: 1,2,3) OR values are out of range [0-6].',
         )
         .required('Required'),
-      imageUrl: Yup.string().required('Required'),
+      imageURL: Yup.string()
+        .required('Required'),
     }),
-  });
-
-  const handleUserSubmit = (event) => {
-    event.preventDefault();
+    onSubmit: () => {
     console.log('user Data:', JSON.stringify(formik.values));
     fetch(`${process.env.REACT_APP_LOCALSERVER}/create`, {
       method: 'POST',
@@ -89,7 +83,8 @@ const ExamForm = () => {
     })
       .then((res) => res.json())
       .then((data) => console.log(data));
-  };
+    },
+  });
 
   return (
     <div>
@@ -97,7 +92,7 @@ const ExamForm = () => {
       <Form
         formik={formik}
         fields={patientFields}
-        onSubmit={handleUserSubmit}
+        onSubmit={formik.handleSubmit}
       />
     </div>
   );
