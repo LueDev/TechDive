@@ -77,7 +77,7 @@ const ExamForm = () => {
     fetch(`${process.env.REACT_APP_LOCALSERVER}/create`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', 
       },
       body: JSON.stringify(formik.values),
     })
