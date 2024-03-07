@@ -18,17 +18,22 @@ Make sure that this matches the port where the back-end service is running.
 You may replace this with the URL to your deployed back-end in production.
 
 2. In the root of the `api` folder, create a `.env` file containing the following:
+
+CORE: 
 ```
 ACCESS_TOKEN_SECRET=
+MONGO_URI=
+REACT_REDIRECT="http://localhost:3000"
+```
+OPTIONAL:
+```
 REFRESH_TOKEN_SECRET=
 CLOUDAMQPS_URI=
 LOCAL_AMQP=
-MONGO_URI=
 SLACK_WEBHOOK=
 SLACK_SIGNING_SECRET=
 SLACK_BOT_TOKEN=
 SLACK_CHANNEL=
-REACT_REDIRECT="http://localhost:3000"
 ```
 
 ## Client
